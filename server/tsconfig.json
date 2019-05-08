@@ -1,0 +1,31 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "pretty": true,
+      "sourceMap": true,
+      "target": "es6",
+      "outDir": "./dist",
+      "baseUrl": "./lib",
+      "paths": {
+        "typings/*": [
+          "server/typings/*"
+        ],
+        "models/*": [
+          "server/models/*"
+        ],
+        "*": [
+          "node_modules/*",
+          "**/*.spec.ts",
+          "**/*.test.ts"
+        ]
+      }
+  },
+  "include": [
+      "./"
+  ],
+  "exclude": [
+      "node_modules"
+  ]
+}
