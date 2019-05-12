@@ -11,6 +11,18 @@ const Homepage = Loadable({
   loading: () => null,
   modules: ["home"]
 });
+
+const CategoryDetails = Loadable({
+  loader: () => import(/* webpackChunkName: "homepage" */ "./CategoryDetails/components/CategoryDetails"),
+  loading: () => null,
+  modules: ["categoryDetails"]
+});
+
+const Login = Loadable({
+  loader: () => import(/* webpackChunkName: "homepage" */ "./Login/container/LoginContainer"),
+  loading: () => null,
+  modules: ["login"]
+});
 const Logout = Loadable({
   loader: () => import(/* webpackChunkName: "logout" */ "./Logout"),
   loading: () => null,
@@ -20,11 +32,10 @@ const Logout = Loadable({
 
 export default () => (
   <Switch>
-    <Route exact path="/" component={Homepage} />
+    <AuthenticatedRoute exact path="/" component={Homepage} />
+    <AuthenticatedRoute exact path="/category-details/:id" component={CategoryDetails} />
 
-    {/**<AuthenticatedRoute exact path="/" component={Homepage} />**/}
-
-    {/**<UnauthenticatedRoute exact path="/login" component={Login} />**/}
+    <UnauthenticatedRoute exact path="/login" component={Login} />
     <AuthenticatedRoute exact path="/logout" component={Logout} />
 
     <Route component={NotFound} />

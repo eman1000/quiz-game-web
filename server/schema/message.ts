@@ -14,7 +14,7 @@ const schema = gql(`
       pageInfo: PageInfo!
     }
   
-    type PageInfo {
+    extend type PageInfo {
       hasNextPage: Boolean!
       endCursor: String!
     }

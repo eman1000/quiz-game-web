@@ -1,41 +1,62 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 import Page from "../../../components/Page";
+import HorizontalScroll from "../../../components/HorizontalScroll"
 import Loader from "../../../components/Loader"
 
-import "./HomeStyles.scss";
+//import { Category } from "typings";
 
-export const GET_PERSON = gql(`
-  {
-    getPerson(id:"injknknnknk"){
-      id
-      firstName
+import styles from "./Home.module.scss";
+
+
+type Category = {
+  id:number;
+  name:string;
+  description:string;
+  thumbnail:string;
+}
+export const GET_CATEGORIES = gql(`
+  query {
+    getCategories(limit: 4) {
+      edges {
+        id
+        name
+        thumbnail
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
-    
   }
 `);
 
-console.log(GET_PERSON);
-class HomePage extends Component<any> {
+const HomePage = (props)=>{
 
-
-  render() {
-
-    return (
-      <Page
-        id="homepage"
-        title="Affiliate App"
-      >
-        <Query query={GET_PERSON}>
+  console.log("user888", props)
+ 
+  return (
+    <Page
+      id="homepage"
+      title="Affiliate App"
+    >
+        <Query query={GET_CATEGORIES}>
           {({ loading, data }) => !loading && (
-            <div>dcdcd {data.getPerson.firstName}</div>
+            <div className={styles.listWrapper}>
+              {
+                (data.getCategories.edges.length > 0) &&
+                <HorizontalScroll
+                  title="Categories"
+                  data={data.getCategories.edges}
+                />
+              }   
+            </div>
           )}
         </Query>
-      </Page>
-    );
-  }
+    </Page>
+  );
 }
 
 export default HomePage;

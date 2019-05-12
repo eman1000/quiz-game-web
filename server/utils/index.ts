@@ -1,0 +1,1 @@
+export const toCursorHash = string => Buffer.from(string).toString('base64');

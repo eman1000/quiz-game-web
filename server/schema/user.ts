@@ -4,12 +4,14 @@ const schema = gql(`
     type User {
       id: ID
       username: String
-      firstame: String !
-      lastName: String
+      firstName: String !
+      lastName: String !
       gender: Gender
       age: Int
       email: String
       role: String
+      facebookId: String
+      avatar: String
       messages: [Message!]
     }
 
@@ -37,10 +39,12 @@ const schema = gql(`
       ): Token!
       signIn(login: String!, password: String!): Token!
       deleteUser(id: ID!): Boolean!
+      signInFacebook(facebookToken :String!): Token!
     }
 
     type Token {
       token: String!
+      user:User!
     }
 
     input UserInput{

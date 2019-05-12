@@ -2,11 +2,11 @@ import uuidv4 from 'uuid/v4';
 import * as Sequelize from 'sequelize';
 import { IResolvers } from "graphql-tools";
 import { combineResolvers } from 'graphql-resolvers';
+import { toCursorHash } from "../utils";
 import pubsub, { EVENTS } from '../subscription';
 
 import { isAuthenticated, isMessageOwner } from './authorization';
 
-const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
   Buffer.from(string, 'base64').toString('ascii');

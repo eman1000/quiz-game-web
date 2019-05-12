@@ -1,3 +1,3 @@
 export default {
-  "SET_CONFIG":"SET_CONFIG"
+  "AUTH_USER":"AUTH_USER"
 };

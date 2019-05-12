@@ -13,6 +13,7 @@ import { ApolloServer, IResolvers } from 'apollo-server-express';
 import schema from "./schema";
 import resolvers from "./resolvers";
 import createModels, { sequelize } from './models';
+import loaders from './loaders';
 
 import "dotenv/config"
 
@@ -30,7 +31,6 @@ const batchUsers = async (keys, models) => {
 
 const getMe = async req => {
   const token = req.headers['x-token'];
-
   if (token) {
     try {
       return await jwt.verify(token, process.env.SECRET);
@@ -52,34 +52,41 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/', function(req, res) {
-  console.log(req.path)
-  console.log(req.method)
-  console.log(res.type("json"))
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
+//cache and batching
+const userLoader = new DataLoader(keys => batchUsers(keys, db));
 
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers:resolvers as any,
   //@ts-ignore
-  context: async ({ req, connection }) => {
+  context: async ({ req, res, connection }) => {
     if (connection) {
       return {
         models:db,
+        loaders: {
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, db),
+          ),
+        }
       };
     }
 
     if (req) {
       const me = await getMe(req);
-
       return {
         models:db,
         me,
         secret: process.env.SECRET,
         loaders: {
-          user: new DataLoader(keys => batchUsers(keys, db)),
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, db),
+          ),
         },
+        req,
+        res
       };
     }
   },
@@ -97,9 +104,9 @@ server.installSubscriptionHandlers(httpServer);
 
 const eraseDatabaseOnSync = true;
 
-sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
+sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
   if (eraseDatabaseOnSync) {
-    createUsersWithMessages(new Date());
+    //createUsersWithMessages(new Date());
   }
 
   httpServer.listen({ port }, () => {
@@ -107,51 +114,51 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   });
 });
 
-const createUsersWithMessages = async date => {
-  await db.User.create(
-    {
-      username: 'doe',
-      firstName: 'John',
-      lastName: 'Doe',
-      email:'doe@gmail.com',
-      gender:'MALE',
-      role: 'ADMIN',
-      age:20,
-      password:'1234567',
-      messages: [
-        {
-          text: 'Published the Road to learn React',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        },
-      ],
-    },
-    {
-      include: [db.Message],
-    },
-  );
+// const createUsersWithMessages = async date => {
+//   await db.User.create(
+//     {
+//       username: 'doe',
+//       firstName: 'John',
+//       lastName: 'Doe',
+//       email:'doe@gmail.com',
+//       gender:'MALE',
+//       role: 'ADMIN',
+//       age:20,
+//       password:'1234567',
+//       messages: [
+//         {
+//           text: 'Published the Road to learn React',
+//           createdAt: date.setSeconds(date.getSeconds() + 1)
+//         },
+//       ],
+//     },
+//     {
+//       include: [db.Message],
+//     },
+//   );
 
-  await db.User.create(
-    {
-      username: 'eman',
-      firstName: 'Emmancipate',
-      lastName: 'Musemwa',
-      email:'eman@gmail.com',
-      gender:'MALE',
-      age:20,
-      password:'1234567',
-      messages: [
-        {
-          text: 'Happy to release ...',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        },
-        {
-          text: 'Published a complete ...',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        },
-      ],
-    },
-    {
-      include: [db.Message],
-    },
-  );
-};
+//   await db.User.create(
+//     {
+//       username: 'eman',
+//       firstName: 'Emmancipate',
+//       lastName: 'Musemwa',
+//       email:'eman@gmail.com',
+//       gender:'MALE',
+//       age:20,
+//       password:'1234567',
+//       messages: [
+//         {
+//           text: 'Happy to release ...',
+//           createdAt: date.setSeconds(date.getSeconds() + 1)
+//         },
+//         {
+//           text: 'Published a complete ...',
+//           createdAt: date.setSeconds(date.getSeconds() + 1)
+//         },
+//       ],
+//     },
+//     {
+//       include: [db.Message],
+//     },
+//   );
+// };

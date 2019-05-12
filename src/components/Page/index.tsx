@@ -16,8 +16,8 @@ const defaultImage = `${SITE_URL}${""}`;
 const defaultTwitter = "@sam-media";
 const defaultSep = " | ";
 
-class Page extends Component<any> {
-  getMetaTags(
+const Page = (props)=> {
+  const getMetaTags = (
     {
       title,
       description,
@@ -31,7 +31,7 @@ class Page extends Component<any> {
       tags
     },
     pathname
-  ) {
+  ) =>{
     const theTitle = title
       ? (title + defaultSep + defaultTitle).substring(0, 60)
       : defaultTitle;
@@ -80,32 +80,31 @@ class Page extends Component<any> {
     return metaTags;
   }
 
-  render() {
-    const { children, id, className, ...rest } = this.props;
+  const { children, id, className, ...rest } = props;
 
-    return (
-      <div id={id} className={className}>
-        <Helmet
-          htmlAttributes={{
-            lang: "en",
-            itemscope: undefined,
-            itemtype: `http://schema.org/${rest.schema || "WebPage"}`
-          }}
-          title={
-            rest.title ? rest.title + defaultSep + defaultTitle : defaultTitle
+  return (
+    <div id={id} className={className}>
+      <Helmet
+        htmlAttributes={{
+          lang: "en",
+          itemscope: undefined,
+          itemtype: `http://schema.org/${rest.schema || "WebPage"}`
+        }}
+        title={
+          rest.title ? rest.title + defaultSep + defaultTitle : defaultTitle
+        }
+        link={[
+          {
+            rel: "canonical",
+            href: SITE_URL + props.location.pathname
           }
-          link={[
-            {
-              rel: "canonical",
-              href: SITE_URL + this.props.location.pathname
-            }
-          ]}
-          meta={this.getMetaTags(rest as any, this.props.location.pathname)}
-        />
-        {children}
-      </div>
-    );
-  }
+        ]}
+        meta={getMetaTags(rest as any, props.location.pathname)}
+      />
+      {children}
+    </div>
+  );
 }
+
 
 export default withRouter(Page);

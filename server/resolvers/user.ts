@@ -3,31 +3,38 @@ import * as jwt from 'jsonwebtoken';
 import { AuthenticationError, UserInputError } from 'apollo-server';
 import { combineResolvers } from 'graphql-resolvers';
 
-import { isAdmin } from './authorization';
-
+import { isAdmin, isAuthenticated } from './authorization';
+import { authenticateFacebook } from "../passport";
 const createToken = async (user, secret, expiresIn) => {
-  const { id, email, username, role } = user;
-  return await jwt.sign({ id, email, username, role }, secret, {
+
+
+  const { id, email, role } = user;
+  return await jwt.sign({ id, email, role }, secret, {
     expiresIn,
   });
 };
 
-
 const resolver:IResolvers = {
     Query: {
-        getUsers: async (parent, args, { models }) => {
+        getUsers: combineResolvers(
+          isAuthenticated,
+          async (parent, args, { models }) => {
           return await models.User.findAll();
-        },
-        getUser: async (parent, { id }, { models }) => {
+        }),
+        getUser: combineResolvers(
+          isAuthenticated,
+          async (parent, { id }, { models }) => {
           return await models.User.findByPk(id);
-        },
-        getMe: async (parent, args, { models, me }) => {
+        }),
+        getMe: combineResolvers(
+          isAuthenticated,
+          async (parent, args, { models, me }) => {
           if (!me) {
             return null;
           }
     
           return await models.User.findByPk(me.id);
-        }
+        })
     },
     Mutation: {
       signUp: async (
@@ -53,7 +60,7 @@ const resolver:IResolvers = {
           password
         });
   
-        return { token: createToken(user, secret, '30m') };
+        return { token: createToken(user, secret, '1y') };
       },
       signIn: async (
         parent,
@@ -73,8 +80,42 @@ const resolver:IResolvers = {
         if (!isValid) {
           throw new AuthenticationError('Invalid password.');
         }
-  
         return { token: createToken(user, secret, '30m') };
+      },
+      signInFacebook: async (
+        parent,
+        { facebookToken },
+        { models, secret, req, res }
+      ) => {
+        req.body = {
+          ...req.body,
+          access_token: facebookToken,
+        };
+        try {
+          // data contains the accessToken, refreshToken and profile from passport
+          //@ts-ignore
+          const { data, info } = await authenticateFacebook(req, res);
+  
+          if (data) {
+            const user = await models.User.upsertFbUser(data);
+    
+            if (user) {
+              console.log("userTTT", user.dataValues)
+              return { token: createToken(user, secret, '30m'), user:user.dataValues };
+            }
+          }
+          if (info) {
+            switch (info.code) {
+              case 'ETIMEDOUT':
+                return (new Error('Failed to reach Facebook: Try Again'));
+              default:
+                return (new Error('something went wrong'));
+            }
+          }
+          return (Error('server error'));
+        } catch (error) {
+          return error;
+        }
       },
       deleteUser: combineResolvers(
         isAdmin,

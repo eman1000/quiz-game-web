@@ -13,6 +13,8 @@ export interface UserAttributes {
   password:string;
   messages?: Array<any>;
   role?:string
+  facebookId?:string
+  avatar?:string
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
@@ -24,9 +26,9 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     username: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     firstName: {
@@ -45,16 +47,16 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     },
     gender: {
       type: DataTypes.ENUM("MALE", "FEMALE"),
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     age: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     email: {
@@ -68,13 +70,19 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
         len: [7, 42],
       },
     },
     role: {
+      type: DataTypes.STRING,
+    },
+    facebookId:{
+      type: DataTypes.STRING,
+    },
+    avatar:{
       type: DataTypes.STRING,
     }
   };
@@ -84,6 +92,10 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
   // @ts-ignore
   User.associate = models => {
     User.hasMany(models.Message, { onDelete: 'CASCADE' });
+  };
+  User.associate = models => {
+    User.hasMany(models.Score, { onDelete: 'CASCADE' });
+    //Category.hasMany(models.Score, {foreignKey: 'category_id'})
   };
   // @ts-ignore
   User.findByLogin = async login => {
@@ -96,10 +108,35 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
         where: { email: login },
       });
     }
+
     return user;
   };
+  // @ts-ignore
+  User.upsertFbUser = async  ({ accessToken, refreshToken, profile })=>{
+      let user = await User.findOne({
+        where: { facebookId: profile.id },
+      });
+
+      // no user was found, lets create a new one
+      if (!user) {
+        const newUser = await User.create({
+          username:null,
+          firstName:profile.name.givenName,
+          lastName:profile.name.familyName,
+          email: profile.emails[0].value,
+          gender:null,
+          age:null,
+          password:null,
+          facebookId:profile.id
+        });
+        return newUser;
+      }
+    return user;
+  }
   User.beforeCreate(async user => {
-    user.password = await user.generatePasswordHash();
+    if(user.password){
+      user.password = await user.generatePasswordHash();
+    }
   });
   // @ts-ignore
   User.prototype.generatePasswordHash = async function() {

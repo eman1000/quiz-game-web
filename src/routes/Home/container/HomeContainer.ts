@@ -5,7 +5,6 @@ import {
 } from "../module";
 
 const mapStateToProps = (state) => ({
-  authenticatedUser: state.home.authenticatedUser,
 });
 
 const mapDispatchToProps = {

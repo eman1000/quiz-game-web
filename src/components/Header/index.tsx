@@ -15,7 +15,7 @@ interface IHeaderLinkProps {
 interface IHeaderProps {
   isAuthenticated: boolean,
   authenticatedUser: {
-    affiliate_name: string
+    username: string
   },
   current: string
 }
