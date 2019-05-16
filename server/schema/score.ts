@@ -3,8 +3,8 @@ import { ApolloServer, gql } from 'apollo-server-express';
 const schema = gql(`
     type Score {
       id: ID
-      userId: Int !
-      categoryId: Int !
+      userId: ID !
+      categoryId: ID !
       score: Int !
       user: User
       category: Category

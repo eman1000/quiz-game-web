@@ -12,6 +12,7 @@ const schema = gql(`
       role: String
       facebookId: String
       avatar: String
+      isOnline: Boolean
       messages: [Message!]
     }
 

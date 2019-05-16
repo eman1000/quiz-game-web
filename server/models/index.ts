@@ -69,7 +69,13 @@ import UserFactory  from './user';
 import MessageFactory  from './message';
 import CategoryFactory  from './category';
 import ScoreFactory  from './score';
-
+import TestFactory  from './test';
+import QuestionFactory  from './question';
+import AnswerFactory  from './answer';
+import MatchFactory  from './match';
+import MatchUserFactory from './matchUser';
+import ResultFactory from './result';
+import TestQuestionFactory from './testQuestion'
 
 const sequelize = new Sequelize("postgresql://emanmw:P%40ssw0rd@localhost/quiz_game",
   {
@@ -86,6 +92,14 @@ const createModels = (): DbInterface => {
     Message: MessageFactory(sequelize, Sequelize),
     Category: CategoryFactory(sequelize, Sequelize),
     Score: ScoreFactory(sequelize, Sequelize),
+    Test: TestFactory(sequelize, Sequelize),
+    Question: QuestionFactory(sequelize, Sequelize),
+    Answer: AnswerFactory(sequelize, Sequelize),
+    Match: MatchFactory(sequelize, Sequelize),
+    MatchUser: MatchUserFactory(sequelize, Sequelize),
+    Result: ResultFactory(sequelize, Sequelize),
+    TestQuestion:TestQuestionFactory(sequelize, Sequelize)
+
   };
 
   Object.keys(db).forEach(modelName => {

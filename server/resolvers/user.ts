@@ -32,7 +32,7 @@ const resolver:IResolvers = {
           if (!me) {
             return null;
           }
-    
+  
           return await models.User.findByPk(me.id);
         })
     },

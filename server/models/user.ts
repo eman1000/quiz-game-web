@@ -15,6 +15,7 @@ export interface UserAttributes {
   role?:string
   facebookId?:string
   avatar?:string
+  isOnline?:boolean
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
@@ -84,6 +85,9 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     },
     avatar:{
       type: DataTypes.STRING,
+    },
+    isOnline:{
+      type: DataTypes.BOOLEAN,
     }
   };
   
@@ -116,9 +120,11 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       let user = await User.findOne({
         where: { facebookId: profile.id },
       });
+      console.log("usr", profile)
 
       // no user was found, lets create a new one
       if (!user) {
+        
         const newUser = await User.create({
           username:null,
           firstName:profile.name.givenName,
@@ -127,7 +133,8 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
           gender:null,
           age:null,
           password:null,
-          facebookId:profile.id
+          facebookId:profile.id,
+          avatar:profile.photos[0].value
         });
         return newUser;
       }

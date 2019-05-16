@@ -11,6 +11,7 @@ import Loader from "../../../components/Loader"
 import styles from "./CategoryDetails.module.scss";
 import PointsHeader from "../../../components/PointsHeader";
 import Banner from "../../../components/Banner";
+import ErrorHandler from "../../../components/ErrorHandler";
 
 
 type Category = {
@@ -26,13 +27,39 @@ export const GET_CATEGORY = gql(`
       name
       thumbnail
       description
+      backgroundImageUrl
+    }
+  }
+`);
+
+export const GET_RANKING = gql(`
+  query ($limit:Int!, $categoryId:Int!){
+    getScores(limit: $limit, categoryId:$categoryId) {
+      edges {
+        id
+        userId
+        categoryId
+        score
+        user{
+          firstName
+        },
+        category{
+          id
+          name
+          thumbnail
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `);
 
 const CategoryDetails = (props)=>{
   const { id } = props.match.params || "";
-
+  console.log("prps", props)
   return (
     <Page
       id="homepage"
@@ -50,8 +77,47 @@ const CategoryDetails = (props)=>{
               <div className={styles.listWrapper}>
                 {
                   category &&
-                  <Banner title={category.name} description={category.description}/>
+                  <Banner
+                    title={category.name}
+                    description={category.description}
+                    bgImage={category.backgroundImageUrl}
+                  />
                 }
+              </div>
+            )
+          }}
+        </Query>
+        <Query
+          query={GET_RANKING}
+          variables={{
+            categoryId:parseInt(id),
+            limit: 2
+          }}
+        >
+          {({ loading, error, data }) =>{
+          if (loading) return "Loading...";
+          if (error) return <ErrorHandler error={error}/>;
+          
+            const ranking  = data.getScores.edges || {};
+            return(
+              <div className={styles.listWrapper}>
+              <h2>Rankings</h2>
+              <ol>
+                {
+                  ranking &&
+                  ranking.map((rank, index)=>{
+                    return(
+                        <li key={index}>
+                          <img src={rank.user.avatar} className={styles.avatar}/>
+                          <span>{rank.user.firstName} </span>
+                          <span>{rank.score}</span>
+                        </li>
+                      
+                    )
+                  })
+               
+                }
+              </ol>
               </div>
             )
           }}

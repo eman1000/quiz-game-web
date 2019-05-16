@@ -31,8 +31,10 @@ const resolver:IResolvers = {
             include:[{ 
               model:models.User,   
               required:false
-            }],
-      
+            },{ 
+              model:models.Category,   
+              required:false
+            }],     
             ...cursorOptions
           });
 

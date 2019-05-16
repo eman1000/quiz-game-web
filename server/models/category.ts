@@ -6,6 +6,7 @@ export interface CategoryAttributes {
   name: string;
   description: string;
   thumbnail: string;
+  backgroundImageUrl:string;
 }
 
 export interface CategoryInstance extends Sequelize.Instance<CategoryAttributes>, CategoryAttributes {
@@ -35,6 +36,13 @@ const category = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes
       validate: {
         notEmpty: true,
       },
+    },
+    backgroundImageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+      },
     }
   };
   
@@ -48,7 +56,12 @@ const category = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes
        foreignKey: 'categoryId'
     });
     models.Score.belongsTo(Category, {foreignKey: 'categoryId'})
-
+    
+  Category.hasMany(models.Question, {
+      onDelete: 'CASCADE',
+      foreignKey: 'categoryId'
+   });
+   models.Test.belongsTo(Category, {foreignKey: 'categoryId'})
     // @ts-ignore
     Category.findByIdWithScore = async id => {
       let category = await Category.findOne({
