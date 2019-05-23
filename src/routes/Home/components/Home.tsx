@@ -19,7 +19,7 @@ type Category = {
 }
 export const GET_CATEGORIES = gql(`
   query {
-    getCategories(limit: 4) {
+    getCategories(limit: 10) {
       edges {
         id
         name
@@ -35,8 +35,8 @@ export const GET_CATEGORIES = gql(`
 
 const HomePage = (props)=>{
 
-  console.log("user888", props)
- 
+  // console.log("user888", props)
+
   return (
     <Page
       id="homepage"

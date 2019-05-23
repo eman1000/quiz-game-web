@@ -10,19 +10,6 @@ import { toCursorHash } from "../utils";
 
 const resolver:IResolvers = {
     Query: {
-      getRandomTestQuestion: async (parent, { id }, { models }) => {
-
-        const test = await models.TestQuestion.findAll({
-          //order: sequelize.random(),
-          where:{
-            //categoryId:1
-            testId:1
-          }
-        })
-
-        console.log("test", test)
-        return test
-      },
       getTestQuestion: async (parent, { id }, { models }) => {
           return await models.TestQuestion.findByPk(id);
         }

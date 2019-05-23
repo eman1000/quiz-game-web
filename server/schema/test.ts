@@ -8,8 +8,9 @@ const schema = gql(`
     }
 
     extend type Query {
-      getTest(id: ID): Test !
-      getRandomTest: Test !
+      getTest(testId: ID): Test !
+      getTestWithQuestions(testId: ID): Test !
+      getRandomTestByCategory(categoryId: ID!): Test !
     }
 `)
 

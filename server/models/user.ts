@@ -15,7 +15,7 @@ export interface UserAttributes {
   role?:string
   facebookId?:string
   avatar?:string
-  isOnline?:boolean
+  lastSeen?:Date
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
@@ -86,8 +86,8 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     avatar:{
       type: DataTypes.STRING,
     },
-    isOnline:{
-      type: DataTypes.BOOLEAN,
+    lastSeen:{
+      type: DataTypes.DATE,
     }
   };
   

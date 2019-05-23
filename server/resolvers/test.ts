@@ -12,13 +12,19 @@ import { sequelize } from '../models';
 const resolver:IResolvers = {
     Query: {
 
-        getTest: async (parent, { id }, { models }) => {
-          return await models.Test.findByPk(id);
+        getTest: async (parent, { testId }, { models }) => {
+          return await models.Test.findByPk(testId);
         },
-        getRandomTest: async (parent, {  }, { models }) => {
+        getTestWithQuestions: async (parent, { testId }, { models }) => {
+          return await models.Test.getTestWithQuestionsById({testId, models});
+        },
+        getRandomTestByCategory: async (parent, { categoryId }, { models }) => {
 
           const test = await models.Test.findAll({
-        
+            
+            where:{
+              categoryId:categoryId
+            },
             include: [{
               model: models.TestQuestion,
               required: true,
@@ -34,9 +40,8 @@ const resolver:IResolvers = {
             order:sequelize.random()
           });
 
+          console.log("test", test)
           //const finalTest = test.testQuestions.map((q)=>q.question);
-
-          console.log("TEST", JSON.stringify(test))
           return test[0]
         }
     }

@@ -9,7 +9,6 @@ const schema = gql(`
     }
     extend type Query {
       getTestQuestion(id: ID): TestQuestion !
-      getRandomTestQuestion(id: ID): [TestQuestion !]
     }
 `)
 

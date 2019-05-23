@@ -22,6 +22,7 @@ export const GET_PROFILE = gql(`
     }
   }
 `);
+
 const AuthenticatedRoute = ({ component: Component, ...rest }) => {
   const { setUserDetails } = React.useContext(UserDetailsContext)
   return(

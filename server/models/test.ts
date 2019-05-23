@@ -42,7 +42,57 @@ const test = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
   };
 
 
+  // @ts-ignore
+  Test.getRandomTestByCategory = async  ({ categoryId, models })=>{
 
+    console.log("CAT", categoryId)
+    const test = await models.Test.findAll({
+          
+      where:{
+        categoryId:categoryId
+      },
+      include: [{
+        model: models.TestQuestion,
+        required: true,
+      include: [{
+        model: models.Question,
+        required: true,
+        include: [{
+          model: models.Answer,
+          required: true
+        }]
+      }]
+      }],
+      order:sequelize.random()
+    });
+    //const finalTest = test.testQuestions.map((q)=>q.question);
+    return test[0]
+  }
+
+  //@ts-ignore
+  Test.getTestWithQuestionsById = async  ({ testId, models })=>{
+
+    const test = await models.Test.findAll({
+          
+      where:{
+        id:testId
+      },
+      include: [{
+        model: models.TestQuestion,
+        required: true,
+      include: [{
+        model: models.Question,
+        required: true,
+        include: [{
+          model: models.Answer,
+          required: true
+        }]
+      }]
+      }]
+    });
+    //const finalTest = test.testQuestions.map((q)=>q.question);
+    return test[0]
+  }
 
   return Test;
 };

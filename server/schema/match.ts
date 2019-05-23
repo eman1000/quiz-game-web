@@ -11,8 +11,24 @@ const schema = gql(`
       results:[Result!]
     }
 
+    extend type Mutation {
+      createMatch(categoryId: ID!, playerOneId: ID!, playerTwoId:ID): Match
+      updateMatch(
+        id: ID !
+        testId: ID
+        status: String
+        nextMoveUserId: ID
+        winnerId:ID
+      ) : Match
+    }
     extend type Query {
-      getMatch(id: ID): Match !
+      getMatch(matchId: ID): Match !
+    }
+    extend type Subscription {
+      matchUpdated(matchId: ID!): MatchUpdated!
+    }
+    type MatchUpdated{
+      match: Match!
     }
 
 `)

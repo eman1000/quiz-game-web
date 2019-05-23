@@ -12,6 +12,7 @@ import styles from "./CategoryDetails.module.scss";
 import PointsHeader from "../../../components/PointsHeader";
 import Banner from "../../../components/Banner";
 import ErrorHandler from "../../../components/ErrorHandler";
+import { Link } from "react-router-dom";
 
 
 type Category = {
@@ -87,6 +88,7 @@ const CategoryDetails = (props)=>{
             )
           }}
         </Query>
+        <Link to={`/pick-opponent/${id}`}>Play Now</Link>
         <Query
           query={GET_RANKING}
           variables={{

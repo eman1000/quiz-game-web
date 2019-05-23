@@ -12,7 +12,7 @@ const schema = gql(`
       role: String
       facebookId: String
       avatar: String
-      isOnline: Boolean
+      lastSeen: Date
       messages: [Message!]
     }
 
@@ -24,6 +24,7 @@ const schema = gql(`
       getUser(id: ID): User
       getUsers: [User!]
       getMe: User
+      getRandomUserByLastSeen: User
     }
 
     extend type Mutation{
@@ -41,6 +42,20 @@ const schema = gql(`
       signIn(login: String!, password: String!): Token!
       deleteUser(id: ID!): Boolean!
       signInFacebook(facebookToken :String!): Token!
+      updateUser(
+        id: ID !
+        username: String
+        password: String
+        firstName: String
+        lastName: String
+        gender: Gender
+        age: Int
+        email: String
+        role: String
+        facebookId: String
+        avatar: String
+        lastSeen: Date
+      ) : User
     }
 
     type Token {

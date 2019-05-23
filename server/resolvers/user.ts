@@ -5,6 +5,21 @@ import { combineResolvers } from 'graphql-resolvers';
 
 import { isAdmin, isAuthenticated } from './authorization';
 import { authenticateFacebook } from "../passport";
+
+export type IUser = {
+  id:string,
+  username:string,
+  password:string,
+  firstName:string,
+  lastName:string,
+  gender: "MALE" | "FEMALE",
+  age:number,
+  email:string,
+  role?:string,
+  facebookId?:string,
+  avatar?:string,
+  lastSeen?:string
+}
 const createToken = async (user, secret, expiresIn) => {
 
 
@@ -34,7 +49,24 @@ const resolver:IResolvers = {
           }
   
           return await models.User.findByPk(me.id);
-        })
+        }),
+        getRandomUserByLastSeen: combineResolvers(
+          //isAuthenticated,
+          async (parent, {}, { models }) => {
+            const user = await models.User.findOne({ 
+              where:{
+                lastSeen:{
+                  $gt: models.sequelize.literal("NOW()- '00:10:10'::interval")
+                }
+              } 
+              });
+            if (!user) {
+              throw new Error(`Couldn’t find user`);
+            }
+
+            return user;
+          }
+        )
     },
     Mutation: {
       signUp: async (
@@ -117,6 +149,26 @@ const resolver:IResolvers = {
           return error;
         }
       },
+      updateUser: combineResolvers(
+        isAuthenticated,
+        async (parent, record:IUser, { models }) => {
+          const user = await models.User.findOne({ where:{id:record.id} });
+          if (!user) {
+            throw new Error(`Couldn’t find author with id ${record.id}`);
+          }
+          const result = await models.User.update({
+            ...record,
+          },{
+            where:{
+              id:record.id
+            },
+            raw : true,
+            returning: true,
+            plain: true
+          });
+          return result[1];
+        }
+      ),
       deleteUser: combineResolvers(
         isAdmin,
         async (parent, { id }, { models }) => {

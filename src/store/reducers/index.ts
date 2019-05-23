@@ -11,6 +11,16 @@ import home from "../../routes/Home/module";
 import app from "../../App/module";
 
 import { setContext } from 'apollo-link-context';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from "apollo-utilities";
+import { split } from "apollo-link";
+
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:5000/graphql`,
+  options: {
+    reconnect: true,
+  },
+});
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:5000/graphql'
@@ -91,8 +101,21 @@ const logLink = onError(({ graphQLErrors, networkError, operation, forward }) =>
   }
 })  // as any
 
+const link = split(
+  // split based on operation type
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink,
+);
+
 export const client = new ApolloClient({
-  link: logLink.concat(authLink.concat(httpLink)),
+  link: logLink.concat(authLink.concat(link)),
   cache: new InMemoryCache()
 });
 // export const client = new ApolloClient({
