@@ -14,6 +14,29 @@ const resolver:IResolvers = {
         getResult: async (parent, { id }, { models }) => {
           return await models.Result.findByPk(id);
         }
+    },
+    Mutation:{
+      saveQuestionResult: async (
+        parent,
+        { 
+          matchId,
+          userId,
+          questionId,
+          answerId,
+          isCorrect
+        },
+        { models, secret },
+      ) => {
+        const result = await models.Result.create({
+          matchId,
+          userId,
+          questionId,
+          answerId,
+          isCorrect
+        });
+  
+        return result;
+      }
     }
 };
 

@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useEffect, useState } from "react";
 import gql from 'graphql-tag';
-import { Query, Subscription, graphql } from 'react-apollo';
+import { Query, Subscription, graphql, withApollo } from 'react-apollo';
 
 import Page from "../../../components/Page";
 import HorizontalScroll from "../../../components/HorizontalScroll"
@@ -19,6 +19,18 @@ export const MATCH_SUBSCRIPTION = gql(`
       match{
         id
         status
+        matchUsers{
+          userId
+          matchId
+        }
+        results{
+          id
+          matchId
+          questionId
+          answerId
+          isCorrect
+          id
+        }
       }
     }
   }
@@ -30,6 +42,38 @@ export const GET_MATCH = gql(`
       id
       status
       testId
+      matchUsers{
+        userId
+        matchId
+      }
+      results{
+        id
+        matchId
+        questionId
+        answerId
+        isCorrect
+        id
+      }
+    }
+  }
+`);
+
+export const GET_OPPONENT = gql(`
+  query($userId: ID!){
+    getOpponent(userId:$userId){
+      opponent{
+        id
+        username
+        firstName
+        lastName
+        gender
+        age
+        email
+        role
+        facebookId
+        avatar
+        lastSeen
+      }
     }
   }
 `);
@@ -38,7 +82,48 @@ const PlayRoom = (props)=>{
   console.log("frfrfrf", props)
   const { matchId } = props.match.params || "";
   console.log("PR matchid", matchId)
-  const { data: {loading, error, getMatch }, match } = props;
+  const { data: {loading, error, getMatch }, match, user } = props;
+  const [opponent, setOpponent] = useState({})
+  console.log("getMatch", getMatch)
+  useEffect(()=>{
+    props.data.subscribeToMore({
+      document: MATCH_SUBSCRIPTION,
+      variables: {
+        matchId: props.match.params.matchId
+      },
+      updateQuery: (prev, {subscriptionData}) => {
+        console.log("PREV", prev)
+        if (!subscriptionData.data) {
+          return prev;
+        }
+        console.log("subscriptionData", subscriptionData)
+        return  {
+          getMatch: subscriptionData.data.matchUpdated.match
+        }
+      }
+    });
+    return ()=>console.log("clear")
+  },[]);
+
+  useEffect(()=>{
+    if(getMatch && getMatch.hasOwnProperty("matchUsers")){
+      //gotOp = true;
+      const opponent = getMatch.matchUsers && getMatch.matchUsers.find((o)=>o.userId !== user.id) || null;
+
+      if(opponent){
+        props.client.query({
+          query:GET_OPPONENT,
+          variables:{
+            userId:opponent.userId
+          }
+        }).then((res)=>{
+          setOpponent(res.data.getOpponent.opponent);
+          console.log("res", res)
+        })
+      }
+    }
+    return ()=>console.log("clear")
+  })
   if (loading) {
     return "Loading...";
   }
@@ -46,13 +131,27 @@ const PlayRoom = (props)=>{
     return <p>{error.message}</p>;
   }
 
+
+
   return (
     <Page
       id="homepage"
       title="Quiz App"
     >
+
       <h1>Play Room</h1>
-      <Test testId={getMatch.testId}/>
+      {
+        getMatch.hasOwnProperty("testId") &&
+        <Test
+          testId={getMatch.testId}
+          matchObj={getMatch}
+          matchId={matchId}
+          user={user}
+          opponent={opponent}
+          {...props}
+        />
+      }
+
         {/* <Subscription
           subscription={MATCH_SUBSCRIPTION}
           variables={{
@@ -81,5 +180,6 @@ export default (graphql(GET_MATCH, {
     //@ts-ignore
     variables: { matchId: props.match.params.matchId },
   }),
+
   //@ts-ignore
-})(PlayRoom));
+})(withApollo(PlayRoom)));

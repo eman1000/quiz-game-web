@@ -22,7 +22,7 @@ const schema = gql(`
       ) : Match
     }
     extend type Query {
-      getMatch(matchId: ID): Match !
+      getMatch(matchId: ID!): Match !
     }
     extend type Subscription {
       matchUpdated(matchId: ID!): MatchUpdated!

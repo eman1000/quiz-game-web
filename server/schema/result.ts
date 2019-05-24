@@ -23,6 +23,16 @@ const schema = gql(`
     extend type Query {
       getResult(id: ID): Result !
     }
+
+    extend type Mutation {
+      saveQuestionResult(
+        matchId: ID !
+        userId: ID !
+        questionId: ID !
+        answerId: ID !
+        isCorrect: Boolean
+      ): Result !
+    }
 `)
 
 export default schema;

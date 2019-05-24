@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { Query } from "react-apollo";
+import { Query, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import UserDetailsContext from "../Context/UserDetailsContext";
 
@@ -24,39 +24,42 @@ export const GET_PROFILE = gql(`
 `);
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => {
+  const {loading, error, getMe } = rest.data;
+  console.log("rest.data", rest.data)
   const { setUserDetails } = React.useContext(UserDetailsContext)
+
+  useEffect(()=>{
+    if(getMe){
+      setUserDetails(getMe)
+    }
+    return ()=>console.log("clear")
+  },[])
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return <p>{error.message}</p>
+  }
+
+  const isAuthenticated = (getMe.id !== undefined) ? true : false;
+
   return(
     <Route
       {...rest}
-      render={props =>
-        <Query query={GET_PROFILE}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          const isAuthenticated = (data.getMe.id !== undefined) ? true : false;
-          if(isAuthenticated){
-            //setUserDetails({...data.getMe})
+      render={props =>(
+        <div>
+          {
+            isAuthenticated && 
+            <Component {...props} user={getMe}  />
+          ||
+          <Redirect to={`/login?redirect=${window.location.pathname}`} />
           }
-          
-          return(<div>
-            {
-              isAuthenticated && 
-              <Component {...props} user={data.getMe}  />
-            ||
-            <Redirect to={`/login?redirect=${window.location.pathname}`} />
-            }
-          </div>)
-          }}
-        </Query>
-      }
+        </div>
+      )}
     />
   )
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.app.isAuthenticated
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(AuthenticatedRoute);
+export default (graphql(GET_PROFILE, {
+  //@ts-ignore
+})(AuthenticatedRoute));

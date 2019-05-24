@@ -47,6 +47,13 @@ const answer = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes):
   const Answer = sequelize.define<AnswerInstance, AnswerAttributes>('answers', attributes);
 
   // @ts-ignore
+  Answer.associate = models => {
+    Answer.hasMany(models.Result, { 
+      onDelete: 'CASCADE',
+      foreignKey: 'answerId'
+    });
+    models.Result.belongsTo(Answer, {foreignKey: 'answerId'})
+  };
 
 
 

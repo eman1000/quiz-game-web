@@ -15,11 +15,13 @@ import CreateMatch from "./CreateMatch";
 
 
 export const GET_RANDOM_PLAYER = gql(`
-  query{
-    getRandomUserByLastSeen{
+  query($userId:ID!){
+    getRandomUserByLastSeen(userId:$userId){
+    opponent{
       id
       username
       firstName
+      }
     }
   }
 `);
@@ -43,6 +45,9 @@ const PlayRoom = (props)=>{
         isFindPlayer &&    
         <Query
             query={GET_RANDOM_PLAYER}
+            variables={{
+              userId:props.user.id
+            }}
           >
           {({ loading, error, data }) =>{
           if (loading) return "Loading...";
@@ -50,7 +55,8 @@ const PlayRoom = (props)=>{
             return <ErrorHandler error={error}/>;
           } 
            
-            const player2  = data.getRandomUserByLastSeen || {};
+          console.log("DATA", data)
+            const player2  = data.getRandomUserByLastSeen.opponent || {};
             console.log("player2", player2)
             
             return(

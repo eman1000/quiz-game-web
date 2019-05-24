@@ -24,7 +24,8 @@ const schema = gql(`
       getUser(id: ID): User
       getUsers: [User!]
       getMe: User
-      getRandomUserByLastSeen: User
+      getRandomUserByLastSeen(userId:ID!): Opponent
+      getOpponent(userId:ID!):Opponent!
     }
 
     extend type Mutation{
@@ -63,6 +64,9 @@ const schema = gql(`
       user:User!
     }
 
+    type Opponent{
+      opponent: User
+    }
     input UserInput{
       id: ID
       username: String
@@ -72,6 +76,7 @@ const schema = gql(`
       age: Int
       email: String
     }
+    
 `)
 
 export default schema;

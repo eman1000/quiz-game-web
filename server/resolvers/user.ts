@@ -52,21 +52,32 @@ const resolver:IResolvers = {
         }),
         getRandomUserByLastSeen: combineResolvers(
           //isAuthenticated,
-          async (parent, {}, { models }) => {
+          async (parent, {userId}, { models }) => {
             const user = await models.User.findOne({ 
               where:{
                 lastSeen:{
-                  $gt: models.sequelize.literal("NOW()- '00:10:10'::interval")
+                  $gt: models.sequelize.literal("NOW()- '00:00:10'::interval")
+                },
+                id:{
+                  $ne: userId
                 }
               } 
               });
             if (!user) {
               throw new Error(`Couldn’t find user`);
             }
-
-            return user;
+            console.log("opponent", JSON.stringify(user))
+            return {opponent:user};
           }
-        )
+        ),
+        getOpponent: async (parent, { userId }, { models }) => {
+          const opponent = await models.User.findOne({
+            where:{
+              id:userId
+            }
+          });
+          return {opponent}
+        },
     },
     Mutation: {
       signUp: async (

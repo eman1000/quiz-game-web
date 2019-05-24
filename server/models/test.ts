@@ -39,6 +39,11 @@ const test = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       foreignKey: 'testId'
     });
     models.TestQuestion.belongsTo(Test, {foreignKey: 'testId'})
+    Test.hasMany(models.Match, { 
+      onDelete: 'CASCADE',
+      foreignKey: 'testId'
+    });
+    models.Match.belongsTo(Test, {foreignKey: 'testId'})
   };
 
 

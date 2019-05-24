@@ -84,7 +84,7 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       type: DataTypes.STRING,
     },
     avatar:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     lastSeen:{
       type: DataTypes.DATE,
@@ -99,7 +99,16 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
   };
   User.associate = models => {
     User.hasMany(models.Score, { onDelete: 'CASCADE' });
-    //Category.hasMany(models.Score, {foreignKey: 'category_id'})
+    User.hasMany(models.Result, { 
+      onDelete: 'CASCADE',
+      foreignKey: 'userId'
+    });
+    models.Result.belongsTo(User, {foreignKey: 'userId'})
+    User.hasMany(models.MatchUser, { 
+      onDelete: 'CASCADE',
+      foreignKey: 'userId'
+    });
+    models.MatchUser.belongsTo(User, {foreignKey: 'userId'})
   };
   // @ts-ignore
   User.findByLogin = async login => {

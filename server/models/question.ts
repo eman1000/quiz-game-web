@@ -51,6 +51,11 @@ const question = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes
     onDelete: 'CASCADE',
     foreignKey: 'questionId'
   });
+  Question.hasMany(models.Result, { 
+    onDelete: 'CASCADE',
+    foreignKey: 'questionId'
+  });
+  models.Result.belongsTo(Question, {foreignKey: 'questionId'})
   models.TestQuestion.belongsTo(Question, {foreignKey: 'questionId'})
   // @ts-ignore
   // Question.findByTestId = async testId => {
