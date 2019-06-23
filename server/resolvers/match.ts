@@ -17,31 +17,12 @@ const resolver:IResolvers = {
       createMatch: combineResolvers(
         //isAuthenticated,
         async (parent, record, { models }) => {
-          console.log("RECORD", record)
+          //multiplayer
           if(!!record.playerOneId && !!record.playerTwoId && !!record.categoryId){
-            console.log("record", record)
-            const test = await models.Test.getRandomTestByCategory({categoryId:record.categoryId, models})
-            if (!test) {
-              throw new Error(`Unable to get a test`);
-            }
-            const matchResult = await models.Match.create({
-              testId:test.id,
-              status:"pending",
-              nextMoveUserId:record.playerOneId
-            });
-            if (!matchResult) {
-              throw new Error(`Unable to create a match`);
-            }
-            const userMatch = await models.MatchUser.bulkCreate([{
-              matchId:matchResult.id,
-              userId:record.playerOneId
-            },{
-              matchId:matchResult.id,
-              userId:record.playerTwoId
-            }]);
-            if (!userMatch) {
-              throw new Error(`Unable to create  test question`);
-            }
+            const matchResult = await models.Match.createMultiPlayerMatch(record, models);
+            return matchResult
+          }else if(!!record.playerOneId && !record.playerTwoId && !!record.categoryId){
+            const matchResult = await models.Match.createSinglePlayerMatch(record, models);
             return matchResult
           }else{
             throw new Error(`Unable to create a match`)
@@ -81,34 +62,54 @@ const resolver:IResolvers = {
             }]
           });
           if (!updatedMatch) {
-            throw new Error(`Couldn’t update match`);
+            throw new Error(`Couldn’t find updated match`);
           }
           //who one
           const playerOneUserId = updatedMatch.matchUsers[0].userId;
-          const playerTwoUserId = updatedMatch.matchUsers[1].userId || null;
+          const playerTwoUserId = updatedMatch.matchUsers[1] ? updatedMatch.matchUsers[1].userId : null;
 
           const results = updatedMatch.results;
           if(results && updatedMatch.status === "complete"){
-            const playerOneCount = results.filter((result)=>result.userId == playerOneUserId && result.matchId == record.id && result.isCorrect).length;
-            const playerTwoCount = results.filter((result)=>result.userId == playerTwoUserId && result.matchId == record.id && result.isCorrect).length || 0
-            
-            console.table([{playerOneCount, playerTwoCount}])
-            const winnerUpdate = await models.Match.update({
-              winnerId:(playerOneCount > playerTwoCount) ? playerOneUserId : playerTwoUserId,
-            },{
-              where:{
-                id:record.id
-              },
-              raw : true,
-              returning: true,
-              plain: true
-            });
+            const playerOneCount = results.filter((result)=>result.userId == playerOneUserId && result.matchId == record.id && result.isCorrect).length;   
+            //multiplayer winner
+            if(playerTwoUserId !== null){
+              const playerTwoCount = results.filter((result)=>result.userId == playerTwoUserId && result.matchId == record.id && result.isCorrect).length;
+              const winnerUpdate = await models.Match.update({
+                winnerId:(playerOneCount > playerTwoCount) ? playerOneUserId : playerTwoUserId,
+              },{
+                where:{
+                  id:record.id
+                },
+                raw : true,
+                returning: true,
+                plain: true
+              });
+  
+              console.log("winnerUpdate", winnerUpdate[1]);
+              pubsub.publish(EVENTS.MATCH.UPDATED, {
+                matchUpdated: { match:winnerUpdate[1] },
+              });
+              return winnerUpdate[1]
+            }else{
+              //single player winner
+              const winnerUpdate = await models.Match.update({
+                winnerId:(playerOneCount > 2) ? playerOneUserId : null,
+              },{
+                where:{
+                  id:record.id
+                },
+                raw : true,
+                returning: true,
+                plain: true
+              });
+  
+              console.log("single winnerUpdate", playerOneCount);
+              pubsub.publish(EVENTS.MATCH.UPDATED, {
+                matchUpdated: { match:winnerUpdate[1] },
+              });
+              return winnerUpdate[1]
+            }
 
-            console.log("winnerUpdate", winnerUpdate[1]);
-            pubsub.publish(EVENTS.MATCH.UPDATED, {
-              matchUpdated: { match:winnerUpdate[1] },
-            });
-            return winnerUpdate[1]
           }
          
           //console.log("updatedMatch", JSON.stringify(updatedMatch));
@@ -139,7 +140,6 @@ const resolver:IResolvers = {
             required:true
           }]
         });
-        console.log("MATCH", JSON.stringify(match))
         return match;
       }
     },
@@ -147,6 +147,11 @@ const resolver:IResolvers = {
       matchUpdated: {
         subscribe: withFilter(() => pubsub.asyncIterator(EVENTS.MATCH.UPDATED), (payload, variables) => {
           return payload.matchUpdated.match.id == variables.matchId;
+        }),
+      },
+      matchRequested: {
+        subscribe: withFilter(() => pubsub.asyncIterator(EVENTS.MATCH.UPDATED), (payload, variables) => {
+          return payload.matchRequested.match.nextMoveUserId == variables.userId && payload.matchRequested.match.status == "pending";
         }),
       }
     }

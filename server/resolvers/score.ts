@@ -38,7 +38,6 @@ const resolver:IResolvers = {
             ...cursorOptions
           });
 
-          console.log("scors", scores)
 
           const hasNextPage = scores.length > limit;
           const edges = hasNextPage ? scores.slice(0, -1) : scores;

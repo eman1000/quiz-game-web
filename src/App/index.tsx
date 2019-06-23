@@ -3,7 +3,7 @@ import React, { Component, useEffect, useRef, useState, useContext } from "react
 import { connect, MapStateToProps, MapStateToPropsParam } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
-import { graphql, withApollo } from 'react-apollo';
+import { graphql, withApollo, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
@@ -19,7 +19,30 @@ import UserDetailsProvider from '../components/Context/UserDetailsProvider'
 import UserDetailsContext from '../components/Context/UserDetailsContext'
 import ErrorHandler from "../components/ErrorHandler"
 import { GET_PROFILE } from "../components/AuthenticatedRoute";
+import MatchNotification from "../components/MatchNotification";
 
+export const MATCH_SUBSCRIPTION = gql(`
+  subscription($matchId: ID!){
+    matchUpdated(matchId:$matchId){
+      match{
+        id
+        status
+        matchUsers{
+          userId
+          matchId
+        }
+        results{
+          id
+          matchId
+          questionId
+          answerId
+          isCorrect
+          id
+        }
+      }
+    }
+  }
+`);
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -46,6 +69,7 @@ export const App = (props)=>{
     const userO = useContext(UserDetailsContext);
     const { setUserDetails } = React.useContext(UserDetailsContext)
     let [user, setUser] = useState(userO)
+    let [requestedMatch, setMatchUser] =  useState({})
     let [count, setCount] = useState(0);
     useEffect(()=>{
       props.client.query({
@@ -54,21 +78,40 @@ export const App = (props)=>{
         const { getMe } = res.data;
         setUser(getMe)
         setUserDetails(getMe);
-      })
+      });
+
+      // props.data.subscribeToMore({
+      //   document: MATCH_SUBSCRIPTION,
+      //   variables: {
+      //     userId: user.id
+      //   },
+      //   updateQuery: (prev, {subscriptionData}) => {
+      //     if (!subscriptionData.data) {
+      //       return prev;
+      //     }
+      //     console.log("subscriptionData", subscriptionData)
+      //     setMatchUser(subscriptionData.data.matchRequested.match)
+      //     return  {
+      //       matchRequested: subscriptionData.data.matchRequested.match
+      //     }
+      //   }
+      // });
       return ()=>console.log("clear")
     },[])
+
+    
     useInterval(async() => {
-      // Your custom logic here
-      console.log("user", user)
-      let lastSeen = await props.mutate({
-        variables:{
-          id:user.id,
-          date: new Date()
-        }
-      });
-      setCount(count + 1);
-      console.log("last")
-      console.log(count)
+      // // Your custom logic here
+      // console.log("user", user)
+      // let lastSeen = await props.mutate({
+      //   variables:{
+      //     id:user.id,
+      //     date: new Date()
+      //   }
+      // });
+      // setCount(count + 1);
+      // console.log("last")
+      // console.log(count)
     }, 2000);
     return (
       <UserDetailsProvider>
@@ -78,6 +121,12 @@ export const App = (props)=>{
             authenticatedUser={user}
           />
         <div id="content">
+          {
+            //@ts-ignore
+            requestedMatch.status === "pending" &&
+            <MatchNotification/>
+          }
+          
           <Routes />
         </div>
       </UserDetailsProvider>

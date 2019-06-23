@@ -1,0 +1,14 @@
+.matchModal{
+  position: absolute;
+  background-color:rgba(0,0,0,0.7);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container{
+    background-color:#fff;
+    width: 400px;
+    height: 400px;
+  }
+}

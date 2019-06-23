@@ -6,12 +6,18 @@ export interface MatchAttributes {
   testId: number;
   status:string;
   nextMoveUserId:number;
-  winnerId:number;
+  winnerId?:number;
+  matchType:MatchType;
+}
+
+enum MatchType {
+  "MULTI_PLAYER",
+  "SINGLE_PLAYER"
 }
 
 
-
 export interface MatchInstance extends Sequelize.Instance<MatchAttributes>, MatchAttributes {
+
 }
 
 const match = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<MatchInstance, MatchAttributes> => {
@@ -32,6 +38,14 @@ const match = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): 
     },
     nextMoveUserId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    matchType: {
+      type: DataTypes.ENUM,
+      values:["MULTI_PLAYER", "SINGLE_PLAYER"], 
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -62,9 +76,57 @@ const match = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): 
     models.Result.belongsTo(Match, {foreignKey: 'matchId'})
   };
 
-
-
-
+  // @ts-ignore
+  Match.createMultiPlayerMatch = async (record, models) => {
+    const test = await models.Test.getRandomTestByCategory({categoryId:record.categoryId, models})
+    if (!test) {
+      throw new Error(`Unable to get a test`);
+    }
+    const matchResult = await models.Match.create({
+      testId:test.id,
+      status:"pending",
+      nextMoveUserId:record.playerOneId,
+      matchType: record.matchType
+    });
+    if (!matchResult) {
+      throw new Error(`Unable to create a match`);
+    }
+    const userMatch = await models.MatchUser.bulkCreate([{
+      matchId:matchResult.id,
+      userId:record.playerOneId
+    },{
+      matchId:matchResult.id,
+      userId:record.playerTwoId
+    }]);
+    if (!userMatch) {
+      throw new Error(`Unable to create  test question`);
+    }
+    return matchResult
+  };
+ // @ts-ignore
+  Match.createSinglePlayerMatch = async (record, models) => {
+    const test = await models.Test.getRandomTestByCategory({categoryId:record.categoryId, models})
+    if (!test) {
+      throw new Error(`Unable to get a test`);
+    }
+    const matchResult = await models.Match.create({
+      testId:test.id,
+      status:"pending",
+      nextMoveUserId:record.playerOneId,
+      matchType: record.matchType
+    });
+    if (!matchResult) {
+      throw new Error(`Unable to create a match`);
+    }
+    const userMatch = await models.MatchUser.bulkCreate([{
+      matchId:matchResult.id,
+      userId:record.playerOneId
+    }]);
+    if (!userMatch) {
+      throw new Error(`Unable to create  test question`);
+    }
+    return matchResult
+  };
   return Match;
 };
 

@@ -14,6 +14,9 @@ import Banner from "../../../components/Banner";
 import ErrorHandler from "../../../components/ErrorHandler";
 import { Link } from "react-router-dom";
 
+//Common queries
+import { GET_CATEGORY } from "../../../queries";
+
 
 type Category = {
   id:number;
@@ -21,17 +24,6 @@ type Category = {
   description:string;
   thumbnail:string;
 }
-export const GET_CATEGORY = gql(`
-  query ($id:ID!){
-    getCategory(id: $id) {
-      id
-      name
-      thumbnail
-      description
-      backgroundImageUrl
-    }
-  }
-`);
 
 export const GET_RANKING = gql(`
   query ($limit:Int!, $categoryId:Int!){
@@ -61,6 +53,7 @@ export const GET_RANKING = gql(`
 const CategoryDetails = (props)=>{
   const { id } = props.match.params || "";
   console.log("prps", props)
+  
   return (
     <Page
       id="homepage"

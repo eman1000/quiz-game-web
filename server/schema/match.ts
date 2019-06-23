@@ -6,13 +6,18 @@ const schema = gql(`
       testId: ID !
       status: String !
       nextMoveUserId: ID !
-      winnerId:ID !
+      winnerId:ID 
+      matchType: MatchType !
       matchUsers:[MatchUser!]
       results:[Result!]
     }
 
+    enum MatchType{
+      MULTI_PLAYER
+      SINGLE_PLAYER
+    }
     extend type Mutation {
-      createMatch(categoryId: ID!, playerOneId: ID!, playerTwoId:ID): Match
+      createMatch(categoryId: ID!, matchType: MatchType!, playerOneId: ID!, playerTwoId:ID): Match
       updateMatch(
         id: ID !
         testId: ID
@@ -26,8 +31,12 @@ const schema = gql(`
     }
     extend type Subscription {
       matchUpdated(matchId: ID!): MatchUpdated!
+      matchRequested(userId: ID!): MatchRequested!
     }
     type MatchUpdated{
+      match: Match!
+    }
+    type MatchRequested{
       match: Match!
     }
 

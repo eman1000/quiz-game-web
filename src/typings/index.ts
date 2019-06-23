@@ -12,7 +12,7 @@ export interface IUser {
   facebookId?:string
   avatar?:string
 }
-export type Category = {
+export type ICategory = {
   id:number;
   name:string;
   description:string;
