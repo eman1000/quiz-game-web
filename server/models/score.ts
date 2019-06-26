@@ -48,6 +48,34 @@ const score = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): 
   };
 
 
+  //@ts-ignore
+  Score.updateScore = async  ({ userId, categoryId })=>{
+    const score = await Score.findOne({ where:{
+      userId,
+      categoryId
+    } });
+    if (!score) {
+      const scoreCreateResult = await Score.create({
+        userId,
+        categoryId,
+        score: 1
+      });
+      return scoreCreateResult[0];
+    }
+
+    const result = await Score.update({
+      score: score.score + 1
+    },{
+      where:{
+        userId,
+        categoryId
+      },
+      returning: true
+    });
+    return result[1];
+  };
+
+
   return Score;
 };
 

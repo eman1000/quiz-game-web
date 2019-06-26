@@ -25,7 +25,7 @@ const Application = (
   </ApolloProvider>
 );
 
-const root = document.querySelector('#root');
+const root = document.querySelector('#root')  as HTMLElement;
 render(Application, root);
 
 serviceWorker.unregister();

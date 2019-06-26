@@ -28,19 +28,17 @@ const resolver:IResolvers = {
             include: [{
               model: models.TestQuestion,
               required: true,
-            include: [{
-              model: models.Question,
-              required: true,
               include: [{
-                model: models.Answer,
-                required: true
+                model: models.Question,
+                required: true,
+                include: [{
+                  model: models.Answer,
+                  required: true
+                }]
               }]
-            }]
             }],
             order:sequelize.random()
           });
-
-          console.log("test", test)
           //const finalTest = test.testQuestions.map((q)=>q.question);
           return test[0]
         }

@@ -8,12 +8,12 @@ export interface MatchAttributes {
   nextMoveUserId:number;
   winnerId?:number;
   matchType:MatchType;
-}
+};
 
 enum MatchType {
   "MULTI_PLAYER",
   "SINGLE_PLAYER"
-}
+};
 
 
 export interface MatchInstance extends Sequelize.Instance<MatchAttributes>, MatchAttributes {

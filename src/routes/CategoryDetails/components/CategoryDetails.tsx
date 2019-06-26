@@ -12,17 +12,26 @@ import styles from "./CategoryDetails.module.scss";
 import PointsHeader from "../../../components/PointsHeader";
 import Banner from "../../../components/Banner";
 import ErrorHandler from "../../../components/ErrorHandler";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  RouteComponentProps
+} from "react-router-dom";
 
 //Common queries
 import { GET_CATEGORY } from "../../../queries";
 
+type TParams = { 
+  id: string;
+};
 
-type Category = {
-  id:number;
-  name:string;
-  description:string;
-  thumbnail:string;
+type ICategoryDetails = {
+  match: {
+    params:{
+      id:string;
+    }
+  }
 }
 
 export const GET_RANKING = gql(`
@@ -50,9 +59,8 @@ export const GET_RANKING = gql(`
   }
 `);
 
-const CategoryDetails = (props)=>{
+const CategoryDetails: React.ComponentType<ICategoryDetails> = (props)=>{
   const { id } = props.match.params || "";
-  console.log("prps", props)
   
   return (
     <Page

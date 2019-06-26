@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { Category } from "../../typings"
 import ScrollItem from "../ScrollItem";
 import styles from "./PointsHeader.module.scss"
 

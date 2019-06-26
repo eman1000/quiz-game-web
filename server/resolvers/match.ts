@@ -137,7 +137,26 @@ const resolver:IResolvers = {
           where:{id:matchId},
           include:[{
             model:models.MatchUser,
-            required:true
+            required:true,
+            include:[{
+              model:models.User,
+              required:true
+            }]
+          },{
+            model:models.Test,
+            required:true,
+            include: [{
+              model: models.TestQuestion,
+              required: true,
+              include: [{
+                model: models.Question,
+                required: true,
+                include: [{
+                  model: models.Answer,
+                  required: true
+                }]
+              }]
+            }]
           }]
         });
         return match;

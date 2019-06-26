@@ -12,10 +12,12 @@ export interface UserAttributes {
   email: string;
   password:string;
   messages?: Array<any>;
-  role?:string
-  facebookId?:string
-  avatar?:string
-  lastSeen?:Date
+  role?:string;
+  facebookId?:string;
+  avatar?:string;
+  lastSeen?:Date;
+  coins?:number;
+  gems?:number;
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
@@ -88,6 +90,22 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     },
     lastSeen:{
       type: DataTypes.DATE,
+    },
+    coins: {
+      type: DataTypes.INTEGER,
+      defaultValue:0,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    gems: {
+      type: DataTypes.INTEGER,
+      defaultValue:0,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     }
   };
   
@@ -129,7 +147,6 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       let user = await User.findOne({
         where: { facebookId: profile.id },
       });
-      console.log("usr", profile)
 
       // no user was found, lets create a new one
       if (!user) {
@@ -148,7 +165,26 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
         return newUser;
       }
     return user;
-  }
+  };
+  //@ts-ignore
+  User.updateRewards = async  ({ id, points })=>{
+    const user = await User.findOne({ where:{id} });
+    if (!user) {
+      throw new Error(`Couldn’t find user to reward with id ${id}`);
+    }
+
+    const gems = (user.coins === 20) ?  1 : null
+    const result = await User.update({
+      coins: user.coins + 1,
+      gems: gems ? (user.gems + gems) : user.gems,
+    },{
+      where:{
+        id
+      },
+      returning: true
+    });
+    return result[1];
+  };
   User.beforeCreate(async user => {
     if(user.password){
       user.password = await user.generatePasswordHash();

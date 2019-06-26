@@ -11,8 +11,18 @@ import Loader from "../../../components/Loader"
 import styles from "./Home.module.scss";
 import ErrorHandler from "../../../components/ErrorHandler";
 import Test from "./Test";
+import { IUser, IMatch } from "../../../typings";
 
-
+export type IPlayRoomProps = {
+  match:{
+    params:{
+      matchId:number;
+    }
+  },
+  user:IUser;
+  data:any;
+  client:any
+}
 export const MATCH_SUBSCRIPTION = gql(`
   subscription($matchId: ID!){
     matchUpdated(matchId:$matchId){
@@ -42,6 +52,28 @@ export const GET_MATCH = gql(`
       id
       status
       testId
+      test{
+        id
+        name
+        categoryId
+        pointsPerAnswer
+         testQuestions{
+          id
+          questionId
+          question{
+            id
+            description
+            imageUrl
+            categoryId
+            answers{
+              id
+              description
+              imageUrl
+              isCorrect
+            }
+          }
+        }
+      }
       matchUsers{
         userId
         matchId
@@ -77,14 +109,34 @@ export const GET_OPPONENT = gql(`
     }
   }
 `);
-const PlayRoom = (props)=>{
-
-  console.log("frfrfrf", props)
-  const { matchId } = props.match.params || "";
-  console.log("PR matchid", matchId)
+const PlayRoom = (props: IPlayRoomProps)=>{
   const { data: {loading, error, getMatch }, match, user } = props;
-  const [opponent, setOpponent] = useState({})
-  console.log("getMatch", getMatch)
+  const { matchId } = match.params || "";
+  const [opponent, setOpponent] = useState<IUser | undefined>(undefined);
+  const [showComplete, setShowComplete] = useState(false);
+  const handleComplete = (matchData)=>{
+    //Correct answer = 100pts
+    //100pts = 1 coins
+    //1 Gem = 20 Coins
+
+    //Levels
+    // < 2500 Begginer 
+    //> 2500 < 3500 MidLevel Guru
+    //> 3500 Guru
+
+    setShowComplete(true);
+  }
+  const handleMatch = (matchData:IMatch)=>{
+    switch (matchData.status) {
+      case "pending":
+        break;
+      case "canceled":
+          break;
+      case "complete":
+        handleComplete(matchData);
+        break;
+    }
+  }
   useEffect(()=>{
     props.data.subscribeToMore({
       document: MATCH_SUBSCRIPTION,
@@ -92,13 +144,13 @@ const PlayRoom = (props)=>{
         matchId: props.match.params.matchId
       },
       updateQuery: (prev, {subscriptionData}) => {
-        console.log("PREV", prev)
         if (!subscriptionData.data) {
           return prev;
         }
-        console.log("subscriptionData", subscriptionData)
+        const matchData = subscriptionData.data.matchUpdated.match;
+        handleMatch(matchData);
         return  {
-          getMatch: subscriptionData.data.matchUpdated.match
+          getMatch: matchData
         }
       }
     });
@@ -107,9 +159,7 @@ const PlayRoom = (props)=>{
 
   useEffect(()=>{
     if(getMatch && getMatch.hasOwnProperty("matchUsers")){
-      //gotOp = true;
       const opponent = getMatch.matchUsers && getMatch.matchUsers.find((o)=>o.userId !== user.id) || null;
-
       if(opponent){
         props.client.query({
           query:GET_OPPONENT,
@@ -118,7 +168,6 @@ const PlayRoom = (props)=>{
           }
         }).then((res)=>{
           setOpponent(res.data.getOpponent.opponent);
-          console.log("res", res)
         })
       }
     }
@@ -130,8 +179,6 @@ const PlayRoom = (props)=>{
   if (error) {
     return <p>{error.message}</p>;
   }
-
-
 
   return (
     <Page
@@ -152,29 +199,11 @@ const PlayRoom = (props)=>{
         />
       }
 
-        {/* <Subscription
-          subscription={MATCH_SUBSCRIPTION}
-          variables={{
-            matchId:parseInt(matchId)
-          }}
-        >
-          {({ loading, error, data }) =>{
-          if (loading) return "Loading...";
-          if (error) return <ErrorHandler error={error}/>;
-          
-            const match  = data.matchUpdated.match || {};
-            console.log("MATCH", match)
-            return(
-              <div>
-                <h2>Match</h2>
-              </div>
-            )
-          }}
-        </Subscription> */}
     </Page>
   );
 }
 
+//export default PlayRoom;
 export default (graphql(GET_MATCH, {
   options: (props) => ({
     //@ts-ignore

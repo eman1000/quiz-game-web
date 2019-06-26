@@ -8,7 +8,6 @@ import Loader from "../../../components/Loader"
 
 import "./LoginStyles.scss";
 import { async } from "q";
-import UserDetailsContext from "../../../components/Context/UserDetailsContext";
 
 export const FACEBOOK_LOGIN = gql(`
   mutation signInFacebook($facebookToken: String!){
@@ -31,9 +30,7 @@ export const FACEBOOK_LOGIN = gql(`
 `);
 
 const Login = ({})=>{
-console.log("jjj")
   const [accessToken, setAccessToken] = useState(null);
-  const { setUserDetails } = React.useContext(UserDetailsContext)
   const fbLogin = async({res, login})=>{
     console.log("res", res)
     if(res){
@@ -43,7 +40,7 @@ console.log("jjj")
         const { token, user } = tokenObj.data.signInFacebook;
         console.log("token", tokenObj)
         if(user){
-          setUserDetails(user)
+          //localStorage.setItem("authUser", user);
         }
 
         return localStorage.setItem("jwtToken", token);

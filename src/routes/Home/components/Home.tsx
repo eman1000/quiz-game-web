@@ -9,14 +9,22 @@ import Loader from "../../../components/Loader"
 //import { Category } from "typings";
 
 import styles from "./Home.module.scss";
+import { ICategory } from "../../../typings";
 
 
-type Category = {
+type IHomeProps = {
   id:number;
   name:string;
   description:string;
   thumbnail:string;
 }
+
+type GetCategoriesQuery = {
+  getCategories:{
+    edges:Array<ICategory>
+  }
+}
+
 export const GET_CATEGORIES = gql(`
   query {
     getCategories(limit: 10) {
@@ -33,7 +41,7 @@ export const GET_CATEGORIES = gql(`
   }
 `);
 
-const HomePage = (props)=>{
+const HomePage: React.FunctionComponent<IHomeProps>  = (props:IHomeProps)=>{
 
   // console.log("user888", props)
 
@@ -42,18 +50,23 @@ const HomePage = (props)=>{
       id="homepage"
       title="Affiliate App"
     >
-        <Query query={GET_CATEGORIES}>
-          {({ loading, data }) => !loading && (
+        <Query<GetCategoriesQuery, {}> query={GET_CATEGORIES}>
+          {({ loading, data, error  }) =>{
+          if (loading) return <div>Loading</div>;
+          if (error) return <h1>ERROR {error.message}</h1>;
+          if (!data) return <div>no data</div>;
+          const { getCategories } = data;
+          return (
             <div className={styles.listWrapper}>
               {
-                (data.getCategories.edges.length > 0) &&
+                (getCategories.edges.length > 0) &&
                 <HorizontalScroll
                   title="Categories"
-                  data={data.getCategories.edges}
+                  data={getCategories.edges}
                 />
               }   
             </div>
-          )}
+          )}}
         </Query>
     </Page>
   );

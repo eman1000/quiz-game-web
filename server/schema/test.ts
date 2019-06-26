@@ -4,6 +4,7 @@ const schema = gql(`
       id: ID
       name: String !
       categoryId: ID !
+      pointsPerAnswer: Int !
       testQuestions:[TestQuestion!]
     }
 

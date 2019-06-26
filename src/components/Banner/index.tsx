@@ -1,9 +1,14 @@
 import React, { Fragment } from "react";
-import { Category } from "../../typings"
+import { ICategory } from "../../typings"
 import ScrollItem from "../ScrollItem";
 import styles from "./Banner.module.scss"
 
-export default ({title, description, bgImage}) => {
+type IBanner = {
+  title: string;
+  description: string;
+  bgImage:string;
+}
+export default ({title, description, bgImage}:IBanner) => {
   return(
     <div>
       <div style={{backgroundImage:`url(${bgImage})`}} className={styles.wrapper}>

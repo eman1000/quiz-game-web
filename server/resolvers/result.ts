@@ -23,7 +23,8 @@ const resolver:IResolvers = {
           userId,
           questionId,
           answerId,
-          isCorrect
+          isCorrect,
+          categoryId
         },
         { models, secret },
       ) => {
@@ -34,6 +35,12 @@ const resolver:IResolvers = {
           answerId,
           isCorrect
         });
+
+        if(result && isCorrect) {
+          const rewardUser = await models.User.updateRewards({id:userId, points:100});
+          console.log("CATEGORYID", categoryId)
+          const updateScore = await models.Score.updateScore({userId, categoryId});
+        }
   
         return result;
       }

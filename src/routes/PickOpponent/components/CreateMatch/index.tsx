@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { graphql, withApollo } from "react-apollo";
 import { Redirect } from "react-router";
 import CategoryDetails from "../../../CategoryDetails/components/CategoryDetails";
+import { ICategory, IUser } from "../../../../typings";
 
 
 export const CREATE_MATCH = gql(`
@@ -18,9 +19,9 @@ export const CREATE_MATCH = gql(`
 `);
 
 class CreateMatch extends PureComponent<{
-  category:any,
-  playerOne:any, 
-  playerTwo:any
+  category:ICategory,
+  playerOne:IUser, 
+  playerTwo:IUser
 },{
   match:{
     id?:string

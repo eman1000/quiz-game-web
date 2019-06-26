@@ -15,11 +15,10 @@ import { isServer } from "../store";
 
 import Header from "../components/Header";
 import Routes from "../routes";
-import UserDetailsProvider from '../components/Context/UserDetailsProvider'
-import UserDetailsContext from '../components/Context/UserDetailsContext'
 import ErrorHandler from "../components/ErrorHandler"
 import { GET_PROFILE } from "../components/AuthenticatedRoute";
 import MatchNotification from "../components/MatchNotification";
+import { IUser } from "../typings";
 
 export const MATCH_SUBSCRIPTION = gql(`
   subscription($matchId: ID!){
@@ -65,10 +64,7 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 export const App = (props)=>{
-  console.log("props", props)
-    const userO = useContext(UserDetailsContext);
-    const { setUserDetails } = React.useContext(UserDetailsContext)
-    let [user, setUser] = useState(userO)
+    let [user, setUser] = useState<IUser | null>(null)
     let [requestedMatch, setMatchUser] =  useState({})
     let [count, setCount] = useState(0);
     useEffect(()=>{
@@ -77,7 +73,6 @@ export const App = (props)=>{
       }).then((res)=>{
         const { getMe } = res.data;
         setUser(getMe)
-        setUserDetails(getMe);
       });
 
       // props.data.subscribeToMore({
@@ -114,12 +109,15 @@ export const App = (props)=>{
       // console.log(count)
     }, 2000);
     return (
-      <UserDetailsProvider>
+      <div>
+        {
+          user &&
           <Header
             isAuthenticated={true}
             current={window.location.pathname}
             authenticatedUser={user}
           />
+        }
         <div id="content">
           {
             //@ts-ignore
@@ -129,7 +127,7 @@ export const App = (props)=>{
           
           <Routes />
         </div>
-      </UserDetailsProvider>
+      </div>
     );
   }
 

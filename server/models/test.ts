@@ -5,6 +5,7 @@ export interface TestAttributes {
   readonly id?: number;
   name: string;
   categoryId;
+  pointsPerAnswer:number;
 }
 
 export interface TestInstance extends Sequelize.Instance<TestAttributes>, TestAttributes {
@@ -25,6 +26,13 @@ const test = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       allowNull: false,
       validate: {
         notEmpty: true,
+      },
+    },
+    pointsPerAnswer: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: false,
       },
     }
   };

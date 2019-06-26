@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import { Query, graphql } from "react-apollo";
 import gql from "graphql-tag";
-import UserDetailsContext from "../Context/UserDetailsContext";
 
 
 export const GET_PROFILE = gql(`
@@ -25,13 +24,8 @@ export const GET_PROFILE = gql(`
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => {
   const {loading, error, getMe } = rest.data;
-  console.log("rest.data", rest.data)
-  const { setUserDetails } = React.useContext(UserDetailsContext)
 
   useEffect(()=>{
-    if(getMe){
-      setUserDetails(getMe)
-    }
     return ()=>console.log("clear")
   },[])
   if (loading) {
@@ -41,7 +35,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => {
     return <p>{error.message}</p>
   }
 
-  const isAuthenticated = (getMe.id !== undefined) ? true : false;
+  const isAuthenticated = localStorage.getItem("jwtToken") ? true : false;
 
   return(
     <Route

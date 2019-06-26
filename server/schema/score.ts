@@ -12,6 +12,7 @@ const schema = gql(`
 
     extend type Query {
       getScore(id: ID): Score !
+      getUserScore(userId: ID!, categoryId: ID!): Score !
       getScores(cursor: String, limit: Int, categoryId: Int): ScoreConnection!
     }
 

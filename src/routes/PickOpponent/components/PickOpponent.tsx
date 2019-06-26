@@ -14,8 +14,19 @@ import { userInfo } from "os";
 import CreateMatch from "./CreateMatch";
 
 //Common queries
-import { GET_CATEGORY } from "../../../queries";
+import { GET_CATEGORY, GetCategoryQuery, GetCategoryVariables, IGetCategotyProps } from "../../../queries";
+import { IUser } from "../../../typings";
 
+
+type GetRandomPlayerQuery = {
+  getRandomUserByLastSeen:{
+    opponent:IUser
+  }
+}
+
+type GetRandomPlayerVariables = {
+  userId:number;
+}
 export const GET_RANDOM_PLAYER = gql(`
   query($userId:ID!){
     getRandomUserByLastSeen(userId:$userId){
@@ -53,7 +64,7 @@ const PickOpponent = (props)=>{
       <PlayButtons setFindPlayer={setFindPlayer} setSinglePlayer={setSinglePlayer}/>
       {
         isFindPlayer &&    
-        <Query
+        <Query<GetRandomPlayerQuery, GetRandomPlayerVariables>
             query={GET_RANDOM_PLAYER}
             variables={{
               userId:props.user.id
@@ -61,9 +72,9 @@ const PickOpponent = (props)=>{
           >
           {({ loading, error, data }) =>{
           if (loading) return "Loading...";
-          if (error){     
-            return <ErrorHandler error={error}/>;
-          } 
+          if (error) return <h1>ERROR</h1>;
+          if (!data) return <div>no data</div>;
+
             const player2  = data.getRandomUserByLastSeen.opponent || {};
             return(
               <CreateMatch
@@ -81,7 +92,7 @@ const PickOpponent = (props)=>{
           category={getCategory}
           playerOne={props.user}
           playerTwo={null}
-      />
+        />
       }
     </Page>
   );
@@ -89,9 +100,8 @@ const PickOpponent = (props)=>{
 
 //export default withApollo(PlayRoom);
 
-export default (graphql(GET_CATEGORY, {
+export default (graphql<IGetCategotyProps, GetCategoryVariables, {}>(GET_CATEGORY, {
   options: (props) => ({
-    //@ts-ignore
     variables: { id: props.match.params.categoryId },
   }),
 

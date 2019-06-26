@@ -13,6 +13,8 @@ const schema = gql(`
       facebookId: String
       avatar: String
       lastSeen: Date
+      coins: Int
+      gems: Int
       messages: [Message!]
     }
 

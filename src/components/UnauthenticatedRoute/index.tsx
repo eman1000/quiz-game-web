@@ -2,13 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import { Route, Redirect } from "react-router-dom";
-import UserDetailsContext from "../Context/UserDetailsContext";
 
 const UnauthenticatedRoute = ({ component: Component, ...rest }) => {
   let query = queryString.parse(rest.location.search);
-  const user = React.useContext(UserDetailsContext);
-  console.log("AYYY", user)
-  const isAuthenticated = (user.id !== undefined) ? true : false;
+
+  const isAuthenticated = localStorage.getItem("jwtToken") ? true : false;
 
   return (
     <Route

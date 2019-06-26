@@ -42,7 +42,6 @@ const resolver:IResolvers = {
           return await models.User.findByPk(id);
         }),
         getMe: combineResolvers(
-          isAuthenticated,
           async (parent, args, { models, me }) => {
           if (!me) {
             return null;

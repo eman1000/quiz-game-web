@@ -4,6 +4,8 @@ const schema = gql(`
       id: ID
       userId: ID !
       matchId: ID !
+      points: Int !
+      user: User 
     }
 
     extend type Query {

@@ -17,6 +17,7 @@ const schema = gql(`
       userId: ID !
       questionId: ID !
       answerId: ID !
+      categoryId: ID
       isCorrect: Boolean
     }
 
@@ -29,6 +30,7 @@ const schema = gql(`
         matchId: ID !
         userId: ID !
         questionId: ID !
+        categoryId: ID !
         answerId: ID !
         isCorrect: Boolean
       ): Result !

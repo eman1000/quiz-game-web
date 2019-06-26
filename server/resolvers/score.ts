@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { IResolvers } from "graphql-tools";
 import { toCursorHash } from "../utils";
+import { async } from 'q';
 // import { AuthenticationError, UserInputError } from 'apollo-server';
 // import { combineResolvers } from 'graphql-resolvers';
 
@@ -52,9 +53,23 @@ const resolver:IResolvers = {
             },
           };
         },
-        getScore: async (parent, { id }, { models }) => {
-          return await models.Score.findByPk(id);
-        }
+      getScore: async (parent, { id }, { models }) => {
+        return await models.Score.findByPk(id);
+      },
+      getUserScore: async (parent, { userId, categoryId }, { models }) => {
+        const score = await models.Score.findOne({
+          where:{
+            categoryId,
+            userId
+          },
+          include:[{ 
+            model:models.User,   
+            required:false
+          }]
+        });
+        return score;
+      }
+
     }
 };
 
