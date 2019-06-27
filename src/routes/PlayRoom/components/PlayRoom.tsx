@@ -184,6 +184,7 @@ const PlayRoom = (props: IPlayRoomProps)=>{
     <Page
       id="homepage"
       title="Quiz App"
+      image="http://www.soidergi.com/wp-content/uploads/cu/cute-beard-afro-smiling-black-guy-face-avatar-vector.jpg"
     >
 
       <h1>Play Room</h1>
