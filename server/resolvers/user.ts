@@ -142,7 +142,6 @@ const resolver:IResolvers = {
             const user = await models.User.upsertFbUser(data);
     
             if (user) {
-              console.log("userTTT", user.dataValues)
               return { token: createToken(user, secret, '30m'), user:user.dataValues };
             }
           }
@@ -171,6 +170,26 @@ const resolver:IResolvers = {
           },{
             where:{
               id:record.id
+            },
+            raw : true,
+            returning: true,
+            plain: true
+          });
+          return result[1];
+        }
+      ),
+      deductReward: combineResolvers(
+        isAuthenticated,
+        async (parent, {id, key, amount}, { models }) => {
+          const user = await models.User.findOne({ where:{id:id} });
+          if (!user) {
+            throw new Error(`Couldn’t find user with id ${id}`);
+          }
+          const result = await models.User.update({
+            [key]:user[key] - amount,
+          },{
+            where:{
+              id:id
             },
             raw : true,
             returning: true,

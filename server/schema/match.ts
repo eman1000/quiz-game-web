@@ -4,7 +4,7 @@ const schema = gql(`
     type Match {
       id: ID
       testId: ID !
-      test:Test
+      test:Test !
       status: String !
       nextMoveUserId: ID !
       winnerId:ID 

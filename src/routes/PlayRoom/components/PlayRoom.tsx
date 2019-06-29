@@ -26,9 +26,33 @@ export type IPlayRoomProps = {
 export const MATCH_SUBSCRIPTION = gql(`
   subscription($matchId: ID!){
     matchUpdated(matchId:$matchId){
-      match{
+      match{      
         id
         status
+        testId
+        winnerId
+        test{
+          id
+          name
+          categoryId
+          pointsPerAnswer
+           testQuestions{
+            id
+            questionId
+            question{
+              id
+              description
+              imageUrl
+              categoryId
+              answers{
+                id
+                description
+                imageUrl
+                isCorrect
+              }
+            }
+          }
+        }
         matchUsers{
           userId
           matchId
@@ -52,6 +76,7 @@ export const GET_MATCH = gql(`
       id
       status
       testId
+      winnerId
       test{
         id
         name
@@ -138,22 +163,24 @@ const PlayRoom = (props: IPlayRoomProps)=>{
     }
   }
   useEffect(()=>{
-    props.data.subscribeToMore({
-      document: MATCH_SUBSCRIPTION,
-      variables: {
-        matchId: props.match.params.matchId
-      },
-      updateQuery: (prev, {subscriptionData}) => {
-        if (!subscriptionData.data) {
-          return prev;
-        }
-        const matchData = subscriptionData.data.matchUpdated.match;
-        handleMatch(matchData);
-        return  {
-          getMatch: matchData
-        }
-      }
-    });
+    // props.data.subscribeToMore({
+    //   document: MATCH_SUBSCRIPTION,
+    //   variables: {
+    //     matchId: props.match.params.matchId
+    //   },
+    //   updateQuery: (prev, {subscriptionData}) => {
+
+    //     if (!subscriptionData.data) {
+    //       return prev;
+    //     }
+    //     const matchData = subscriptionData.data.matchUpdated.match;
+
+    //     handleMatch(matchData);
+    //     return  {
+    //       getMatch: matchData
+    //     }
+    //   }
+    // });
     return ()=>console.log("clear")
   },[]);
 
@@ -172,14 +199,13 @@ const PlayRoom = (props: IPlayRoomProps)=>{
       }
     }
     return ()=>console.log("clear")
-  })
+  },[])
   if (loading) {
     return "Loading...";
   }
   if (error) {
     return <p>{error.message}</p>;
   }
-
   return (
     <Page
       id="homepage"
@@ -191,7 +217,6 @@ const PlayRoom = (props: IPlayRoomProps)=>{
       {
         getMatch.hasOwnProperty("testId") &&
         <Test
-          testId={getMatch.testId}
           matchObj={getMatch}
           matchId={matchId}
           user={user}

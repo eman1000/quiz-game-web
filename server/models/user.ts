@@ -167,7 +167,7 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
     return user;
   };
   //@ts-ignore
-  User.updateRewards = async  ({ id, points })=>{
+  User.addToRewards = async  ({ id, points })=>{
     const user = await User.findOne({ where:{id} });
     if (!user) {
       throw new Error(`Couldn’t find user to reward with id ${id}`);

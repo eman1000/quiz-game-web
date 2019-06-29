@@ -9,11 +9,11 @@ import { async } from 'q';
 
 
 type ITestProps = {
-  testId:number;
   matchId:number;
   matchObj:{
     test:ITest;
     status:string;
+    winnerId:number;
   };
   user:IUser;
   opponent?:IUser;
@@ -119,7 +119,7 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 const Test = (props: ITestProps) => {
-  const {testId, matchId, matchObj, user, opponent, client} = props;
+  const {matchId, matchObj, user, opponent, client} = props;
   let [count, setCount] = useState(0);
   const [testPosition, setTestPosition] = useState(0);
   const [questionResult, setQuestionResult] = useState({});
@@ -141,7 +141,6 @@ const Test = (props: ITestProps) => {
     })
     if(getScores){
       const {getUserScore} = getScores.data;
-      console.log("getUserScore", getUserScore)
       setUserScoreData(getUserScore);
     }
   }
@@ -154,7 +153,7 @@ const Test = (props: ITestProps) => {
     })
     setTimeout(() => {
       handleNext()
-    }, 1000);
+    }, 5000);
   }
   const markAsDone = async({matchId, status}) =>{
     console.table([{matchId, status}])
@@ -184,7 +183,6 @@ const Test = (props: ITestProps) => {
     })
     if(getScores){
       const {getUserScore} = getScores.data;
-      console.log("getUserScore", getUserScore)
       setUserScoreData(getUserScore);
     }
     const winnerData = winner.data.updateMatch;
@@ -196,7 +194,7 @@ const Test = (props: ITestProps) => {
       setShowComplete(true);
     }
 
-   // console.log("WINNER",winner)
+    console.log("WINNER",winner)
   }
   const handleNext = ()=>{
     setCount(0);
@@ -221,7 +219,6 @@ const Test = (props: ITestProps) => {
       if((testPosition + 1) == matchObj.test.testQuestions.length && count === 10){
         clearInterval(timer)
       }
-      console.log("test", matchObj);
     }, 1000);
   
     useEffect(()=>{
@@ -237,6 +234,7 @@ const Test = (props: ITestProps) => {
           userScoreData && matchObj.status === "complete" &&
           <QuizComplete
             userScoreData={userScoreData}
+            isWinner={(matchObj.winnerId == user.id) ? true : false}
           />
         }
         <div style={{
@@ -265,7 +263,6 @@ const Test = (props: ITestProps) => {
           {
             test.question.answers.map((answer, index)=>{
               let isCorrect = questionResult[`q${test.questionId}a${answer.id}`]
-              console.log("matchObj", matchObj)
               return(
                 <Mutation
                   key={index}

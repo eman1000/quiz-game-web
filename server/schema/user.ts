@@ -59,6 +59,12 @@ const schema = gql(`
         avatar: String
         lastSeen: Date
       ) : User
+      deductReward(id: ID!, key:DeductKey!, amount:Int!) : User
+    }
+
+    enum DeductKey {
+      coins
+      gems
     }
 
     type Token {

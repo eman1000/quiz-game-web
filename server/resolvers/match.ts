@@ -69,8 +69,12 @@ const resolver:IResolvers = {
           const playerTwoUserId = updatedMatch.matchUsers[1] ? updatedMatch.matchUsers[1].userId : null;
 
           const results = updatedMatch.results;
+          console.log("results", results)
+
           if(results && updatedMatch.status === "complete"){
             const playerOneCount = results.filter((result)=>result.userId == playerOneUserId && result.matchId == record.id && result.isCorrect).length;   
+            
+            console.log("playerOneCount", playerOneCount)
             //multiplayer winner
             if(playerTwoUserId !== null){
               const playerTwoCount = results.filter((result)=>result.userId == playerTwoUserId && result.matchId == record.id && result.isCorrect).length;
@@ -84,8 +88,6 @@ const resolver:IResolvers = {
                 returning: true,
                 plain: true
               });
-  
-              console.log("winnerUpdate", winnerUpdate[1]);
               pubsub.publish(EVENTS.MATCH.UPDATED, {
                 matchUpdated: { match:winnerUpdate[1] },
               });

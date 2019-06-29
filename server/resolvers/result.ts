@@ -37,8 +37,7 @@ const resolver:IResolvers = {
         });
 
         if(result && isCorrect) {
-          const rewardUser = await models.User.updateRewards({id:userId, points:100});
-          console.log("CATEGORYID", categoryId)
+          const rewardUser = await models.User.addToRewards({id:userId, points:1});
           const updateScore = await models.Score.updateScore({userId, categoryId});
         }
   

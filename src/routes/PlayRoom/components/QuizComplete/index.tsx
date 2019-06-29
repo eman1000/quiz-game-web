@@ -6,20 +6,23 @@ import SocialShare from "../../../../components/SocialShare";
 
 export type IQuizCompleteProps = {
   userScoreData:IUserScoreData;
+  isWinner:boolean;
 }
 const QuizComplete = ({
-  userScoreData
+  userScoreData,
+  isWinner
 }:IQuizCompleteProps)=>{
 
   const { user, score } = userScoreData;
   const { avatar, coins, gems } = user;
 
+  const title = isWinner ? "Congratulations" : "You lost!"
   return (
     <div className={styles.quizComplete}>
       
       <img width="150px" src={avatar} />
       <h6>You got 99th position with a total score of: {score}</h6>
-      <h1>Congratulations</h1>
+      <h1>{title}</h1>
       <div>{coins} coins</div>
       <div>{gems} gems</div>
       <SocialShare/>
