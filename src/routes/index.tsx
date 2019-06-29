@@ -3,6 +3,10 @@ import { Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "../components/AuthenticatedRoute";
 import UnauthenticatedRoute from "../components/UnauthenticatedRoute";
 import Loadable from "react-loadable";
+import { 
+  CSSTransition, 
+  TransitionGroup 
+} from 'react-transition-group';
 
 import NotFound from "./NotFound";
 
@@ -41,16 +45,26 @@ const Logout = Loadable({
 
 
 export default () => (
-  <Switch>
-    <AuthenticatedRoute exact path="/" component={Homepage} />
-    <AuthenticatedRoute exact path="/category-details/:id" component={CategoryDetails} />
-    <AuthenticatedRoute exact path="/play-room/:matchId" component={PlayRoom} />
+  <TransitionGroup>
+    <CSSTransition
+      classNames="page"
+      timeout={{
+        enter: 1000,
+        exit: 1000,
+      }}
+    >
+    <Switch>
+      <AuthenticatedRoute exact path="/" component={Homepage} />
+      <AuthenticatedRoute exact path="/category-details/:id" component={CategoryDetails} />
+      <AuthenticatedRoute exact path="/play-room/:matchId" component={PlayRoom} />
 
-    <AuthenticatedRoute exact path="/pick-opponent/:categoryId" component={PickOpponent} />
+      <AuthenticatedRoute exact path="/pick-opponent/:categoryId" component={PickOpponent} />
 
-    <UnauthenticatedRoute exact path="/login" component={Login} />
-    <AuthenticatedRoute exact path="/logout" component={Logout} />
+      <UnauthenticatedRoute exact path="/login" component={Login} />
+      <AuthenticatedRoute exact path="/logout" component={Logout} />
 
-    <Route component={NotFound} />
-  </Switch>
+      <Route component={NotFound} />
+    </Switch>
+    </CSSTransition>
+  </TransitionGroup>
 );
