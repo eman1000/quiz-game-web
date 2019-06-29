@@ -181,9 +181,13 @@ const resolver:IResolvers = {
       deductReward: combineResolvers(
         isAuthenticated,
         async (parent, {id, key, amount}, { models }) => {
+
           const user = await models.User.findOne({ where:{id:id} });
           if (!user) {
             throw new Error(`Couldn’t find user with id ${id}`);
+          }
+          if(user[key] < amount){
+            throw new Error(`You dont have enough ${key}`);
           }
           const result = await models.User.update({
             [key]:user[key] - amount,

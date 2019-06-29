@@ -98,15 +98,11 @@ export const GET_SCORE = gql(`
 `);
 
 export const DEDUCT_REWARD = gql(`
-  mutation($id:ID!, $key:String!, $amount: Int!){
+  mutation($id:ID!, $key:DeductKey!, $amount: Int!){
     deductReward(id: $id, key: $key, amount: $amount){
-      userId
-      score
-      user{
-        avatar
-        coins
-        gems
-      }
+      id
+      coins
+      gems
     }
   }
 `);
@@ -171,7 +167,7 @@ const Test = (props: ITestProps) => {
     })
     setTimeout(() => {
       handleNext()
-    }, 1000);
+    }, 2000);
   }
   const markAsDone = async({matchId, status}) =>{
     console.table([{matchId, status}])
@@ -226,18 +222,27 @@ const Test = (props: ITestProps) => {
       markAsDone({matchId, status:"complete"})
     }
   }
-    const cheat = (id:number, amount:number, key:string)=>{
-      // client.mutate({
-      //   query:DEDUCT_REWARD,
-      //   variables:{
-      //     id,
-      //     key,
-      //     amount
-      //   },
-      // })
-      if(key === "gems"){
-        console.log("here")
-        setGemsCheat(true);
+    const cheat = async (id:number, amount:number, key:string)=>{
+      try{
+        const deduct =  await client.mutate({
+          mutation:DEDUCT_REWARD,
+          variables:{
+            id,
+            key,
+            amount
+          },
+        })
+        if(deduct){
+          if(key === "gems"){
+            setGemsCheat(true);
+          }
+        }
+        return deduct;
+      }
+      catch(err){
+        alert(err.message)
+        throw err;
+      
       }
   }
   useInterval(() => {
@@ -359,7 +364,6 @@ const Test = (props: ITestProps) => {
 
           <button onClick={()=>cheat(user.id, 8, "gems")}>Grenade X8 Gems</button>
           <button onClick={()=>cheat(user.id, 8, "coins")}>Cheat X8 Coins</button>
-        }}
       </div>
       }
     </div>
