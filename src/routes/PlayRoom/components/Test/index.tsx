@@ -5,6 +5,8 @@ import gql from 'graphql-tag';
 import { IMatch, IUser, ITest } from '../../../../typings';
 import QuizComplete from '../QuizComplete';
 import { async } from 'q';
+import { number } from 'prop-types';
+import Answer from '../Answer';
 
 
 
@@ -108,6 +110,11 @@ export const DEDUCT_REWARD = gql(`
 `);
 
 var timer;
+
+const getRandomInt = (max, correctIndex)=>{
+  const num = Math.floor(Math.random() * Math.floor(max));
+  return (correctIndex === num) ? getRandomInt(max, correctIndex) : num;
+}
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
@@ -130,13 +137,14 @@ function useInterval(callback, delay) {
 }
 const Test = (props: ITestProps) => {
   const {matchId, matchObj, user, opponent, client} = props;
-  let [count, setCount] = useState(0);
-  const [testPosition, setTestPosition] = useState(0);
+  let [count, setCount] = useState<number>(0);
+  const [testPosition, setTestPosition] = useState<number>(0);
   const [questionResult, setQuestionResult] = useState({});
 
-  const [showComplete, setShowComplete] = useState(true);
+  const [showComplete, setShowComplete] = useState<boolean>(true);
   const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(null)
   const [isGemsCheat, setGemsCheat] = useState<boolean>(false);
+  const [isCoinsCheat, setCoinsCheat] = useState<boolean>(false);
 
   const testObj  = matchObj.test || {};
   const test = testObj.testQuestions[testPosition];
@@ -215,6 +223,9 @@ const Test = (props: ITestProps) => {
     if(isGemsCheat){
       setGemsCheat(false);
     }
+    if(isCoinsCheat){
+      setCoinsCheat(false);
+    }
     //@ts-ignore
     if((testPosition + 1) < matchObj.test.testQuestions.length){
       setTestPosition(testPosition + 1)
@@ -235,6 +246,9 @@ const Test = (props: ITestProps) => {
         if(deduct){
           if(key === "gems"){
             setGemsCheat(true);
+          }
+          if(key === "coins"){
+            setCoinsCheat(true);
           }
         }
         return deduct;
@@ -258,7 +272,7 @@ const Test = (props: ITestProps) => {
     if((testPosition + 1) == matchObj.test.testQuestions.length && count === 10){
       clearInterval(timer)
     }
-  }, 10000);
+  }, 2000);
   
   useEffect(()=>{
     if(matchObj.status === "complete"){
@@ -266,31 +280,9 @@ const Test = (props: ITestProps) => {
     }
     return ()=>console.log("clear")
   },[]);
-
-  const Answer = ({
-    answer,
-    isCorrect,
-    saveQuestionResult,
-    testObj,
-    handleSaveQuestion,
-    isGemsCheat
-  })=>{
-    useEffect(()=>{
-      if(isGemsCheat){
-        handleSaveQuestion({saveQuestionResult, testObj});
-      }
-    })
-    return(
-      <li>
-        <button
-          onClick={()=>handleSaveQuestion({saveQuestionResult, testObj})}
-          style={{backgroundColor: (isCorrect !== undefined) ? (isCorrect ? "green" : "red" ) : "#eee"}}
-        >
-          {answer.description}
-        </button>
-      </li>
-    )
-  }
+  const answers = test.question.answers;
+  const correctAnswerIndex = answers.findIndex((ans => ans.isCorrect === true))
+  const filterdAnswers = !isCoinsCheat ? answers : answers.filter(((ans, index) => ans.isCorrect === true || index === getRandomInt(answers.length, correctAnswerIndex )))
   return (
       <div>
         {
@@ -326,7 +318,7 @@ const Test = (props: ITestProps) => {
           <h3>{test.question.description}</h3>
           <ul>
             {
-              test.question.answers.map((answer, index)=>{
+              filterdAnswers.map((answer, index)=>{
                 let isCorrect = questionResult[`q${test.questionId}a${answer.id}`];
 
                 return(
