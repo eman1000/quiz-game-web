@@ -173,7 +173,7 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
       throw new Error(`Couldn’t find user to reward with id ${id}`);
     }
 
-    const gems = (user.coins === 20) ?  1 : null
+    const gems = ((user.coins % 20 === 0)) ?  1 : null
     const result = await User.update({
       coins: user.coins + 1,
       gems: gems ? (user.gems + gems) : user.gems,

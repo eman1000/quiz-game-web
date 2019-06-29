@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IUser, IScore } from "../../../../typings";
 import { IUserScoreData } from "../Test";
 import styles from "./QuizComplete.module.scss";
@@ -15,8 +15,9 @@ const QuizComplete = ({
 
   const { user, score } = userScoreData;
   const { avatar, coins, gems } = user;
+  const title = isWinner ? "Congratulations" : "You lost!";
 
-  const title = isWinner ? "Congratulations" : "You lost!"
+  const [showSocialButtons, setShowSocialButtons] = useState<boolean>(false)
   return (
     <div className={styles.quizComplete}>
       
@@ -25,9 +26,13 @@ const QuizComplete = ({
       <h1>{title}</h1>
       <div>{coins} coins</div>
       <div>{gems} gems</div>
-      <SocialShare/>
+      
       <button>Share Results</button>
-      <button>Pick Another Quiz</button>
+      {
+        showSocialButtons &&
+        <SocialShare/>
+      }
+      <button onClick={()=>window.location.href = "/"}>Pick Another Quiz</button>
     </div>
   );
 }
