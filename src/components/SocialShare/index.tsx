@@ -14,7 +14,7 @@ const SocialShare = ()=>{
   return(
     <div>
       <FacebookShareButton
-        url={"http://localhost:3000/play-room/24"}
+        url={"http://c1.ouisys.com/VUJXTQ"}
       >
       <FacebookIcon
         size={32}

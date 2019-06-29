@@ -33,7 +33,6 @@ const resolver:IResolvers = {
         //isAuthenticated,
         async (parent, record, { models }) => {
 
-          console.log("RECORD", record)
           const match = await models.Match.findOne({ where:{id:record.id} });
           if (!match) {
             throw new Error(`Couldn’t find match with id ${record.id}`);
@@ -44,6 +43,29 @@ const resolver:IResolvers = {
             where:{
               id:record.id
             },
+            include:[{
+              model:models.MatchUser,
+              required:true,
+              include:[{
+                model:models.User,
+                required:true
+              }]
+            },{
+              model:models.Test,
+              required:true,
+              include: [{
+                model: models.TestQuestion,
+                required: true,
+                include: [{
+                  model: models.Question,
+                  required: true,
+                  include: [{
+                    model: models.Answer,
+                    required: true
+                  }]
+                }]
+              }]
+            }],
             raw : true,
             returning: true,
             plain: true
@@ -51,16 +73,34 @@ const resolver:IResolvers = {
           if (!result) {
             throw new Error(`Couldn’t update match`);
           }
+
           const updatedMatch = await models.Match.findOne({ 
             where:{id:record.id},
             include:[{
               model:models.MatchUser,
-              required:true
+              required:true,
+              include:[{
+                model:models.User,
+                required:true
+              }]
             },{
-              model:models.Result,
-              required:true
+              model:models.Test,
+              required:true,
+              include: [{
+                model: models.TestQuestion,
+                required: true,
+                include: [{
+                  model: models.Question,
+                  required: true,
+                  include: [{
+                    model: models.Answer,
+                    required: true
+                  }]
+                }]
+              }]
             }]
           });
+          
           if (!updatedMatch) {
             throw new Error(`Couldn’t find updated match`);
           }
@@ -68,13 +108,17 @@ const resolver:IResolvers = {
           const playerOneUserId = updatedMatch.matchUsers[0].userId;
           const playerTwoUserId = updatedMatch.matchUsers[1] ? updatedMatch.matchUsers[1].userId : null;
 
-          const results = updatedMatch.results;
-          console.log("results", results)
+          const results = await models.Result.findAll({
+            where:{
+              matchId:record.id
+            }
+          });
+
+          const testLength = updatedMatch.test.testQuestions.length;
 
           if(results && updatedMatch.status === "complete"){
             const playerOneCount = results.filter((result)=>result.userId == playerOneUserId && result.matchId == record.id && result.isCorrect).length;   
             
-            console.log("playerOneCount", playerOneCount)
             //multiplayer winner
             if(playerTwoUserId !== null){
               const playerTwoCount = results.filter((result)=>result.userId == playerTwoUserId && result.matchId == record.id && result.isCorrect).length;
@@ -84,6 +128,29 @@ const resolver:IResolvers = {
                 where:{
                   id:record.id
                 },
+                include:[{
+                  model:models.MatchUser,
+                  required:true,
+                  include:[{
+                    model:models.User,
+                    required:true
+                  }]
+                },{
+                  model:models.Test,
+                  required:true,
+                  include: [{
+                    model: models.TestQuestion,
+                    required: true,
+                    include: [{
+                      model: models.Question,
+                      required: true,
+                      include: [{
+                        model: models.Answer,
+                        required: true
+                      }]
+                    }]
+                  }]
+                }],
                 raw : true,
                 returning: true,
                 plain: true
@@ -95,7 +162,7 @@ const resolver:IResolvers = {
             }else{
               //single player winner
               const winnerUpdate = await models.Match.update({
-                winnerId:(playerOneCount > 2) ? playerOneUserId : null,
+                winnerId:(playerOneCount > testLength/2) ? playerOneUserId : null,
               },{
                 where:{
                   id:record.id
@@ -105,7 +172,8 @@ const resolver:IResolvers = {
                 plain: true
               });
   
-              console.log("single winnerUpdate", playerOneCount);
+
+              console.log("AAAAAAAAAA", JSON.stringify(winnerUpdate))
               pubsub.publish(EVENTS.MATCH.UPDATED, {
                 matchUpdated: { match:winnerUpdate[1] },
               });

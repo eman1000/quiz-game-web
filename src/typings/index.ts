@@ -1,7 +1,7 @@
 import { type } from "os";
 
 export interface IUser {
-  readonly id?: number;
+  readonly id: number;
   username: string;
   firstName: string;
   lastName: string;

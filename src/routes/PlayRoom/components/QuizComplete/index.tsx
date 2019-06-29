@@ -27,7 +27,7 @@ const QuizComplete = ({
       <div>{coins} coins</div>
       <div>{gems} gems</div>
       
-      <button>Share Results</button>
+      <button onClick={()=>setShowSocialButtons(true)}>Share Results</button>
       {
         showSocialButtons &&
         <SocialShare/>

@@ -163,24 +163,24 @@ const PlayRoom = (props: IPlayRoomProps)=>{
     }
   }
   useEffect(()=>{
-    // props.data.subscribeToMore({
-    //   document: MATCH_SUBSCRIPTION,
-    //   variables: {
-    //     matchId: props.match.params.matchId
-    //   },
-    //   updateQuery: (prev, {subscriptionData}) => {
+    props.data.subscribeToMore({
+      document: MATCH_SUBSCRIPTION,
+      variables: {
+        matchId: props.match.params.matchId
+      },
+      updateQuery: (prev, {subscriptionData}) => {
 
-    //     if (!subscriptionData.data) {
-    //       return prev;
-    //     }
-    //     const matchData = subscriptionData.data.matchUpdated.match;
+        if (!subscriptionData.data) {
+          return prev;
+        }
+        const matchData = subscriptionData.data.matchUpdated.match;
 
-    //     handleMatch(matchData);
-    //     return  {
-    //       getMatch: matchData
-    //     }
-    //   }
-    // });
+        handleMatch(matchData);
+        return  {
+          getMatch: matchData
+        }
+      }
+    });
     return ()=>console.log("clear")
   },[]);
 
