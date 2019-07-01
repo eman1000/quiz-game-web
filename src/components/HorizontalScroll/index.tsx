@@ -13,8 +13,9 @@ export default ({data, title, className}:{data:Array<ICategory>, title?:string,c
       }
       <div className={styles.wrapper}>
         {
-          //UNCOMMENT THIS TO SHOW ALL CATEGORIES AND COMMENT LINE BELOW data.map((category:ICategory, index:number)=>{
-          data.filter((c)=>c.id == 1).map((category:ICategory, index:number)=>{
+          //UNCOMMENT THIS TO SHOW ALL CATEGORIES AND COMMENT LINE BELOW 
+          data.map((category:ICategory, index:number)=>{
+          //data.filter((c)=>c.id == 1).map((category:ICategory, index:number)=>{
             return(
               <ScrollItem
                 key={index}

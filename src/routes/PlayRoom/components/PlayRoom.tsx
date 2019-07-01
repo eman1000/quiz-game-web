@@ -31,28 +31,6 @@ export const MATCH_SUBSCRIPTION = gql(`
         status
         testId
         winnerId
-        test{
-          id
-          name
-          categoryId
-          pointsPerAnswer
-           testQuestions{
-            id
-            questionId
-            question{
-              id
-              description
-              imageUrl
-              categoryId
-              answers{
-                id
-                description
-                imageUrl
-                isCorrect
-              }
-            }
-          }
-        }
         matchUsers{
           userId
           matchId
