@@ -77,6 +77,7 @@ import MatchUserFactory from './matchUser';
 import ResultFactory from './result';
 import TestQuestionFactory from './testQuestion'
 
+//const sequelize = new Sequelize("postgresql://emanmw:P%40ssw0rd@localhost/quiz_game",
 const sequelize = new Sequelize("postgresql://zkidswvtkidbjy:43566099b719ee19acbfa045691549e3dc55c4628f469216d10778213dbc7dda@ec2-54-221-198-156.compute-1.amazonaws.com/d3q6hgtl7jc29v",
   {
     dialect: 'postgres',

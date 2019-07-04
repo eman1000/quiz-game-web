@@ -7,6 +7,7 @@ export interface CategoryAttributes {
   description: string;
   thumbnail: string;
   backgroundImageUrl:string;
+  catKey:string;
 }
 
 export interface CategoryInstance extends Sequelize.Instance<CategoryAttributes>, CategoryAttributes {
@@ -42,6 +43,13 @@ const category = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes
       allowNull: true,
       validate: {
         notEmpty: false,
+      },
+    },
+    catKey: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
       },
     }
   };
