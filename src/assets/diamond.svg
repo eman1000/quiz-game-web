@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.234" height="27.587" viewBox="0 0 27.234 27.587">
+  <g id="diamond" transform="translate(-66.998 -80.413)">
+    <g id="XMLID_358_" transform="translate(66.998 80.413)">
+      <path id="XMLID_2714_" d="M89.5,80.413H71.729L67,87.494,80.617,108,94.233,87.494Z" transform="translate(-67 -80.413)" fill="#ff90c2"/>
+      <path id="XMLID_380_" d="M269.617,87.5,256,108V80.416h8.888Z" transform="translate(-242.383 -80.416)" fill="#e80c6a"/>
+      <path id="XMLID_81_" d="M94.232,87.5H67l4.729-7.08H89.5Z" transform="translate(-66.998 -80.416)" fill="#ff73af"/>
+      <path id="XMLID_384_" d="M269.617,87.5H256v-7.08h8.888Z" transform="translate(-242.383 -80.416)" fill="#ff127f"/>
+      <path id="XMLID_2761_" d="M132.641,80.413l2.509,7.081,6.379-7.081Z" transform="translate(-127.912 -80.413)" fill="#ffb1d6"/>
+      <path id="XMLID_2801_" d="M264.888,80.413l-2.509,7.081L256,80.413Z" transform="translate(-242.383 -80.413)" fill="#ff52a1"/>
+      <path id="XMLID_2775_" d="M167.464,178.7l6.379,20.506,6.379-20.506Z" transform="translate(-160.226 -171.614)" fill="#ff52a1"/>
+      <path id="XMLID_386_" d="M262.379,178.693,256,199.2V178.693Z" transform="translate(-242.383 -171.612)" fill="#ff73af"/>
+    </g>
+  </g>
+</svg>

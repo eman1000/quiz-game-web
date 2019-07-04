@@ -11,7 +11,7 @@ export default ({data, title, className}:{data:Array<ICategory>, title?:string,c
         title &&
         <h4>{title}</h4>
       }
-      <div className={styles.wrapper}>
+      <div className={"categories"}>
         {
           //UNCOMMENT THIS TO SHOW ALL CATEGORIES AND COMMENT LINE BELOW 
           data.map((category:ICategory, index:number)=>{

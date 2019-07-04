@@ -110,14 +110,14 @@ export const App = (props)=>{
     }, 2000);
     return (
       <div>
-        {
+        {/* {
           user &&
           <Header
             isAuthenticated={true}
             current={window.location.pathname}
             authenticatedUser={user}
           />
-        }
+        } */}
         <div id="content">
           {
             //@ts-ignore
