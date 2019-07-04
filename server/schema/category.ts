@@ -7,6 +7,7 @@ const schema = gql(`
       description: String 
       thumbnail: String !
       backgroundImageUrl: String
+      catKey: String !
       scores: [Score!]
     }
     extend type Query {

@@ -32,6 +32,7 @@ export const GET_CATEGORIES = gql(`
         id
         name
         thumbnail
+        catKey
       }
       pageInfo {
         hasNextPage
