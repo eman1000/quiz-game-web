@@ -3,11 +3,11 @@ import React from "react";
 const PlayButtons = ({setFindPlayer, setSinglePlayer})=>{
 
   return (
-    <div>
-      <h1>Pick Opponent</h1>
-      <button onClick={()=>setFindPlayer(true)}>Random Player</button>
-      <br/><br/>
-      <button onClick={()=>setSinglePlayer(true)}>Single Player</button>
+    <div className={"play-buttons-container"}>
+      
+      <button className={"  btn greengradient"} onClick={()=>setFindPlayer(true)}>Random Player</button>
+      
+      <button className={" btn btn-outline"} onClick={()=>setSinglePlayer(true)}>Single Player</button>
     </div>
   );
 }

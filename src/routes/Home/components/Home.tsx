@@ -8,7 +8,7 @@ import Loader from "../../../components/Loader";
 
 //import { Category } from "typings";
 
-import "./Home.scss";
+import "../../../styles/home.scss";
 import { ICategory } from "../../../typings";
 
 type IHomeProps = {

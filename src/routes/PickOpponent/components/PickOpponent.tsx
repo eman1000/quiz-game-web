@@ -12,6 +12,8 @@ import ErrorHandler from "../../../components/ErrorHandler";
 import PlayButtons from "./PlayButtons";
 import { userInfo } from "os";
 import CreateMatch from "./CreateMatch";
+import "../../../styles/home.scss";
+
 
 //Common queries
 import { GET_CATEGORY, GetCategoryQuery, GetCategoryVariables, IGetCategotyProps } from "../../../queries";
@@ -61,7 +63,55 @@ const PickOpponent = (props)=>{
       id="homepage"
       title="Quiz App"
     >
-      <PlayButtons setFindPlayer={setFindPlayer} setSinglePlayer={setSinglePlayer}/>
+
+         <div className={"header"}>
+        <a href="category.html" className={"back"}></a>
+        <h3>Pick An Opponent</h3>
+      </div>
+
+            <div className={"main"}>
+        <div className={"pick-opponent"}>
+          <p>Find and invite friends from your facebook</p>
+          <div className={"search-container"}>
+            <input type="search" className={"input"} />
+          </div>
+
+          
+
+<h3>Previous opponents</h3>
+          <div className={"rankings"}>
+              
+              <div className={"ranking-list"}>
+                  <div className={"ranking-list__img"}></div>
+                  <div className={"ranking-list__name"}>Billy Curtis</div>
+                  <button className={"ranking-list__points"}>Choose</button>
+              </div>
+
+               <div className={"ranking-list"}>
+                  <div className={"ranking-list__img"}></div>
+                  <div className={"ranking-list__name"}>Billy Curtis</div>
+                  <button className={"ranking-list__points"}>Choose</button>
+              </div>
+
+               <div className={"ranking-list"}>
+                  <div className={"ranking-list__img"}></div>
+                  <div className={"ranking-list__name"}>Billy Curtis</div>
+                  <button className={"ranking-list__points"}>Choose</button>
+              </div>
+    
+        
+           
+            </div>
+
+              <PlayButtons setFindPlayer={setFindPlayer} setSinglePlayer={setSinglePlayer}/>
+
+            </div>
+
+          
+
+            </div>
+
+      
       {
         isFindPlayer &&    
         <Query<GetRandomPlayerQuery, GetRandomPlayerVariables>
@@ -86,6 +136,9 @@ const PickOpponent = (props)=>{
           }}
         </Query>
       }
+
+     
+
       {
         isSinglePlayer &&
         <CreateMatch
