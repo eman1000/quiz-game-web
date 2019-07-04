@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ITest, IQuestion } from "../../../../typings";
+import "../../../../styles/home.scss";
 
 export type IAnswer = {
   answer:any,
@@ -24,7 +25,7 @@ const Answer = ({
   })
   return(
     <li>
-      <button
+      <button className={" btn btn-outline option "}
         onClick={()=>handleSaveQuestion({saveQuestionResult, testObj})}
         style={{backgroundColor: (isCorrect !== undefined) ? (isCorrect ? "green" : "red" ) : "#eee"}}
       >

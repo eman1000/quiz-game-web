@@ -196,7 +196,7 @@
 .header .back {
   position: absolute;
   width: 27px;
-  // background-image: url("../img/icon-back.svg");
+  background-image: url("../assets/icon-back.svg");
   top: 24px;
   left: 17px;
   background-repeat: no-repeat;
@@ -535,6 +535,60 @@
   }
 }
 
+
+// CHEATS 
+
+.cheats{
+  display: flex;
+
+  .btn{
+      border-radius: 8px;
+      max-width: 43%;
+      white-space: normal;
+      padding: 0 30px 3px;
+      margin-top: 4px;
+      padding-left: 60px;
+      font-size: 18px;
+      text-align: left;
+      font-weight: bold;
+      span{
+          font-size: 14px;
+          margin-top: -12px;
+          display: block;
+          font-weight: normal;
+          
+      }
+  }
+}
+
+.grenade, .cheat{
+  position: relative;
+
+  &::before{
+      position: absolute;
+      height: 35px;
+      width: 35px;
+      
+      content: '';
+      left: 8px;
+      top: 7px;
+      background-size: contain;
+      background-repeat: no-repeat;
+
+  }
+}
+
+.grenade{
+  &::before{
+      background-image: url('../assets/grenade-icon.svg');
+  }
+}
+
+.cheat{
+  &::before{
+      background-image: url('../assets/cheat-icon.svg');
+  }
+}
 
 
 

@@ -1,40 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {  Query, Mutation, withApollo } from 'react-apollo';
-import ErrorHandler from '../../../../components/ErrorHandler';
-import gql from 'graphql-tag';
-import { IMatch, IUser, ITest } from '../../../../typings';
-import QuizComplete from '../QuizComplete';
-import { async } from 'q';
-import { number } from 'prop-types';
-import Answer from '../Answer';
-
-
+import React, { useState, useEffect, useRef } from "react";
+import { Query, Mutation, withApollo } from "react-apollo";
+import ErrorHandler from "../../../../components/ErrorHandler";
+import gql from "graphql-tag";
+import { IMatch, IUser, ITest } from "../../../../typings";
+import QuizComplete from "../QuizComplete";
+import { async } from "q";
+import { number } from "prop-types";
+import Answer from "../Answer";
+import "../../../../styles/home.scss";
 
 type ITestProps = {
-  matchId:number;
-  matchObj:{
-    test:ITest;
-    status:string;
-    winnerId:number;
+  matchId: number;
+  matchObj: {
+    test: ITest;
+    status: string;
+    winnerId: number;
   };
-  user:IUser;
-  opponent?:IUser;
+  user: IUser;
+  opponent?: IUser;
   client: any;
 };
 
 type GetTestQuery = {
-  getTestWithQuestions:ITest
-}
+  getTestWithQuestions: ITest;
+};
 
 type GetTestVariables = {
-  testId:number;
-}
+  testId: number;
+};
 
 export type IUserScoreData = {
-  userId:number;
-  score:number;
-  user:IUser;
-}
+  userId: number;
+  score: number;
+  user: IUser;
+};
 export const GET_TEST = gql(`
   query($testId:ID !) {
     getTestWithQuestions(testId: $testId) {
@@ -111,10 +110,10 @@ export const DEDUCT_REWARD = gql(`
 
 var timer;
 
-const getRandomInt = (max, correctIndex)=>{
+const getRandomInt = (max, correctIndex) => {
   const num = Math.floor(Math.random() * Math.floor(max));
-  return (correctIndex === num) ? getRandomInt(max, correctIndex) : num;
-}
+  return correctIndex === num ? getRandomInt(max, correctIndex) : num;
+};
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
@@ -136,232 +135,269 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 const Test = (props: ITestProps) => {
-  const {matchId, matchObj, user, opponent, client} = props;
+  const { matchId, matchObj, user, opponent, client } = props;
   let [count, setCount] = useState<number>(0);
   const [testPosition, setTestPosition] = useState<number>(0);
   const [questionResult, setQuestionResult] = useState({});
 
   const [showComplete, setShowComplete] = useState<boolean>(true);
-  const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(null)
+  const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(
+    null
+  );
   const [isGemsCheat, setGemsCheat] = useState<boolean>(false);
   const [isCoinsCheat, setCoinsCheat] = useState<boolean>(false);
 
-  const testObj  = matchObj.test || {};
+  const testObj = matchObj.test || {};
   const test = testObj.testQuestions[testPosition];
 
-
-  const handleGetScores = async()=>{
+  const handleGetScores = async () => {
     const getScores = await client.query({
-      query:GET_SCORE,
-      variables:{
-        categoryId:matchObj.test.categoryId,
-        userId:user.id
-      },
-    })
-    if(getScores){
-      const {getUserScore} = getScores.data;
+      query: GET_SCORE,
+      variables: {
+        categoryId: matchObj.test.categoryId,
+        userId: user.id
+      }
+    });
+    if (getScores) {
+      const { getUserScore } = getScores.data;
       setUserScoreData(getUserScore);
     }
-  }
-  const handleSaveQuestion = async({saveQuestionResult, testObj})=>{
-    if(isGemsCheat){
+  };
+  const handleSaveQuestion = async ({ saveQuestionResult, testObj }) => {
+    if (isGemsCheat) {
       setGemsCheat(false);
     }
     const result = await saveQuestionResult();
     const data = result.data.saveQuestionResult;
     setQuestionResult({
       ...questionResult,
-      [`q${data.questionId}a${data.answerId}`]:data.isCorrect
-    })
+      [`q${data.questionId}a${data.answerId}`]: data.isCorrect
+    });
     setTimeout(() => {
-      handleNext()
+      handleNext();
     }, 2000);
-  }
-  const markAsDone = async({matchId, status}) =>{
-    console.table([{matchId, status}])
+  };
+  const markAsDone = async ({ matchId, status }) => {
+    console.table([{ matchId, status }]);
     const winner = await client.mutate({
-      mutation:UPDATE_MATCH,
-      variables:{
-        id:matchId,
+      mutation: UPDATE_MATCH,
+      variables: {
+        id: matchId,
         status
-      },
-    })
-
+      }
+    });
 
     const test = await client.mutate({
-      mutation:UPDATE_MATCH,
-      variables:{
-        id:matchId,
+      mutation: UPDATE_MATCH,
+      variables: {
+        id: matchId,
         status
-      },
-    })
+      }
+    });
 
     const getScores = await client.query({
-      query:GET_SCORE,
-      variables:{
-        categoryId:matchObj.test.categoryId,
-        userId:user.id
-      },
-    })
-    if(getScores){
-      const {getUserScore} = getScores.data;
+      query: GET_SCORE,
+      variables: {
+        categoryId: matchObj.test.categoryId,
+        userId: user.id
+      }
+    });
+    if (getScores) {
+      const { getUserScore } = getScores.data;
       setUserScoreData(getUserScore);
     }
     const winnerData = winner.data.updateMatch;
-    if(winnerData.winnerId === user.id){
+    if (winnerData.winnerId === user.id) {
       //show Quiz complete modal
       setShowComplete(true);
-    }else{
+    } else {
       //show Quiz complete modal
       setShowComplete(true);
     }
 
-    console.log("WINNER",winner)
-  }
-  const handleNext = ()=>{
+    console.log("WINNER", winner);
+  };
+  const handleNext = () => {
     setCount(0);
-    if(isGemsCheat){
+    if (isGemsCheat) {
       setGemsCheat(false);
     }
-    if(isCoinsCheat){
+    if (isCoinsCheat) {
       setCoinsCheat(false);
     }
     //@ts-ignore
-    if((testPosition + 1) < matchObj.test.testQuestions.length){
-      setTestPosition(testPosition + 1)
-    }else{
-      markAsDone({matchId, status:"complete"})
+    if (testPosition + 1 < matchObj.test.testQuestions.length) {
+      setTestPosition(testPosition + 1);
+    } else {
+      markAsDone({ matchId, status: "complete" });
     }
-  }
-    const cheat = async (id:number, amount:number, key:string)=>{
-      try{
-        const deduct =  await client.mutate({
-          mutation:DEDUCT_REWARD,
-          variables:{
-            id,
-            key,
-            amount
-          },
-        })
-        if(deduct){
-          if(key === "gems"){
-            setGemsCheat(true);
-          }
-          if(key === "coins"){
-            setCoinsCheat(true);
-          }
+  };
+  const cheat = async (id: number, amount: number, key: string) => {
+    try {
+      const deduct = await client.mutate({
+        mutation: DEDUCT_REWARD,
+        variables: {
+          id,
+          key,
+          amount
         }
-        return deduct;
+      });
+      if (deduct) {
+        if (key === "gems") {
+          setGemsCheat(true);
+        }
+        if (key === "coins") {
+          setCoinsCheat(true);
+        }
       }
-      catch(err){
-        alert(err.message)
-        throw err;
-      
-      }
-  }
+      return deduct;
+    } catch (err) {
+      alert(err.message);
+      throw err;
+    }
+  };
   useInterval(() => {
-    if(matchObj.status === "complete"){ 
+    if (matchObj.status === "complete") {
       clearInterval(timer);
     }
-    if(count === 10){
-      handleNext()
-    }else{
+    if (count === 10) {
+      handleNext();
+    } else {
       setCount(count + 1);
     }
     //@ts-ignore
-    if((testPosition + 1) == matchObj.test.testQuestions.length && count === 10){
-      clearInterval(timer)
+    if (
+      testPosition + 1 == matchObj.test.testQuestions.length &&
+      count === 10
+    ) {
+      clearInterval(timer);
     }
-  }, 2000);
-  
-  useEffect(()=>{
-    if(matchObj.status === "complete"){
+  }, 200000000);
+
+  useEffect(() => {
+    if (matchObj.status === "complete") {
       handleGetScores();
     }
-    return ()=>console.log("clear")
-  },[]);
+    return () => console.log("clear");
+  }, []);
   const answers = test.question.answers;
-  const correctAnswerIndex = answers.findIndex((ans => ans.isCorrect === true))
-  const filterdAnswers = !isCoinsCheat ? answers : answers.filter(((ans, index) => ans.isCorrect === true || index === getRandomInt(answers.length, correctAnswerIndex )))
+  const correctAnswerIndex = answers.findIndex(ans => ans.isCorrect === true);
+  const filterdAnswers = !isCoinsCheat
+    ? answers
+    : answers.filter(
+        (ans, index) =>
+          ans.isCorrect === true ||
+          index === getRandomInt(answers.length, correctAnswerIndex)
+      );
   return (
-      <div>
-        {
-          userScoreData && matchObj.status === "complete" &&
-          <QuizComplete
-            userScoreData={userScoreData}
-            isWinner={(matchObj.winnerId == user.id) ? true : false}
-          />
-        }
-        {matchObj.test &&
+    <div>
+      {userScoreData && matchObj.status === "complete" && (
+        <QuizComplete
+          userScoreData={userScoreData}
+          isWinner={matchObj.winnerId == user.id ? true : false}
+        />
+      )}
+      {matchObj.test && (
         <div>
-          <div style={{
-            display:"flex",
-            flexDirection:"row",
-            justifyContent:"space-between"
-          }}>
-            <div>
-              <img style={{width:"100px"}} src={user.avatar}/>
-            </div>
-            <div>
-              
-            </div>
-            {
-              opponent &&
-            
-              <div>
-                <img style={{width:"100px"}} src={opponent.avatar}/>
+          <div>
+            <div className={"question"}>
+              <div className={"header"}>
+                <div className={"profile single-player"}>
+                  <div className={"profile-point-wrapper"}>
+                    <div className={"profile__user"}>
+                      <img
+                        className={"user__img"}
+                        style={{ width: "100px" }}
+                        src={user.avatar}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            }
+
+              <div className={"question__count-down"}>09</div>
+
+              <div className={"question__counter"}>Question 6/7</div>
+
+              <div className={"question__title"}>
+                <h3>{test.question.description}</h3>
+              </div>
+
+              <h1>{count}</h1>
+              <h6>
+                {testPosition + 1}/{testObj.testQuestions.length}
+              </h6>
+            </div>
+
+            <div />
+            <div />
+            {opponent && (
+              <div>
+                <img style={{ width: "100px" }} src={opponent.avatar} />
+              </div>
+            )}
           </div>
-          <h1>{count}</h1>
-          <h6>{testPosition + 1}/{testObj.testQuestions.length}</h6>
-          <h3>{test.question.description}</h3>
+
           <ul>
-            {
-              filterdAnswers.map((answer, index)=>{
-                let isCorrect = questionResult[`q${test.questionId}a${answer.id}`];
+            {filterdAnswers.map((answer, index) => {
+              let isCorrect =
+                questionResult[`q${test.questionId}a${answer.id}`];
 
-                return(
-                  <Mutation
-                    key={index}
-                    mutation={SAVE_QUESTION_RESULT}
-                    variables={{
-                      matchId,
-                      userId:user.id,
-                      answerId:answer.id,
-                      questionId:test.question.id,
-                      categoryId:matchObj.test.categoryId,
-                      isCorrect:(answer.isCorrect !== null) ? answer.isCorrect : false
-                    }}
-                  >
-                    {(saveQuestionResult, { loading }) => {
-                      if (loading) return "Loading...";
-                      return(
-                        <Answer
-                          handleSaveQuestion={handleSaveQuestion}
-                          saveQuestionResult={saveQuestionResult}
-                          isCorrect={isCorrect}
-                          testObj={testObj}
-                          answer={answer}
-                          isGemsCheat={isGemsCheat}
-                        />
-                      )
-                    }}
-                  </Mutation>
-                )
-              })
-            }
-
+              return (
+                <Mutation
+                  key={index}
+                  mutation={SAVE_QUESTION_RESULT}
+                  variables={{
+                    matchId,
+                    userId: user.id,
+                    answerId: answer.id,
+                    questionId: test.question.id,
+                    categoryId: matchObj.test.categoryId,
+                    isCorrect:
+                      answer.isCorrect !== null ? answer.isCorrect : false
+                  }}
+                >
+                  {(saveQuestionResult, { loading }) => {
+                    if (loading) return "Loading...";
+                    return (
+                      <Answer
+                        handleSaveQuestion={handleSaveQuestion}
+                        saveQuestionResult={saveQuestionResult}
+                        isCorrect={isCorrect}
+                        testObj={testObj}
+                        answer={answer}
+                        isGemsCheat={isGemsCheat}
+                      />
+                    );
+                  }}
+                </Mutation>
+              );
+            })}
           </ul>
 
-          <button onClick={()=>cheat(user.id, 8, "gems")}>Grenade X8 Gems</button>
-          <button onClick={()=>cheat(user.id, 8, "coins")}>Cheat X8 Coins</button>
-      </div>
-      }
+          <div className={"footer cheats"}>
+            <button 
+            
+              onClick={() => cheat(user.id, 8, "gems")}
+              className={"btn darkbluegradient grenade"}
+            >
+              Grenade
+              <span>X8 Coins</span>
+            </button>
+
+            <button
+            
+              onClick={() => cheat(user.id, 8, "coins")}
+              className={"btn orangegradient cheat"}
+            >
+              Cheat
+              <span>X8 Coins</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
-
-
+};
 
 export default withApollo(Test);

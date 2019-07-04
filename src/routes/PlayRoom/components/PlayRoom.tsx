@@ -191,7 +191,7 @@ const PlayRoom = (props: IPlayRoomProps)=>{
       image="http://www.soidergi.com/wp-content/uploads/cu/cute-beard-afro-smiling-black-guy-face-avatar-vector.jpg"
     >
 
-      <h1>Play Room</h1>
+      
       {
         getMatch.hasOwnProperty("testId") &&
         <Test
