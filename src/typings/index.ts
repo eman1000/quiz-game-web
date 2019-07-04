@@ -21,6 +21,7 @@ export type ICategory = {
   name:string;
   description:string;
   thumbnail:string;
+  catKey:string;
 }
 
 export type IMatch = {

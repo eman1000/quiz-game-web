@@ -1,3 +1,176 @@
+.bluegradient {
+ 
+  background: #4efff8; /* Old browsers */
+  background: -moz-linear-gradient(top,  #4efff8 0%, #76baff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #4efff8 0%,#76baff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #4efff8 0%,#76baff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      color: #fff;
+  }
+  
+  .pinkgradient{   
+  background: #ff989b; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ff989b 0%, #ff5177 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #ff989b 0%,#ff5177 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #ff989b 0%,#ff5177 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #fff;}
+  
+  .darkbluegradient{
+      
+  background: #9dacf2; /* Old browsers */
+  background: -moz-linear-gradient(top,  #9dacf2 0%, #6384e9 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #9dacf2 0%,#6384e9 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #9dacf2 0%,#6384e9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #fff;
+  }
+  
+  .orangegradient{
+      
+  background: #ffb26a; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffb26a 0%, #ff722d 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #ffb26a 0%,#ff722d 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #ffb26a 0%,#ff722d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #fff;
+  }
+  
+  .greengradient{
+  
+  background: #7bd39b; /* Old browsers */
+  background: -moz-linear-gradient(top,  #7bd39b 0%, #3eaf74 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #7bd39b 0%,#3eaf74 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #7bd39b 0%,#3eaf74 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #fff;
+  
+  }
+  
+  .btngradient{
+      color: #fff;
+  background: #82e300; /* Old browsers */
+  background: -moz-linear-gradient(top,  #82e300 0%, #82e300 17%, #7adb00 33%, #65c500 67%, #43a100 83%, #1a7500 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #82e300 0%,#82e300 17%,#7adb00 33%,#65c500 67%,#43a100 83%,#1a7500 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #82e300 0%,#82e300 17%,#7adb00 33%,#65c500 67%,#43a100 83%,#1a7500 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  border: 0;
+  height: auto;
+  
+  }
+  
+  ::-webkit-scrollbar {
+      width: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+      background: transparent;
+  }
+  
+  .food, .music, .movies, .sport, .animals, .cars, .general, .health{
+      position: relative;
+      &:before{
+          content: '';
+          position: absolute;
+          height: 38px;
+          width: 38px;
+          left: 0;
+          right: 0;
+          top: 12vh;
+          bottom: 0;
+          margin: auto;
+          background-size: contain;
+          background-repeat: no-repeat;
+          
+      }
+  }
+  
+  .cars, .general, .health{
+      &:before{
+          height: 34px;
+          width: 34px;
+      }
+  }
+  
+  .sport{
+      &:before{
+      background-image: url('../../../assets/basketball-icon.svg');
+      }
+  }
+  
+  .movies{
+      &:before{
+      background-image: url('../../../assets/filmstrip-icon.svg');
+      }
+  }
+  
+  .music{
+      &:before{
+      background-image: url('../../../assets/music-icon.svg');
+      }
+  }
+  
+  .food{
+    @extend .bluegradient;
+      &:before{
+      background-image: url('../../../assets/food-icon.svg');
+      }
+  }
+  
+  .animals{
+      &:before{
+      background-image: url('../../../assets/paw-icon.svg');
+      }
+  }
+  
+  .cars{
+      &:before{
+          background-image: url('../../../assets/wheel-icon.svg');
+          }
+  }
+  
+  .general{
+      &:before{
+          background-image: url('../../../assets/brain.svg');
+          }
+  }
+  
+  .health{
+    @extend .bluegradient;
+      &:before{
+          background-image: url('../../../assets/medical-bag.svg');
+          height: 40px;
+          width: 40px;
+          
+          }
+  }
+  
+  a{
+      color: inherit;
+  }
+  
+      body{
+        position: relative;
+        overflow: hidden;
+        background-color: #000;
+        
+         &:after{
+             position: fixed;
+             top: 0;
+             right: 0;
+             left: 0;
+             height: 100vh;
+             width: 100vw;
+             content: '';
+             background-size: cover;
+             background-position: center;
+             z-index: -999;
+             opacity: 1;
+             background-image: url('../../../assets/line-bg-grey.svg');
+          // background-image: url('/img/main-bg.png');
+          
+         }
+          
+      }
+
+
+
+
 .header {
   min-height: 80px;
   background-image: url("../../../assets/header-bg.svg");
