@@ -1,0 +1,30 @@
+@charset 'UTF-8';
+@import '../abstracts/mixins';
+.searcher {
+   
+    display: flex;
+    .input {
+        background-color: #fff;
+        position: relative;
+
+        &::after {
+            @include icon-font;
+            content: '\E8B6';
+            width: 30px;
+            height: 35px;
+            position: absolute;
+            top: 12px;
+            right: 0;
+            z-index: 9;
+            opacity: 0.4;
+        }
+    }
+
+    .btn{
+        margin-left: -5px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 0;
+        z-index: 99;
+    }
+ 
+}

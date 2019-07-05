@@ -1,0 +1,42 @@
+.product{
+
+display: flex;
+    &__details{
+        flex: 3;
+    }
+
+    &__statistics{
+        flex: 1;
+        background-color: #fafafa;
+        margin-left: -2.5em;
+        margin-top: -0.2em;
+        margin-right: 2em;
+        padding: 2em;
+        max-width: 347px;
+        padding: 24px 32px;
+        height: calc(100vh - 56px);
+
+        &__image{
+            height: 90px;
+        }
+    }
+
+}
+
+.product-stats{
+    padding-top: 4em;
+   
+    &__label{
+        display: block;
+        text-transform: uppercase;
+        font-size: 1.1em;
+        opacity: 0.5;
+        letter-spacing: 1px;
+    }
+
+    &__count{
+        font-size: 3.2em;
+        font-weight: bold;
+        color: #349be7;
+    }
+}

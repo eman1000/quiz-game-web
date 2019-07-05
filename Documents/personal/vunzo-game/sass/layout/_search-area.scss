@@ -1,0 +1,31 @@
+@import '../themes/default';
+
+.filter-header{
+    display: flex;
+    // border-bottom: 1px solid $border-color;
+    justify-content: space-between;
+    align-items:flex-start;
+        
+        .btn{
+            vertical-align: middle;
+            padding: 1em 1em 0 1em;
+            vertical-align: middle;
+        }
+  
+    .select{
+        margin-right: 1em;
+        min-width: 300px;
+    }
+}
+
+.tabs{
+    align-self: center;
+    font-weight: bold;
+   
+    .tab{
+        color: $text-default;
+        font-size: 1.3em;
+        padding: 0.6em 2em 0.5em 0;
+        display: inline-block;
+    }
+}

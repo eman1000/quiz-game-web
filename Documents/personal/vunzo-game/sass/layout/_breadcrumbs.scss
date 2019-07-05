@@ -1,0 +1,33 @@
+
+/*************************************************************
+BREADCRUMB LIST
+*************************************************************/
+
+.breadcrumbs {
+    position: relative;
+    display: flex;
+    padding: 15px 0;
+    font-size: 14px;
+    &__item {
+        padding: 0 24px 0 0px;
+        position: relative;
+        margin-right: 16px;
+        a {
+            color: #878787;
+        }
+        &::after {
+            position: absolute;
+            content: '\E315';
+            font-family: "Material Icons";
+            width: 10px;
+            height: 10px;
+            font-size: 18px;
+            right: 0;
+            top: -2px;
+            color: #878787;
+        }
+    }
+    &__item::first-child {
+        padding-left: 0;
+    }
+}

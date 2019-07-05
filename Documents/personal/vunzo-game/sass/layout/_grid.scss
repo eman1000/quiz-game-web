@@ -1,0 +1,27 @@
+@import '../themes/default';
+
+.container {
+   // background-color: #ffffff;
+   // -webkit-box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
+    //box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
+  
+}
+
+.container.max-width{
+    max-width: 800px;
+    max-width: 624px;
+  //  margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    /*padding: 1em 1em;*/
+    padding: 1.5em 1em 1em 0;
+    h3 {
+        flex: 1;
+        margin: auto;
+        
+        font-size: 2.2em;
+        letter-spacing: 1px;
+    }
+}
