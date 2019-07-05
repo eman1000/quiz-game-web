@@ -92,15 +92,27 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                       </div>
                     </div>
 
+                    <div className={"categories-container"}>
+
+                    
+
+                    <div className={"categoriies-header"}>
+                      <h2>Category</h2>
+                      <a href="category.html" className={"view-all"}>
+                        View All
+                      </a>
+                    </div>
+
                     <HorizontalScroll
                       // title="uhyuhyhh"
                       data={getCategories.edges}
                     />
 
+                    </div>
 
-
-                    <a href="pick-opponent.html" className="btn btngradient">Quick Play</a>
-
+                    <a href="pick-opponent.html" className="btn btngradient">
+                      Quick Play
+                    </a>
                   </div>
 
                   <div className={"footer"}>

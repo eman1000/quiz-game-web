@@ -182,7 +182,13 @@
       }
 
 
-
+.main{
+    
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+}
 
 .header {
   min-height: 80px;
@@ -238,7 +244,7 @@
   position: absolute;
   height: 35px;
   width: 35px;
-  // background-image: url("../img/coin.svg");
+  background-image: url("../assets/coin.svg");
   left: -8px;
   top: -1px;
   background-repeat: no-repeat;
@@ -256,6 +262,7 @@
   padding: 2px 0 5px 30px;
   position: relative;
   font-size: 16px;
+  
 }
 
 .profile__germs::before {
@@ -263,7 +270,7 @@
   position: absolute;
   height: 35px;
   width: 35px;
-  // background-image: url("../img/diamond.svg");
+  background-image: url("../assets/diamond.svg");
   left: -14px;
   top: -1px;
   background-repeat: no-repeat;
@@ -321,7 +328,7 @@
   
   .category{
       margin-bottom: 4vh;
-      min-width: 25%;
+      min-width: 20%;
       border-radius: 6px;
       margin:5px;
       padding: 4vh 6px;
@@ -338,7 +345,7 @@
 
       &__name{
           text-align: center;
-          font-family: $light-font;
+          
           
       }
   }
@@ -392,7 +399,7 @@
     border-radius: 6px;
     color: #fff;
     margin: 10px 4px;
-    padding: 10px 4px 24px 50px;
+    padding: 10px 4px 6px 50px;
     position: relative;
     text-transform: uppercase;
     min-height: 55px;
@@ -955,7 +962,7 @@
           content: '';
           height: 20px;
           width: 20px;
-          // background-image: url('../assets/coin.svg');
+          background-image: url('../assets/coin.svg');
           background-size: cover;
           left: -8px;
           top: -2px;

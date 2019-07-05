@@ -6,7 +6,7 @@ import styles from "./HorizontalScroll.module.scss"
 
 export default ({data, title, className}:{data:Array<ICategory>, title?:string,className?:string}) => {
   return(
-    <div>
+    <Fragment>
       {
         title &&
         <h4>{title}</h4>
@@ -25,6 +25,6 @@ export default ({data, title, className}:{data:Array<ICategory>, title?:string,c
           })
         }
       </div>
-    </div>
+    </Fragment>
   )
 }
