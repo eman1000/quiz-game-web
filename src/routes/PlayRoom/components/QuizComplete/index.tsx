@@ -3,38 +3,59 @@ import { IUser, IScore } from "../../../../typings";
 import { IUserScoreData } from "../Test";
 import styles from "./QuizComplete.module.scss";
 import SocialShare from "../../../../components/SocialShare";
+// import "../../../../styles/home.scss";
 
 export type IQuizCompleteProps = {
-  userScoreData:IUserScoreData;
-  isWinner:boolean;
-}
-const QuizComplete = ({
-  userScoreData,
-  isWinner
-}:IQuizCompleteProps)=>{
-
+  userScoreData: IUserScoreData;
+  isWinner: boolean;
+};
+const QuizComplete = ({ userScoreData, isWinner }: IQuizCompleteProps) => {
   const { user, score } = userScoreData;
   const { avatar, coins, gems } = user;
   const title = isWinner ? "Congratulations" : "You lost!";
 
-  const [showSocialButtons, setShowSocialButtons] = useState<boolean>(false)
+  const [showSocialButtons, setShowSocialButtons] = useState<boolean>(false);
   return (
-    <div className={styles.quizComplete}>
-      
-      <img width="150px" src={avatar} />
-      <h6>You got 99th position with a total score of: {score}</h6>
-      <h1>{title}</h1>
-      <div>{coins} coins</div>
-      <div>{gems} gems</div>
-      
-      <button onClick={()=>setShowSocialButtons(true)}>Share Results</button>
-      {
-        showSocialButtons &&
-        <SocialShare/>
-      }
-      <button onClick={()=>window.location.href = "/"}>Pick Another Quiz</button>
+    <div className={"result-container"}>
+      <div className={"result"}>
+        <div className={"profile__user"}>
+          <div>
+            <img className={"user__img"} src={avatar} />
+          </div>
+        </div>
+
+        <div className={"result__title"}>{title}</div>
+
+        <div className={"winner-reward"}>
+          <h3>
+            Your total score of:
+            <span> {score} pts</span>
+          </h3>
+          <div className={"reward-wrap"}>
+            <div className={"reward reward--gem"}>{gems}</div>
+
+            <div className={"reward reward--coin"}>{coins}</div>
+          </div>
+        </div>
+
+        <div className={"result--action"}>
+          <button
+            className={"btn greengradient"}
+            onClick={() => setShowSocialButtons(true)}
+          >
+            Share Results
+          </button>
+          {showSocialButtons && <SocialShare />}
+          <button
+            className={"btn btn-outline"}
+            onClick={() => (window.location.href = "/")}
+          >
+            Pick Another Quiz
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default QuizComplete;

@@ -117,7 +117,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                     </a>
 
                     <a href="home.html" className={"footer__item"}>
-                      <span className={"styles.footer-icon"}>
+                      <span className={"footer-icon"}>
                         <svg
                           style={{ width: 24, height: 24 }}
                           viewBox="0 0 24 24"

@@ -1,9 +1,12 @@
 @charset 'UTF-8';
 
+@import'variables';
 @import 'themes';
 @import 'inputFiles';
-@import
-  'buttons';
+@import'buttons';
+@import'typography';
+
+
 
 
 
@@ -206,7 +209,7 @@
 }
 
 .header h3 {
-  // line-height: 70px;
+  line-height: 70px;
   font-size: 18px;
   padding-left: 46px;
   position: relative;
@@ -335,7 +338,7 @@
 
       &__name{
           text-align: center;
-          // font-family: $light-font;
+          font-family: $light-font;
           
       }
   }
@@ -536,6 +539,191 @@
 }
 
 
+// QUESTION 
+
+.question{
+
+  .user{
+      &__img{
+          width: 40px;
+          height: 40px;
+  }
+
+}
+
+  &__image{
+      margin-top:50px;
+      height: 180px;
+      background-color: #ccc;
+      width: 100%;
+  }
+
+  &__count-down{
+      background-color: #fff;
+      height: 40px;
+      width: 40px;
+      margin: auto;
+      margin-top: -20px;
+      margin-bottom: 10px;
+      line-height: 40px;
+      font-size: 17px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      text-align: center;
+      
+  }
+
+  &__counter{
+      text-align: center;
+      font-size: 11px;
+      font-weight: $light-font;
+      margin-bottom: 10px;
+  }
+
+  &__title{
+      text-align: center;
+      font-size: 16px;
+      margin: 0 20px;
+  }
+
+  &__options{
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+
+      .option{
+          
+          font-size: 12px;
+          line-height: 17px;
+          height: auto;
+          white-space:normal;
+          
+      }
+
+  }
+}
+
+
+.result-container{
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 99999;
+  height: 100vh;
+}
+
+.result{
+
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
+  height: 80vh;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 10vh;
+  padding: 0 5vw;
+  box-sizing: border-box;
+  .profile__user{
+      margin: auto;
+      
+      .user__img{
+          height: 90px;
+          width: 90px;
+          border-radius: 50%;
+
+      }
+
+  }
+
+  &__title, &__subtitle{
+      text-align: center;
+  }
+
+  &__title{
+      text-align: center;
+      font-size: 24px;
+      color: #71CD94;
+      margin-bottom: 20px;
+      margin-top: 20px
+  }
+
+  &--action{
+      .btn{
+          margin: 20px auto;
+          
+          display: block;
+      }
+  }
+}
+
+// REWARD WRAP
+
+.winner-reward{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  
+  flex: 1;
+
+  h3{
+      // font-family: $light-font;
+      font-size: 17px;
+  }
+
+  .reward-wrap{
+      display: flex;
+      max-width: 290px;
+      margin: auto;
+      justify-content: space-between;
+      font-size: 22px;
+      background-color: rgba(238, 238, 238, 0.47);
+      border-radius: 8px;
+      
+      .reward{
+          
+          margin: 10px 0;
+          flex: 1;
+          position: relative;
+          
+      }
+
+      .reward--gem, .reward--coin{
+          padding: 16px 30px 16px 0px;
+          
+          &:before{
+          content: '';
+          height: 25px;
+          width: 25px;
+          
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          right: 30px;
+          background-size: contain;
+      }
+  }
+  .reward--gem{
+      &:before{
+          background-image: url('../assets/diamond.svg');
+      background-repeat: no-repeat;
+      
+      }
+  }
+
+      .reward--coin{
+          &:before{
+              background-image: url('../assets/coin.svg');
+              right: 35px;
+              background-repeat: no-repeat;
+          }
+      }
+  }
+
+}
+
 // CHEATS 
 
 .cheats{
@@ -591,6 +779,114 @@
 }
 
 
+// RANKINGS 
+
+.rankings{
+    // margin: 20px;
+    counter-reset: section;
+    max-height: 40vh;
+    overflow: scroll;
+    margin-top: 50px;
+    
+    position: relative;
+    
+   h3{
+       font-size: 18px;
+       
+       position: fixed;
+       margin-top: -40px;
+       margin-bottom: 30px;
+       height: 45px;
+       padding: 15px 20px 8px 20px;
+       background-color: #fff;
+       
+       width: 100%;
+       z-index: 99999;
+       
+   }
+
+   .ranking-list{
+       
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding-top:6px;
+       padding-bottom:6px;
+       padding-left: 40px;
+       padding-right: 30px;
+       font-family: $light-font;
+       position: relative;
+       margin-bottom: 4px;
+
+       &:nth-child(odd){
+        background-color: #EFF0F1;
+       }
+       
+       &__img{
+        height: 40px;
+        width: 40px;
+        background-color: #ccc;
+        
+        border-radius: 50%;
+       }
+
+       &__name{
+        flex: 1;
+        margin-left: 11px;
+       }
+
+       &__points{
+        
+        position: relative;
+        padding-left: 20px;
+
+        &::before {
+            position: absolute;
+            content: '';
+            height: 20px;
+            width: 20px;
+            background-image: url('../assets/coin.svg');
+            background-size: cover;
+            left: -8px;
+            top: -2px;
+        }
+       }
+
+       &::before {
+        position: absolute;
+        counter-increment: section;
+        content:counter(section);
+        left: 20px;
+        
+      }
+   }
+}
+
+// CATEGORY HEADER
+.category-header{
+    background-image: url('../assets/orange-circles.svg');
+    
+    background-repeat: no-repeat;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-top: 30px;
+    color: #fff;
+    text-align: center;
+    background-size: cover;
+
+    h3{
+        font-size: 23px; 
+    }
+
+    p{
+        font-family: neusa-next-std-wide, sans-serif;
+
+        font-weight: 300;
+        max-width: 280px;
+        margin: auto;
+        font-size: 14px;
+    }
+}
 
 // rankings 
 
@@ -600,7 +896,8 @@
   // max-height: 40vh;
   // overflow: scroll;
   // margin-top: 50px;
-  
+  margin: 0;
+  padding: 0;
   position: relative;
   
  h3{
@@ -769,6 +1066,7 @@ box-sizing: content-box;
       display: block;
       padding: 5px 10px;
       // line-height: 40px;
+      font-size: 12px;
       position: relative;
       z-index: 0;
       

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ITest, IQuestion } from "../../../../typings";
 import "../../../../styles/home.scss";
+import { props } from "bluebird";
 
 export type IAnswer = {
   answer:any,
@@ -9,6 +10,7 @@ export type IAnswer = {
   testObj:ITest,
   handleSaveQuestion:({saveQuestionResult:IAnswer, testObj:ITest})=>void,
   isGemsCheat:boolean,
+  saveAnswerLoading: boolean
 }
 const Answer = ({
   answer,
@@ -16,7 +18,9 @@ const Answer = ({
   saveQuestionResult,
   testObj,
   handleSaveQuestion,
-  isGemsCheat
+  isGemsCheat,
+  saveAnswerLoading
+
 }:IAnswer)=>{
   useEffect(()=>{
     if(isGemsCheat){
@@ -24,14 +28,14 @@ const Answer = ({
     }
   })
   return(
-    <li>
-      <button className={" btn btn-outline option "}
+    <div>
+      <button className={saveAnswerLoading ? "loading btn btn-outline option"  : "btn btn-outline option" }
         onClick={()=>handleSaveQuestion({saveQuestionResult, testObj})}
-        style={{backgroundColor: (isCorrect !== undefined) ? (isCorrect ? "green" : "red" ) : "#eee"}}
+        // style={{backgroundColor: (isCorrect !== undefined) ? (isCorrect ? "green" : "red" ) : ""}}
       >
         {answer.description}
       </button>
-    </li>
+    </div>
   )
 }
 

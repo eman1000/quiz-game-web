@@ -307,7 +307,7 @@ const Test = (props: ITestProps) => {
                     <div className={"profile__user"}>
                       <img
                         className={"user__img"}
-                        style={{ width: "100px" }}
+                        
                         src={user.avatar}
                       />
                     </div>
@@ -315,18 +315,17 @@ const Test = (props: ITestProps) => {
                 </div>
               </div>
 
-              <div className={"question__count-down"}>09</div>
+                  <div className={"question__image"}>
 
-              <div className={"question__counter"}>Question 6/7</div>
+</div>
+
+              <div className={"question__count-down"}>{count}</div>
+
+              <div className={"question__counter"}>Question {testPosition + 1}/{testObj.testQuestions.length}</div>
 
               <div className={"question__title"}>
                 <h3>{test.question.description}</h3>
               </div>
-
-              <h1>{count}</h1>
-              <h6>
-                {testPosition + 1}/{testObj.testQuestions.length}
-              </h6>
             </div>
 
             <div />
@@ -358,7 +357,7 @@ const Test = (props: ITestProps) => {
                   }}
                 >
                   {(saveQuestionResult, { loading }) => {
-                    if (loading) return "Loading...";
+                    // if (loading) return "Loading...";
                     return (
                       <Answer
                         handleSaveQuestion={handleSaveQuestion}
@@ -367,6 +366,7 @@ const Test = (props: ITestProps) => {
                         testObj={testObj}
                         answer={answer}
                         isGemsCheat={isGemsCheat}
+                        saveAnswerLoading={loading}
                       />
                     );
                   }}
@@ -386,7 +386,6 @@ const Test = (props: ITestProps) => {
             </button>
 
             <button
-            
               onClick={() => cheat(user.id, 8, "coins")}
               className={"btn orangegradient cheat"}
             >
