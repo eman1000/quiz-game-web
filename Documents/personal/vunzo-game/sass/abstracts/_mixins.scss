@@ -1,0 +1,14 @@
+  
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+@mixin icon-font {
+   
+    font-family: Material Icons;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    vertical-align: middle;
+   
+    font-size: 1.1em;
+}

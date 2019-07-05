@@ -1,0 +1,221 @@
+ // -----------------------------------------------------------------------------
+ // This file contains all styles related to the button component.
+ // -----------------------------------------------------------------------------
+ // -----------------------------------------------------------------------------
+ // This file contains all styles related to the button component.
+ // -----------------------------------------------------------------------------
+
+ @import '../themes/default';
+
+ .btn {
+     text-align: center;
+     display: block;
+     letter-spacing: 0;
+     font-size: 1.2em;
+     width: 95%;
+     max-width: 250px;
+     font-weight: 500;
+     color: #777777;
+
+     line-height: 1.8em;
+     white-space: nowrap;
+     border: 1px transparent solid;
+     padding: 10px 20px 9px 20px;
+     cursor: pointer;
+     -webkit-transition: color .2s, background-color .2s, box-shadow .2s, border .2s;
+     transition: color .2s, background-color .2s, box-shadow .2s, border .2s;
+     border-radius: 0.5em;
+     
+     align-self: center;
+     margin: 0 auto 10px auto;
+
+     &:disabled {
+         opacity: 0.5;
+         cursor: default!important;
+         text-shadow: none;
+         -webkit-transition: none;
+         transition: none;
+     }
+     i {
+         vertical-align: middle;
+         margin-top: -0.12em;
+         padding: 0 0.4em;
+     }
+
+     &:hover {
+        opacity: 0.9;
+    }
+ }
+
+ .facebook{
+     background-color: #3B5999;
+     color: #fff;
+     margin: auto;
+     display: block;
+ }
+
+ .btn-outline{
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+ .btn-sm {
+     padding: 7px 20px 6px 20px;
+     line-height: 10px;
+ }
+ 
+ .btn-text {
+     background-color: transparent;
+     height: auto !important;
+     padding: 0 0.2em 0 0;
+     padding-left: 0;
+     line-height: 1.1em;
+ }
+ 
+ .primary {
+     background: /*linear-gradient(-45deg, #ec1943, #f0486a);*/
+     $primary;
+     color: #fff !important;
+     border: 1px solid $primary;
+     
+ }
+
+ .secondary{
+    background: linear-gradient(to bottom, #fff, #f9fafb);
+    border: 1px solid $border-color;
+ }
+ 
+ .danger {
+     background-color: $danger;
+     border: 2px solid $primary;
+ }
+ 
+ .heart {
+     color: $primary;
+ }
+ 
+ .success {
+     background-color: $success;
+     color: #fff;
+     i {
+         color: #fff;
+     }
+ }
+ 
+ .outline {
+     background-color: transparent;
+     border: 1px solid $border-color;
+ }
+ 
+ .outline-danger {
+     background-color: transparent;
+     border: 1px solid $danger;
+     color: $danger;
+ }
+ 
+ .outline-success {
+     background-color: transparent;
+     border: 1px solid $success;
+     color: $success;
+ }
+ 
+ .shadow {
+     box-shadow: 0 5px 34px 0 rgba(142, 140, 140, 0.46);
+ }
+ 
+ .btn-full {
+     width: 100%;
+ }
+ 
+ .toggle-btn {
+     width: 40px;
+     height: 20px;
+     margin-bottom: -7px;
+     border-radius: 50px;
+     display: inline-block;
+     position: relative;
+     cursor: pointer;
+     -webkit-transition: background-color .40s ease-in-out;
+     -moz-transition: background-color .40s ease-in-out;
+     -o-transition: background-color .40s ease-in-out;
+     transition: background-color .40s ease-in-out;
+     cursor: pointer;
+     &.inactive {
+         background: no-repeat 40px center $danger;
+         .round-btn {
+             left: 5px;
+         }
+         &::after {
+             position: absolute;
+             right: -65px;
+             content: 'Inactive';
+             top: 0px;
+         }
+     }
+     &.inactive.level {
+         &::after {
+             content: 'True';
+             left: 54px;
+             top: 3px;
+         }
+     }
+     &.active {
+         background: $success;
+         .round-btn {
+             left: 20px;
+         }
+         &::after {
+             position: absolute;
+             content: 'Active';
+             left: 54px;
+             top: 0px;
+         }
+     }
+     &.active.level {
+         &::after {
+             position: absolute;
+             content: 'False';
+             left: 54px;
+             top: 3px;
+         }
+     }
+     .round-btn {
+         width: 15px;
+         height: 15px;
+         background-color: #fff;
+         border-radius: 50%;
+         display: inline-block;
+         position: absolute;
+         top: 12.4px;
+         margin-top: -10.399px;
+         -webkit-transition: all .30s ease-in-out;
+         -moz-transition: all .30s ease-in-out;
+         -o-transition: all .30s ease-in-out;
+         transition: all .30s ease-in-out;
+     }
+     .cb-value {
+         position: absolute;
+         left: 0;
+         right: 0;
+         width: 100%;
+         height: 100%;
+         opacity: 0;
+         z-index: 9;
+         cursor: pointer;
+         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+     }
+     .cb-text {
+         position: absolute;
+         font-size: 1em;
+         right: 10px;
+         top: 5px;
+         color: #fff;
+     }
+ }
+ 
+ //
+ .clear {
+     background-color: transparent;
+     border: 0;
+     color: inherit;
+ }

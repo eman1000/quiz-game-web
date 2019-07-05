@@ -1,0 +1,168 @@
+// -----------------------------------------------------------------------------
+// This file contains CSS helper classes.
+// -----------------------------------------------------------------------------
+
+/**
+ * Clear inner floats
+ */
+
+.clearfix::after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+
+.container {
+    max-width: 100%;
+    /*$max-width; /* 1 */
+    width: 100%;
+    /* 1 */
+}
+
+.flex {
+    display: flex;
+    position: relative;
+}
+
+
+/**
+ * STYLE THE SCROLLBAR WITH BELLOW CODE
+ * CODE IS NOT ATTACHED TO A DIV
+ */
+
+.pull-right {
+    float: right;
+    align-self: flex-end;
+}
+
+.marginTop {
+    margin-top: 16px;
+}
+
+.marginBottom {
+    margin-bottom: 32px;
+}
+
+.padding-none{
+    padding: 0;
+}
+
+/**
+ * STYLE THE SCROLLBAR WITH BELLOW CODE
+ * CODE IS NOT ATTACHED TO A DIV
+ */
+
+ .full-width{
+     width: 100%;
+     display: block;
+ }
+
+/**
+ * STYLE THE SCROLLBAR WITH BELLOW CODE
+ * CODE IS NOT ATTACHED TO A DIV
+ */
+
+hr {
+    margin-top: 31px;
+    margin-bottom: 31px;
+    border: 0;
+    border-top: 1px solid #D5D5D5;
+}
+
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+
+.hide-text {
+    overflow: hidden;
+    padding: 0;
+    text-indent: 101%;
+    white-space: nowrap;
+}
+
+
+/**
+ * USE STYLE WHEN YOU WANT TO HIDE AN ELEMENT 
+ * CODE MIGHT LOOK WEIRD BUT ITS FOR COMPATIBILITY WITH OLD BROWSERS
+ */
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+
+/**
+ * STYLE HOW YOU WANT IMAGES TO BE TREATED
+ * PLACE CLASS ON ACTUAL IMG TAG
+ */
+
+.img-responsive {
+    width: 100%;
+}
+
+
+/**
+ * STYLE LIST HEIGHT TO FORCE HEIGHT ON ELEMENT
+ * ADH=JUST HEIGHT AS NEEDED
+ */
+
+.list-height {
+    max-height: 200px;
+    overflow: scroll;
+}
+
+
+/**
+ * STYLE THE SCROLLBAR WITH BELLOW CODE
+ * USE HAS DIVIDER ON DIV TO SEPARATE CONTENT
+ */
+
+.has-divider {
+    padding: 48px 48px 30px 48px;
+}
+
+
+/**
+ * STYLE THE SCROLLBAR WITH BELLOW CODE
+ * CODE IS NOT ATTACHED TO A DIV
+ */
+
+::-webkit-scrollbar {
+    background: transparent;
+    width: 3px;
+    padding: 0;
+    margin: 0;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    height: 10px !important;
+}
+
+::-webkit-scrollbar-track-piece {
+    height: 30px;
+    width: 30px;
+}
+
+.max-width{
+    //margin: auto;
+    padding: 2em;
+    width: 800px;
+}

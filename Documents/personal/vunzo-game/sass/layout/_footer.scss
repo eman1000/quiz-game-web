@@ -1,0 +1,53 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the footer of the site/application.
+// -----------------------------------------------------------------------------
+
+footer {
+    background-color: #3c3241;
+    margin-top: 3em;
+    padding:2.5em 0;
+    
+    p{
+        color: #999;
+    }
+    
+    ul {
+        color: #fff !important;
+        h4 {
+            font-size: 1.2em;
+            
+            color: #fff;
+            font-size: 16px;
+    margin: 2em 40px 1em 0;
+    padding-bottom: 4px;
+        }
+    }
+    a {
+        line-height: 2.25em;
+        color: #d0d0cb;
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+        font-weight: 300 ;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    footer{
+        display: block;
+        background-color: #313c53;
+    }
+    .footer-items {
+        display: flex;
+        
+        ul {
+            flex: 1;
+            h4 {
+              
+            }
+        }
+        a {
+           
+        }
+    }
+}

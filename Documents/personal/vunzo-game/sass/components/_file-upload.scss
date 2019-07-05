@@ -1,0 +1,76 @@
+
+/************************************
+FILE UPLOAD
+************************************/
+
+.upload-wrapper{
+    display: flex;
+}
+
+.fileUpload {
+    margin: 0 1em 0.5em 0;
+    position: relative;
+    border: 2px dashed #e5ecef;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    height: 152px;
+    position: relative;
+    cursor: default;
+    float: left;
+    
+    .fileUpload--btn {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        z-index: 2;
+        opacity: 0;
+        -moz-opacity: 0;
+        
+    }
+    .fileUpload--placeholder {
+        font-size: 14px;
+        line-height: 1.714;
+        text-align: center;
+        position: absolute;
+        width: 100%;
+        top: 35%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        i {
+            display: block;
+        }
+    }
+    .remove-upload {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #333;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        z-index: 9999;
+        border: 0;
+        i {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            line-height: 20px;
+        }
+        &::hover {
+            cursor: pointer;
+        }
+    }
+    
+    img{
+            width: 100%;
+        height: 100%;
+    object-fit: cover;
+    }
+}
