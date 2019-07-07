@@ -337,7 +337,7 @@ const Test = (props: ITestProps) => {
             )}
           </div>
 
-          <ul>
+          <ul className={"question__options"}>
             {filterdAnswers.map((answer, index) => {
               let isCorrect =
                 questionResult[`q${test.questionId}a${answer.id}`];

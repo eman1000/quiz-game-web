@@ -1,15 +1,17 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useEffect } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
 import Page from "../../../components/Page";
 import HorizontalScroll from "../../../components/HorizontalScroll";
 import Loader from "../../../components/Loader";
+import { Transition } from 'react-transition-group';
 
 //import { Category } from "typings";
 
 import "../../../styles/home.scss";
 import { ICategory } from "../../../typings";
+import { isAbsolute } from "path";
 
 type IHomeProps = {
   id: number;
@@ -23,6 +25,13 @@ type GetCategoriesQuery = {
     edges: Array<ICategory>;
   };
 };
+
+const duration = 300;
+
+const defaultStyle = {
+  transition: `opacity ${duration}ms ease-in-out`,
+  opacity: 0,
+}
 
 export const GET_CATEGORIES = gql(`
   query {
@@ -44,6 +53,31 @@ export const GET_CATEGORIES = gql(`
 const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
   // console.log("user888", props)
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      setInProp(true)
+    }, 1000)
+  },[])
+
+  const duration = 1000;
+
+  const defaultStyle = {
+    transition: `opacity ${duration}ms ease-in-out`,
+    // opacity: 0,
+    position: "absolute",
+    left: -9999,
+  }
+  
+  const transitionStyles = {
+    entering: { left: 0 },
+    entered:  { right: 0 },
+    exiting:  { opacity: 0 },
+    exited:  { opacity: 0 },
+  };
+  const [inProp, setInProp] = React.useState(false);
+
+
+
   return (
     <Page id="homepage" title="Affiliate App">
       <Query<GetCategoriesQuery, {}> query={GET_CATEGORIES}>
@@ -61,7 +95,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                       <div className={"profile__coins"}>12</div>
 
                       <div className={"profile__user"}>
-                        <div className={"user__img"} />
+                        <img src="" className={"user__img"} />
                       </div>
 
                       <div className={"profile__germs"}>12</div>
@@ -69,7 +103,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                   </div>
 
                   <div className={"main"}>
-                    <div className={"chest-container"}>
+                    <div className={"chest-container bounceIn"}>
                       <div className={"chest  chest--game"}>
                         <div className={"chest__status"}>
                           <h3>Game Chest</h3>
@@ -82,14 +116,17 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                           </div>
                         </div>
                       </div>
-                      <div className="chest chest--free">
-                        <div className="chest__status">
-                          <h3>Game Chest</h3>
-                          <div className="chest__loader-wrap">
-                            <span>Opens in 12 hrs 20 min</span>
-                          </div>
-                        </div>
-                      </div>
+                      
+                          
+                            <div className="chest chest--free">
+                              <div className="chest__status">
+                                <h3>Free Chest</h3>
+                                <div className="chest__loader-wrap">
+                                  <span>Open in 12h 20m</span>
+                                </div>
+                              </div>
+                            </div>
+                          
                     </div>
 
                     <div className={"categories-container"}>

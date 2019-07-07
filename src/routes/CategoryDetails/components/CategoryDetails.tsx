@@ -80,7 +80,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
 
                       <div className={"profile__user"}>
                         <div className={"user__img"} />
-                        <div className={"user__level"}>289</div>
+                        {/* <div className={"user__level"}>289</div> */}
                       </div>
 
                       <div className={"profile__germs"}>12</div>

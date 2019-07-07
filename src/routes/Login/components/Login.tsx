@@ -1,10 +1,10 @@
 import React, { Component, useState } from "react";
-import gql from 'graphql-tag';
-import { Query, Mutation } from 'react-apollo';
+import gql from "graphql-tag";
+import { Query, Mutation } from "react-apollo";
 import FacebookLogin from "react-facebook-login";
 
 import Page from "../../../components/Page";
-import Loader from "../../../components/Loader"
+import Loader from "../../../components/Loader";
 
 import "./LoginStyles.scss";
 import { async } from "q";
@@ -29,49 +29,64 @@ export const FACEBOOK_LOGIN = gql(`
   }
 `);
 
-const Login = ({})=>{
+const Login = ({}) => {
   const [accessToken, setAccessToken] = useState(null);
-  const fbLogin = async({res, login})=>{
-    console.log("res", res)
-    if(res){
+  const fbLogin = async ({ res, login }) => {
+    console.log("res", res);
+    if (res) {
       setAccessToken(res.accessToken);
       const tokenObj = await login();
-      if(tokenObj){
+      if (tokenObj) {
         const { token, user } = tokenObj.data.signInFacebook;
-        console.log("token", tokenObj)
-        if(user){
+        console.log("token", tokenObj);
+        if (user) {
           //localStorage.setItem("authUser", user);
         }
 
         return localStorage.setItem("jwtToken", token);
       }
     }
-
-  }
+  };
   return (
-    <Page
-      id="homepage"
-      title="Affiliate App"
-    >
+    <Page id="homepage" title="Affiliate App">
       <Mutation
         mutation={FACEBOOK_LOGIN}
-        variables={{facebookToken:accessToken}}
+        variables={{ facebookToken: accessToken }}
       >
         {(login, { loading }) => {
           if (loading) return "Loading...";
-          return(
-            <FacebookLogin
-              appId="337440783579454"
-              autoLoad={true}
-              fields="name,email,picture"
-              onClick={()=>console.log("clicked")}
-              callback={(res)=>fbLogin({res,login})}
-            />
-          )
+          return (
+            <div>
+              <div className={"container"}>
+                <div className={"login-wrapper"}>
+                  <div className={"intro"}>Welcome to Vunzo</div>
+
+                  <div className={"login-footer"}>
+                    <p>Signup to start playing quiz bee with friends</p>
+
+                    <a href="home.html" className={"btn facebook"}>
+                      Connent with facebbok
+                    </a>
+
+                       <div className="login-footer">
+                  <FacebookLogin
+                    appId="337440783579454"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    onClick={() => console.log("clicked")}
+                    callback={res => fbLogin({ res, login })}
+                  />
+                </div>
+                  </div>
+                </div>
+             
+              </div>
+            </div>
+          );
         }}
       </Mutation>
     </Page>
   );
-}
+};
 
 export default Login;
