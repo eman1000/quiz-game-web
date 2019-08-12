@@ -13,7 +13,7 @@ import "../../../styles/home.scss";
 import { ICategory } from "../../../typings";
 import { isAbsolute } from "path";
 
-type IHomeProps = {
+type ICategoriesProps = {
   id: number;
   name: string;
   description: string;
@@ -50,7 +50,7 @@ export const GET_CATEGORIES = gql(`
   }
 `);
 
-const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
+const Categories: React.FunctionComponent<ICategoriesProps> = (props: ICategoriesProps) => {
   // console.log("user888", props)
 
   useEffect(()=>{
@@ -147,13 +147,13 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
 
                     </div>
 
-                    <a href="/pick-opponent/1" className="btn btngradient">
+                    <a href="pick-opponent.html" className="btn btngradient">
                       Quick Play
                     </a>
                   </div>
 
                   <div className={"footer"}>
-                    <a href="/categories" className={"footer__item"}>
+                    <a href="competitions.html" className={"footer__item"}>
                       <span className={"footer-icon"}>
                         <svg
                           style={{ width: 24, height: 24 }}
@@ -177,7 +177,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                       <span>Home</span>
                     </a>
 
-                    <a href="categories.html" className={"footer__item"}>
+                    <a href="/categories" className={"footer__item"}>
                       <span className={"footer-icon"}>
                         <svg
                           style={{ width: 24, height: 24 }}
@@ -211,4 +211,4 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
   );
 };
 
-export default HomePage;
+export default Categories;
