@@ -164,7 +164,7 @@
       body{
         position: relative;
         overflow: hidden;
-        // background-color: #000;
+        background-color: #000;
         
          &:after{
              position: fixed;
@@ -178,9 +178,10 @@
              background-position: center;
              z-index: -999;
              opacity: 1;
-             background-image: url('../assets/line-bg-grey.svg');
-             opacity: 0.1;
-          // background-image: url('/img/main-bg.png');
+            //  background-image: url('../assets/line-bg-grey.svg');
+             opacity: 0.3;
+             
+          background-image: url('../assets/background.jpg');
           
          }
           
@@ -195,7 +196,7 @@
     flex-direction: column;
 
     .btn{
-        max-width: 300px;
+        max-width: 90%;
     }
     
 }
@@ -237,7 +238,7 @@
 }
 
 .profile__coins {
-  height: 22px;
+  height: 26px;
   background: rgba(145, 152, 148, 0.4);
   flex: 1;
   margin-top: 20px;
@@ -262,7 +263,7 @@
 }
 
 .profile__germs {
-  height: 14px;
+  height: 26px;
   background: rgba(145, 152, 148, 0.4);
   flex: 1;
   margin-top: 20px;
@@ -330,14 +331,15 @@
 .categoriies-header {
   display: flex;
   justify-content: space-between;
-  margin: 10vh 10px 0 10px;
+  margin: 4vh 10px -15px 10px;
   
   h2{
       font-size: 16px;
+      color: #fff;
   }
 
   .view-all{
-
+    color: #fff;
   }
 }
 
@@ -427,7 +429,7 @@
     padding: 8px 4px 0px 50px;
     position: relative;
     text-transform: uppercase;
-    min-height: 65px;
+    min-height: 75px;
 
     &--free {
       background: #4eff00; /* Old browsers */
@@ -1126,9 +1128,9 @@ box-sizing: content-box;
       width: 20px;
       fill: #6f6f6f;
       margin: auto;
-      margin-bottom: 4px;
-      
+      margin-bottom: 9px;
       display: block;
+      margin-top: -10px;
       
   }
 }
