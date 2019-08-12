@@ -74,16 +74,20 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
             <div>
               {
                 <div>
-                  <div className={"header"}>
+                 <div className={"header"}>
                     <div className={"profile"}>
-                      <div className={"profile__coins"}>12</div>
 
                       <div className={"profile__user"}>
-                        <div className={"user__img"} />
-                        {/* <div className={"user__level"}>289</div> */}
+                        <img src="" className={"user__img"} />
+                        <div className={"profile-points"}>
+                        <div className={"profile-points-title"}>Your total points</div>
+                        <div className={"profile-points-qty"}>24,800</div>
+                        </div>
                       </div>
-
+                      <div className={"profile-gains"}>
+                      <div className={"profile__coins"}>12</div>
                       <div className={"profile__germs"}>12</div>
+                      </div>
                     </div>
                   </div>
 
@@ -102,7 +106,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
         }}
       </Query>
       <div className={"footer no-bg"}>
-        <Link className={"btn greengradient"} to={`/pick-opponent/${id}`}>
+        <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
           Play Now
         </Link>
       </div>

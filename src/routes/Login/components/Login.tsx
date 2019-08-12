@@ -64,9 +64,7 @@ const Login = ({}) => {
                   <div className={"login-footer"}>
                     <p>Signup to start playing quiz bee with friends</p>
 
-                    <a href="home.html" className={"btn facebook"}>
-                      Connent with facebbok
-                    </a>
+                  
 
                        <div className="login-footer">
                   <FacebookLogin

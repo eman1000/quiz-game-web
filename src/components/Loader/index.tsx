@@ -5,8 +5,9 @@ import "./Loader.scss";
 const Loader = () =>{
 
   return (
-    <div className="wrapper">
-      <LoaderComponent active type="ball-clip-rotate" />
+    <div className="loader">
+      1232323
+      <LoaderComponent  active type="ball-clip-rotate" />
     </div>
 
   );
