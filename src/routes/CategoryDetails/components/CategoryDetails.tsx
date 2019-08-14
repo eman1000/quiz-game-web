@@ -91,7 +91,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
                     </div>
                   </div>
 
-                  <div className={"main"}>
+                  <div className={"mains"}>
                     category &&
                     <Banner
                       title={category.name}

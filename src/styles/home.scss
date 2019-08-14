@@ -17,7 +17,7 @@
 
 .bluegradient {
  
-  background: #57CCFC; /* Old browsers */
+  background: #26D5F9; /* Old browsers */
 //   background: -moz-linear-gradient(top,  #4efff8 0%, #76baff 100%); /* FF3.6-15 */
 //   background: -webkit-linear-gradient(top,  #4efff8 0%,#76baff 100%); /* Chrome10-25,Safari5.1-6 */
 //   background: linear-gradient(to bottom,  #4efff8 0%,#76baff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -25,7 +25,7 @@
   }
   
   .pinkgradient{   
-  background: #FA7575; /* Old browsers */
+  background: #CF43CA; /* Old browsers */
 //   background: -moz-linear-gradient(top,  #ff989b 0%, #ff5177 100%); /* FF3.6-15 */
 //   background: -webkit-linear-gradient(top,  #ff989b 0%,#ff5177 100%); /* Chrome10-25,Safari5.1-6 */
 //   background: linear-gradient(to bottom,  #ff989b 0%,#ff5177 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -42,7 +42,7 @@
   
   .orangegradient{
       
-  background: #FCB657; /* Old browsers */
+  background: #F3BC00; /* Old browsers */
 //   background: -moz-linear-gradient(top,  #ffb26a 0%, #ff722d 100%); /* FF3.6-15 */
 //   background: -webkit-linear-gradient(top,  #ffb26a 0%,#ff722d 100%); /* Chrome10-25,Safari5.1-6 */
 //   background: linear-gradient(to bottom,  #ffb26a 0%,#ff722d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -51,22 +51,21 @@
   
   .greengradient{
   
-  background: #51D2BE; /* Old browsers */
-//   background: -moz-linear-gradient(top,  #7bd39b 0%, #3eaf74 100%); /* FF3.6-15 */
-//   background: -webkit-linear-gradient(top,  #7bd39b 0%,#3eaf74 100%); /* Chrome10-25,Safari5.1-6 */
-//   background: linear-gradient(to bottom,  #7bd39b 0%,#3eaf74 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #45E534; /* Old browsers */
+ 
   color: #fff;
   
   }
   
   .btngradient{
       color: #fff;
-  background: #41BE72; /* Old browsers */
-//   background: -moz-linear-gradient(top,  #82e300 0%, #82e300 17%, #7adb00 33%, #65c500 67%, #43a100 83%, #1a7500 100%); /* FF3.6-15 */
-//   background: -webkit-linear-gradient(top,  #82e300 0%,#82e300 17%,#7adb00 33%,#65c500 67%,#43a100 83%,#1a7500 100%); /* Chrome10-25,Safari5.1-6 */
-//   background: linear-gradient(to bottom,  #82e300 0%,#82e300 17%,#7adb00 33%,#65c500 67%,#43a100 83%,#1a7500 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #A2F023; /* Old browsers */
   border: 0;
   height: auto;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: 0px 4px 0px #CAFF68;
+ -moz-box-shadow: 0px 4px 0px #CAFF68;
+ box-shadow: 0px 4px 0px #519105;
   
   }
   
@@ -164,10 +163,10 @@
       body{
         position: relative;
         overflow: hidden;
-        background-color: #F0F4F9;
-        color: #4E5D70;
+        background-color: #2F1358;
+        color: #fff;
         
-         &:after{
+         &:before{
              position: fixed;
              top: 0;
              right: 0;
@@ -179,21 +178,39 @@
              background-position: center;
              z-index: -999;
              opacity: 1;
-             background-image: url('../assets/line-bg-grey.svg');
-             opacity: 0.05;
+            //  background-image: url('../assets/line-bg-grey.svg');
+             opacity: 0.30;
              
-        //   background-image: url('../assets/background.jpg');
+          background-image: url('../assets/background.svg');
           
          }
+
+         &:after{
+            position: fixed;
+            bottom: -25vh;
+            right: 0;
+            left: 0;
+            height: 60vh;
+            width: 100vw;
+            content: '';
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -999;
+      
+            
+         background-image: url('../assets/radial-bg.svg');
+         
+        }
           
       }
 
 
 .main{
     
-    height: 100vh;
+    height: calc(100vh - 105px);
     display: flex;
-    // padding: 0 2vw;
+    justify-content: space-between;
     flex-direction: column;
 
     .btn{
@@ -208,11 +225,13 @@
   background-repeat: no-repeat;
   position: fixed;
   width: 100%;
+  height: 110px;
   box-sizing: content-box;
   top: 0;
   z-index: 9;
-  background-size: contain;
-  background-color: #fff;
+  background-position: center;
+  background-size: cover;
+//   background-color: #fff;
 }
 
 .header .back {
@@ -251,8 +270,13 @@
   margin-top: -3px;
   margin-bottom: 6px;
   border-radius: 3px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid #386AA1;
+  background: -moz-linear-gradient(top,  #123655 10%, #255B97 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #123655 10%,#255B97 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #123655 10%,#255B97 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
   padding: 5px 0 0px 40px;
   position: relative;
   font-size: 14px;
@@ -431,7 +455,7 @@ display: flex;
     min-height: 75px;
 
     &--free {
-      background: #6983FB; /* Old browsers */
+      background: #45E534; /* Old browsers */
 
       position: relative;
 
@@ -449,7 +473,7 @@ display: flex;
     }
 
     &--game {
-      background-color: #51D2BE;
+      background-color: #0B74B0;
       position: relative;
 
       &::before {
@@ -568,9 +592,9 @@ display: flex;
 }
 
   &__image{
-      margin-top:50px;
+      margin-top:70px;
       height: 180px;
-      background-color: #ccc;
+      background-color: #320167;
       width: 100%;
   }
 
@@ -586,6 +610,7 @@ display: flex;
       border-radius: 50%;
       border: 1px solid #ccc;
       text-align: center;
+      color: #F3BC00;
       
   }
 
@@ -898,7 +923,7 @@ background-color: #fff;
     background-image: url('../assets/orange-circles.svg');
     
     background-repeat: no-repeat;
-    padding-top: 60px;
+    padding-top: 120px;
     padding-bottom: 60px;
     margin-top: 30px;
     color: #fff;
@@ -1077,7 +1102,7 @@ box-sizing: content-box;
   &::before{
       content: '';
       position: fixed;
-      width: 105vw;
+      width: 110vw;
       background-image: url("../assets/footer-bg.svg");
       background-repeat: no-repeat;
       right: 0;
@@ -1085,7 +1110,7 @@ box-sizing: content-box;
       
       z-index: 0;
       height: 100px;
-      background-size: contain;
+      background-size: cover;
   }
 
   .btn{
