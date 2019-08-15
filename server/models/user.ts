@@ -175,7 +175,7 @@ const user = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): S
 
     const gems = ((user.coins % 20 === 0)) ?  1 : null
     const result = await User.update({
-      coins: user.coins + 1,
+      coins: user.coins + 2,
       gems: gems ? (user.gems + gems) : user.gems,
     },{
       where:{

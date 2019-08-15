@@ -90,17 +90,6 @@ const Categories: React.FunctionComponent<ICategoriesProps> = (props: ICategorie
             <div className="listWrapper">
               {getCategories.edges.length > 0 && (
                 <div>
-                  <div className={"header"}>
-                    <div className={"profile"}>
-                      <div className={"profile__coins"}>12</div>
-
-                      <div className={"profile__user"}>
-                        <img src="" className={"user__img"} />
-                      </div>
-
-                      <div className={"profile__germs"}>12</div>
-                    </div>
-                  </div>
 
                   <div className={"main"}>
                     <div className={"chest-container bounceIn"}>

@@ -57,6 +57,14 @@ const PickOpponent = Loadable({
   loading: () => null,
   modules: ["pickOpponent"]
 });
+
+const Challenges = Loadable({
+  loader: () => import(/* webpackChunkName: "homepage" */ "./Challenges/components/Challenges"),
+  loading: () => null,
+  modules: ["challenges"]
+});
+
+
 const Login = Loadable({
   loader: () => import(/* webpackChunkName: "homepage" */ "./Login/container/LoginContainer"),
   loading: () => null,
@@ -87,8 +95,10 @@ export default () => (
       <AuthenticatedRoute exact path="/game-chest" component={GameChest} />
       <AuthenticatedRoute exact path="/free-chest" component={FreeChest} />
       <AuthenticatedRoute exact path="/profile" component={Profile} />
+      <AuthenticatedRoute exact path="/challenges" component={Challenges} />
 
 
+      
       <AuthenticatedRoute exact path="/play-room/:matchId" component={PlayRoom} />
 
       <AuthenticatedRoute exact path="/pick-opponent/:categoryId" component={PickOpponent} />

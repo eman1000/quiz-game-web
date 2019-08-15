@@ -64,10 +64,6 @@ const PickOpponent = (props)=>{
       title="Quiz App"
     >
 
-         <div className={"header"}>
-        <a href="category.html" className={"back"}></a>
-        <h3>Pick An Opponent</h3>
-      </div>
 
             <div className={"main"}>
         <div className={"pick-opponent"}>

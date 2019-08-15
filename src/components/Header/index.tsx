@@ -1,8 +1,8 @@
 import React from "react";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
-import moment from "moment";
-import classnames from "classnames";
+import { withRouter } from "react-router-dom";
+import {RouteComponentProps} from "react-router";
 import "./Header.scss";
+import { IUser } from "../../typings";
 
 
 interface IHeaderLinkProps {
@@ -12,103 +12,85 @@ interface IHeaderLinkProps {
   current: string
 }
 
-interface IHeaderProps {
-  isAuthenticated: boolean,
-  authenticatedUser: {
-    username: string
-  },
-  current: string
-}
-
-interface IHeaderState{
-  isOpen: boolean
-}
-const links:Array<Object> = [
-  /**{
-    to: "/login",
-    text: "Login",
-    auth: false,
-    isButton:true
-  },
-  {
-    to: "/campaigns",
-    text: "My Campaigns",
-    auth: true
-  },
-  {
-    to: "/logout",
-    text: "Logout",
-    auth: true
-  }
-  /*{
-    to: '/this-is-broken',
-    text: 'Broken Page'
-  }*/
-];
-
-const isCurrent = (to: string, current:string): boolean => {
-  if (to === "/" && current === to) {
-    return true;
-  } else if (to !== "/" && current.includes(to)) {
-    return true;
-  }
-  return false;
+type IHeaderProps = RouteComponentProps & {
+  isAuthenticated: boolean;
+  user:IUser;
+  current:string;
 };
 
-const navItemClasses = (to:string, current:string, isButton:boolean) => classnames({
-  current:isCurrent(to, current),
-  btn: isButton,
-  "btn-gradient": isButton
-});
 
-export default class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
-  constructor(props:IHeaderProps) {
-    super(props);
+const Header = (props:IHeaderProps)=>{
+  
+  const {avatar, coins, gems} = props.user;
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-  getGreetingTime (m){
-    var g = ""; //return g
-    
-    if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-    
-    var split_afternoon = 12 //24hr time to split the afternoon
-    var split_evening = 17 //24hr time to split the evening
-    var currentHour = parseFloat(m.format("HH"));
-    
-    if(currentHour >= split_afternoon && currentHour <= split_evening) {
-      g = "afternoon";
-    } else if(currentHour >= split_evening) {
-      g = "evening";
-    } else {
-      g = "morning";
+  console.log("Current", props.current)
+  const pages = {
+    "/":{
+      name:"Home",
+      hasBack:false
+    },
+    "category-details":{
+      name:"Category Details",
+      hasBack:false
+    },
+    "categories":{
+      name:"Categories",
+      hasBack:false
+    },
+    "game-chest":{
+      name:"Game Chest",
+      hasBack:false
+    },
+    "free-chest":{
+      name:"Free Chest",
+      hasBack:false
+    },
+    "profile":{
+      name:"Profile",
+      hasBack:false
+    },
+    "play-room":{
+      name:"Play Room",
+      hasBack:false
+    },
+    "pick-opponent":{
+      name:"Pick Opponent",
+      hasBack:true
+    },
+    "challeges":{
+      name:"Challenges Opponent",
+      hasBack:true
     }
-    return g;
-  }
-  //export default ({ isAuthenticated, current }) => (
+  };
+  const path = props.current.split("/")[1];
+  console.log("context", path)
+  return (
+    <div className={"header"}>
+      { (props.current === "/" || (pages[path] && !pages[path].hasBack)) &&
+        <div className={"profile"}>
+          <div className={"profile__user"}>
+            <img src={avatar} className={"user__img"} />
+            <div className={"profile-points"}>
+            <div className={"profile-points-title"}>Your total points</div>
+            <div className={"profile-points-qty"}>rfrfr</div>
+            </div>
+          </div>
+          <div className={"profile-gains"}>
+          <div className={"profile__coins"}>{coins}</div>
+          <div className={"profile__germs"}>{gems}</div>
+          </div>
+        </div>
+        ||
+        <div>
+          <a href="" onClick={(ev)=>{ev.preventDefault();props.history.goBack()}} className={"back"}></a>
+          <h3>{pages[path] && pages[path].name}</h3>
+        </div>
 
-  render(){
-    return (
-      <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand href="/">
-          <span className="logo">
-            {/**<img src={logo} alt="Homepage"/>**/}
-            <span>App</span>
-          </span>
+      }
+    
+    </div>
+  );
+};
 
-        </NavbarBrand>
-        <Nav className="ml-auto" navbar>
-     
-        </Nav>
-      </Navbar>
-    );
-  }
-}
+export default withRouter(Header);
+

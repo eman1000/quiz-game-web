@@ -19,6 +19,7 @@ import ErrorHandler from "../components/ErrorHandler"
 import { GET_PROFILE } from "../components/AuthenticatedRoute";
 import MatchNotification from "../components/MatchNotification";
 import { IUser } from "../typings";
+import Footer from "../components/Footer";
 
 export const MATCH_SUBSCRIPTION = gql(`
   subscription($matchId: ID!){
@@ -110,14 +111,15 @@ export const App = (props)=>{
     }, 2000);
     return (
       <div>
-        {/* {
+        {
           user &&
+          //@ts-ignore
           <Header
             isAuthenticated={true}
             current={window.location.pathname}
-            authenticatedUser={user}
+            user={user}
           />
-        } */}
+        }
         <div id="content">
           {
             //@ts-ignore
@@ -126,6 +128,10 @@ export const App = (props)=>{
           }
           
           <Routes />
+          {/* {
+            user &&
+            <Footer current={window.location.pathname}/>
+          } */}
         </div>
       </div>
     );

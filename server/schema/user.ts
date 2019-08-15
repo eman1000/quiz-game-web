@@ -84,6 +84,9 @@ const schema = gql(`
       age: Int
       email: String
     }
+    extend type Subscription {
+      userUpdated(id: ID): User !
+    }
     
 `)
 

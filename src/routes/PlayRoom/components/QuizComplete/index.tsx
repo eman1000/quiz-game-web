@@ -15,6 +15,7 @@ const QuizComplete = ({ userScoreData, isWinner }: IQuizCompleteProps) => {
   const title = isWinner ? "Congratulations" : "You lost!";
 
   const [showSocialButtons, setShowSocialButtons] = useState<boolean>(false);
+
   return (
     <div className={"result-container"}>
       <div className={"result"}>

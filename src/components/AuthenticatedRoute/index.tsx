@@ -17,7 +17,9 @@ export const GET_PROFILE = gql(`
       email
       role
       facebookId
-      avatar
+      avatar,
+      coins,
+      gems
     }
   }
 `);

@@ -215,6 +215,16 @@ const Test = (props: ITestProps) => {
       setShowComplete(true);
     }
 
+    //num games played
+    if(typeof window != "undefined"){
+      const theNumGamesPlayed = window.localStorage.getItem("numGamesPlayed");
+      if(theNumGamesPlayed != null){
+        const newNum = parseInt(theNumGamesPlayed) + 1;
+        window.localStorage.setItem("numGamesPlayed", newNum.toString());
+      }else{
+        window.localStorage.setItem("numGamesPlayed", "1");
+      }
+    }
     console.log("WINNER", winner);
   };
   const handleNext = () => {
@@ -258,7 +268,7 @@ const Test = (props: ITestProps) => {
   };
   useInterval(() => {
     if (matchObj.status === "complete") {
-      clearInterval(timer);
+      clearInterval(timer);  
     }
     if (count === 10) {
       handleNext();
@@ -272,7 +282,7 @@ const Test = (props: ITestProps) => {
     ) {
       clearInterval(timer);
     }
-  }, 200000000);
+  }, 1000);
 
   useEffect(() => {
     if (matchObj.status === "complete") {
@@ -301,22 +311,6 @@ const Test = (props: ITestProps) => {
         <div>
           <div>
             <div className={"question"}>
-            <div className={"header"}>
-                    <div className={"profile"}>
-
-                      <div className={"profile__user"}>
-                        <img src="" className={"user__img"} />
-                        <div className={"profile-points"}>
-                        <div className={"profile-points-title"}>Your total points</div>
-                        <div className={"profile-points-qty"}>24,800</div>
-                        </div>
-                      </div>
-                      <div className={"profile-gains"}>
-                      <div className={"profile__coins"}>12</div>
-                      <div className={"profile__germs"}>12</div>
-                      </div>
-                    </div>
-                  </div>
 
                   <div className={"question__image"}>
 
