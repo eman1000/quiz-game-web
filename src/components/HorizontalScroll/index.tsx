@@ -9,7 +9,10 @@ export default ({data, title, className}:{data:Array<ICategory>, title?:string,c
     <Fragment>
       {
         title &&
+        <div>
         <h4>{title}</h4>
+        <p>a small iorn sword description</p>
+        </div>
       }
       <div className={"categories"}>
         {

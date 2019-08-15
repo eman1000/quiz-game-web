@@ -15,7 +15,12 @@ export default ({category}:IScrollProps)=>{
   
   <div className={`${category.catKey} category__icon `}></div>
 
-      <div className={"category__name"}>{category.name}</div>
+      <div className={"category__name"}>{category.name}
+      
+      <p>a small iorn sword description</p>
+      </div>
+
+      <div className="category-btn"></div>
     </Link>
   )
 };

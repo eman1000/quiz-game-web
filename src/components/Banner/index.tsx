@@ -10,11 +10,16 @@ type IBanner = {
 };
 export default ({ title, description, bgImage }: IBanner) => {
   return (
-    <div>
+    <div >
       <div className={"category-header"}>
         <h1>{title}</h1>
-        <p>{description}</p>
+        
       </div>
-    </div>
+      <div className={"category-banner"}>
+      <p>{description}</p>
+      </div>
+      </div>
+    
+    
   );
 };

@@ -64,7 +64,8 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
   const { id } = props.match.params || "";
 
   return (
-    <Page id="homepage" title="Affiliate App">
+    <Page id="homepage"  className={"category-wrapper"} title="Affiliate App">
+     <div className={"category-details"}>
       <Query query={GET_CATEGORY} variables={{ id }}>
         {({ loading, error, data }) => {
           if (loading) return "Loading...";
@@ -73,27 +74,28 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
           return (
             <div>
               {
-                <div>
+                <div >
+       
 
-                  <div className={"mains"}>
-                    category &&
+                 
+                    {/* category && */}
                     <Banner
                       title={category.name}
                       description={category.description}
                       bgImage={category.backgroundImageUrl}
                     />
-                  </div>
+
+
+                 
                 </div>
+
+                
               }
             </div>
           );
         }}
       </Query>
-      <div className={"footer no-bg"}>
-        <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
-          Play Now
-        </Link>
-      </div>
+ 
       <Query
         query={GET_RANKING}
         variables={{
@@ -136,6 +138,10 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
           );
         }}
       </Query>
+      <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
+          Play Now
+        </Link>
+    </div>
     </Page>
   );
 };

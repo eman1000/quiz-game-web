@@ -88,7 +88,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
               {getCategories.edges.length > 0 && (
                 <div>
                   <div className={"main"}>
-                    <div className={"chest-container bounceIn"}>
+                    {/* <div className={"chest-container bounceIn"}>
                       <Link to="/free-chest" className={"chest  chest--game"}>
                         <div className={"chest__status"}>
                           <h3>Game Chest</h3>
@@ -112,16 +112,16 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                               </div>
                             </Link>
                           
-                    </div>
+                    </div> */}
 
                     <div className={"categories-container"}>
 
                     
 
-                    <div className={"categoriies-header"}>
-                      <h2>Category</h2>
-                      <a href="category.html" className={"view-all"}>
-                        View All
+                    <div className={"r"}>
+                      
+                      <a href="category.html" className={"categoriies-header"}>
+                        CATEGORIES
                       </a>
                     </div>
 
@@ -132,9 +132,9 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
 
                     </div>
 
-                    <Link to="/pick-opponent/1" className="btn btngradient">
+                    {/* <Link to="/pick-opponent/1" className="btn btngradient">
                       Quick Play
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               )}
