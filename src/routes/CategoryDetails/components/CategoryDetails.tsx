@@ -65,10 +65,12 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
 
   return (
     <Page id="homepage"  className={"category-wrapper"} title="Affiliate App">
-     <div className={"category-details"}>
+      
+     <div className={"modal"}>
+     
       <Query query={GET_CATEGORY} variables={{ id }}>
         {({ loading, error, data }) => {
-          if (loading) return "Loading...";
+          if (loading) return <Loader></Loader>;
           if (error) return `Error! ${error.message}`;
           const category = data.getCategory || {};
           return (
@@ -76,17 +78,12 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
               {
                 <div >
        
-
-                 
                     {/* category && */}
                     <Banner
                       title={category.name}
                       description={category.description}
                       bgImage={category.backgroundImageUrl}
-                    />
-
-
-                 
+                    />                 
                 </div>
 
                 
@@ -95,7 +92,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
           );
         }}
       </Query>
- 
+ <div className={"modal-body"}>
       <Query
         query={GET_RANKING}
         variables={{
@@ -104,13 +101,14 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
         }}
       >
         {({ loading, error, data }) => {
-          if (loading) return "Loading...";
+           if (loading) return <Loader></Loader>;
           if (error) return <ErrorHandler error={error} />;
 
           const ranking = data.getScores.edges || {};
           return (
-            <div className={styles.listWrapper}>
-              <h3>Rankings</h3>
+            <div>
+          
+              
               <ol className={"rankings"}>
               
                 {ranking &&
@@ -134,13 +132,17 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
                     );
                   })}
               </ol>
+              <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
+          Play Now
+        </Link>
+            
+              
             </div>
+            
           );
         }}
       </Query>
-      <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
-          Play Now
-        </Link>
+      </div>
     </div>
     </Page>
   );

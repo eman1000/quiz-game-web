@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import { Query, graphql } from "react-apollo";
 import gql from "graphql-tag";
+import Loader from "../../components/Loader";
 
 
 export const GET_PROFILE = gql(`
@@ -31,7 +32,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => {
     return ()=>console.log("clear")
   },[])
   if (loading) {
-    return <p>Loading...</p>
+    return <Loader/>
   }
   if (error) {
     return <p>{error.message}</p>

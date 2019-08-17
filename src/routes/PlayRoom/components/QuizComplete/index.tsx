@@ -17,7 +17,10 @@ const QuizComplete = ({ userScoreData, isWinner }: IQuizCompleteProps) => {
   const [showSocialButtons, setShowSocialButtons] = useState<boolean>(false);
 
   return (
-    <div className={"result-container"}>
+    <div className={"result-container "}>
+      <div className={"modal"}>
+        <div className={"modal-header "}><h1>Quiz completed</h1></div>
+        <div className={"modal-body"}>
       <div className={"result"}>
         <div className={"profile__user"}>
           <div>
@@ -25,7 +28,9 @@ const QuizComplete = ({ userScoreData, isWinner }: IQuizCompleteProps) => {
           </div>
         </div>
 
-        <div className={"result__title"}>{title}</div>
+        <div className={"result__title"}>
+          <span>{title}</span>
+        </div>
 
         <div className={"winner-reward"}>
           <h3>
@@ -55,6 +60,8 @@ const QuizComplete = ({ userScoreData, isWinner }: IQuizCompleteProps) => {
           </button>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

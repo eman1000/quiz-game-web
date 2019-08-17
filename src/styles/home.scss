@@ -14,6 +14,15 @@
 }
 
 
+.bggradient {
+ 
+  background: #46417D; /* Old browsers */
+  background: -moz-linear-gradient(top,  #2E305C 0%, #46417D 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #2E305C 0%,#46417D 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #2E305C 0%,#46417D 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      
+  }
+
 
 .bluegradient {
  
@@ -83,24 +92,19 @@
       &:before{
           content: '';
           position: absolute;
-          height: 38px;
-          width: 38px;
+          height: 20px;
+          width: 20px;
           left: 0;
           right: 0;
-          bottom: 0;
+          top: 10px;
           margin: auto;
-          background-size: contain;
+          background-size: cover;
           background-repeat: no-repeat;
           
       }
   }
   
-  .cars, .general, .health{
-      &:before{
-          height: 34px;
-          width: 34px;
-      }
-  }
+
   
   .sport{
       &:before{
@@ -149,8 +153,8 @@
     
       &:before{
           background-image: url('../assets/medical-bag.svg');
-          height: 30px;
-          width: 30px;
+          height: 15px;
+          width: 15px;
           
           }
   }
@@ -163,45 +167,31 @@
       body{
         position: relative;
         overflow: hidden;
-        background-color: #2F1358;
+        background-color: #030126;
         color: #fff;
+        height: 100vh;
+        width: 100vw;
         
-         &:before{
+         &:after{
              position: fixed;
-             top: 0;
-             right: 0;
+            
+             
              left: 0;
-             height: 100vh;
+            height: 100vh;
              width: 100vw;
              content: '';
-             background-size: cover;
+            opacity: 0.3;
              background-position: center;
-             z-index: -999;
-             opacity: 1;
-            background-color: #31314A;
-          //    opacity: 0.30;
-             
-          // background-image: url('../assets/background.svg');
-          
+             z-index: -1;
+            
+            top: -24vh;
+            background-image: url("../assets/main-bg.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+               
          }
 
-        //  &:after{
-        //     position: fixed;
-        //     bottom: -25vh;
-        //     right: 0;
-        //     left: 0;
-        //     height: 60vh;
-        //     width: 100vw;
-        //     content: '';
-        //     background-size: cover;
-        //     background-repeat: no-repeat;
-        //     background-position: center;
-        //     z-index: -999;
-      
-            
-        //  background-image: url('../assets/radial-bg.svg');
-         
-        // }
+
           
       }
 
@@ -337,9 +327,9 @@ overflow: hidden;
       content: '';
       position: absolute;
       height: 28px;
-      width: 28px;
-      left: 6px;
-      top:-4px;
+      width: 36px;
+      left: 2px;
+      top: -2px;
       background-image: url('../assets/trophie.svg');
       background-repeat: no-repeat;
     }
@@ -443,7 +433,9 @@ overflow: hidden;
           margin: 0 auto;
           height: 40px;
           width: 40px;
-          border: 3px solid gold;
+          background-image: url("../assets/orange-box.svg");
+          background-repeat: no-repeat;
+          border-radius: 3px;
           position: relative;
           margin-right: 10px;
 
@@ -468,9 +460,13 @@ overflow: hidden;
       }
 
       .category-btn{
-        width: 40px;
-        height: 40px;
-        background-color: #1BD437;
+        width: 25px;
+        height: 25px;
+        align-self: center;
+       background-image: url("../assets//arrow.svg");
+       background-repeat: no-repeat;
+       opacity: 0.25;
+
       
       }
   }
@@ -491,9 +487,7 @@ overflow: hidden;
   justify-content: flex-start;
 
   .category{
-    
-
-
+  
       &--horizontal{
           flex-direction: row;
       }
@@ -520,25 +514,65 @@ overflow: hidden;
 }
 
 
-.category-details{
-  background-color: #46417D;
-  
+.modal{
+  background: #46417D; /* Old browsers */
+  background: -moz-linear-gradient(top,  #2E305C 0%, #46417D 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #2E305C 0%,#46417D 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #2E305C 0%,#46417D 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   left: 0;
   right: 0;
   width: 100%;
+  top: 15vh;
+  max-height: 80vh;
   max-width: 300px;
   margin: auto;
-  padding-bottom: 20px;
+  position: relative;
+  overflow-y: scroll;
+  border-radius: 8px;
+  animation-duration: 0.75s;
+    animation-name: bounceIn;
   
+
+  &::after{
+    content: '';
+    position: absolute;
+  width: 100%;
+  height: 10px;
+  left: 0;
+  bottom:0px;
+  background-image: url("../assets/modal-footer.svg");
+  background-size: cover;
+  z-index: 99999;
+  }
+  
+}
+
+.modal-body{
+  border: 1px solid #9A95FF;
+  border-top: 1px solid #9a95ff94;
+  margin-top: -2px;
+  padding-bottom: 10px;
+  min-height: 200px;
+}
+
+.result-container .modal-body{
+  background-image: url("../assets/stars.svg");
+}
+
+.modal-buttons{
+  margin: 1em 0;
+  padding-top: 1em;
+ 
 }
 
 .category-banner{
   padding: 0 2em;
   min-height: 100px;
   background-color: #249B1E;
-  border: 2px solid #797CEC;
+  border: 1px solid #797CEC;
   margin: 10px 10px;
   border-radius: 8px;
+  display: none;
 }
 
 
@@ -698,8 +732,7 @@ overflow: hidden;
 
   &__image{
       margin-top:70px;
-      height: 180px;
-      background-color: #320167;
+      height: 130px;
       width: 100%;
   }
 
@@ -758,7 +791,7 @@ overflow: hidden;
 // OPTION ANSWER
 
 .result-container{
-background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.83);
   position: fixed;
   top: 0;
   right: 0;
@@ -767,33 +800,22 @@ background-color: #fff;
   height: 100vh;
   -webkit-animation-duration: 0.75s;
   animation-duration: 0.75s;
-  // animation-delay: .5s;
   -webkit-animation-name: bounceIn;
   animation-name: bounceIn;
 }
 
 .result{
-
-  background-color: #fff;
-  border-radius: 20px 20px 0 0;
-  height: 80vh;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  bottom: 0vh;
-  padding: 0 5vw;
-  box-sizing: border-box;
+padding: 4em 1.5em 0 1.5em;
   .profile__user{
       align-self: center;
       display: block;
       
       .user__img{
-          height: 90px;
-          width: 90px;
+          height: 50px;
+          width: 50px;
           border-radius: 10px;
           margin: auto;
-          background-image: url('../assets/user.jpg');
-
+          display: none;
       }
 
   }
@@ -804,17 +826,42 @@ background-color: #fff;
 
   &__title{
       text-align: center;
-      font-size: 24px;
-      color: #71CD94;
+      font-size: 18px;
+      line-height: 4em;
       margin-bottom: 20px;
-      margin-top: 20px
+      margin-top: 20px;
+      position: relative;
+      
+      span{
+        position: relative;
+        z-index: 9;
+      }
+
+      &::before{
+        content: '';
+        height: 150px;
+        width: 220px;
+        left: 0;
+        right: 0;
+        top: -90px;
+        margin: auto;
+        background-image: url("../assets/completed.svg");
+        
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        z-index: 0;
+      }
   }
 
   &--action{
+margin-top: 30px;
       .btn{
-          margin: 20px auto;
+         
+          margin: 15px auto;
+          font-size: 12px;
           
-          display: block;
+          
       }
   }
 }
@@ -823,14 +870,11 @@ background-color: #fff;
 
 .winner-reward{
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  
   flex: 1;
 
   h3{
       // font-family: $light-font;
-      font-size: 17px;
+      font-size: 13px;
   }
 
   .reward-wrap{
@@ -838,13 +882,13 @@ background-color: #fff;
       max-width: 290px;
       margin: auto;
       justify-content: space-between;
-      font-size: 22px;
+      font-size: 17px;
       background-color: rgba(238, 238, 238, 0.47);
       border-radius: 8px;
       
       .reward{
           
-          margin: 10px 0;
+          margin: 0px 0;
           flex: 1;
           position: relative;
           
@@ -892,20 +936,38 @@ background-color: #fff;
 
   .btn{
       border-radius: 8px;
-      max-width: 43%;
+      align-content: flex-start;
+      justify-content: flex-start;
+      max-width: 65px;
       white-space: normal;
-      padding: 0 30px 3px;
+      padding: 4px 10px;
       margin-top: 4px;
-      padding-left: 60px;
-      font-size: 18px;
+      text-transform: uppercase;
+      font-size: 14px;
       text-align: left;
       font-weight: bold;
+      background-color: #5A5ECE;
+      border: 0;
+      color: #fff;
       span{
           font-size: 14px;
-          margin-top: -12px;
+          position: relative;
+          padding-left: 30px;
           display: block;
           font-weight: normal;
-          
+          &::before{
+            
+            position: absolute;
+            height: 25px;
+            width: 25px;
+            
+            content: '';
+            left: 0px;
+            top: 0px;
+            background-size: contain;
+            background-repeat: no-repeat;
+      
+        }
       }
   }
 }
@@ -913,118 +975,25 @@ background-color: #fff;
 .grenade, .cheat{
   position: relative;
 
-  &::before{
-      position: absolute;
-      height: 35px;
-      width: 35px;
-      
-      content: '';
-      left: 8px;
-      top: 7px;
-      background-size: contain;
-      background-repeat: no-repeat;
-
-  }
+  
 }
 
-.grenade{
+.grenade span{
   &::before{
       background-image: url('../assets/grenade-icon.svg');
   }
 }
 
-.cheat{
+.cheat span{
   &::before{
       background-image: url('../assets/cheat-icon.svg');
   }
 }
 
 
-// RANKINGS 
-
-.rankings{
-    // margin: 20px;
-    counter-reset: section;
-    max-height: 40vh;
-    overflow: scroll;
-    margin-top: 50px;
-    
-    position: relative;
-    
-   h3{
-       font-size: 18px;
-       
-       position: fixed;
-       margin-top: -40px;
-       margin-bottom: 30px;
-       height: 45px;
-       padding: 15px 20px 8px 20px;
-       background-color: #fff;
-       
-       width: 100%;
-       z-index: 99999;
-       
-   }
-
-   .ranking-list{
-       
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       padding-top:6px;
-       padding-bottom:6px;
-       padding-left: 40px;
-       padding-right: 30px;
-       font-family: $light-font;
-       position: relative;
-       margin-bottom: 4px;
-
-       &:nth-child(odd){
-        background-color: #EFF0F1;
-       }
-       
-       &__img{
-        height: 40px;
-        width: 40px;
-        background-color: #ccc;
-        
-        border-radius: 50%;
-       }
-
-       &__name{
-        flex: 1;
-        margin-left: 11px;
-       }
-
-       &__points{
-        
-        position: relative;
-        padding-left: 20px;
-
-        &::before {
-            position: absolute;
-            content: '';
-            height: 20px;
-            width: 20px;
-            background-image: url('../assets/coin.svg');
-            background-size: cover;
-            left: -8px;
-            top: -2px;
-        }
-       }
-
-       &::before {
-        position: absolute;
-        counter-increment: section;
-        content:counter(section);
-        left: 20px;
-        
-      }
-   }
-}
 
 // CATEGORY HEADER
-.category-header{
+.modal-header{
     // background-image: url('../assets/orange-circles.svg');
     
    background-image: url('../assets//header-bg.svg');
@@ -1054,6 +1023,10 @@ background-color: #fff;
 
 // rankings 
 
+.rankings.disabled{
+  opacity: 0.3;
+}
+
 .rankings{
   // margin: 20px;
   counter-reset: section;
@@ -1063,6 +1036,7 @@ background-color: #fff;
   margin: 0;
   padding: 0;
   position: relative;
+  min-height: 200px;
   
  h3{
      font-size: 18px;
@@ -1080,73 +1054,71 @@ background-color: #fff;
  }
 
  .ranking-list{
-     
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     padding-top:6px;
-     padding-bottom:6px;
-     padding-left: 40px;
-     padding-right: 30px;
-    //  font-family: $light-font;
-     position: relative;
-     margin-bottom: 4px;
+       
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:6px;
+  padding-bottom:6px;
+  padding-left: 40px;
+  padding-right: 30px;
+  // font-family: $light-font;
+  position: relative;
+  margin-bottom: 4px;
+  
 
-     &:nth-child(odd){
-      background-color: #EFF0F1;
-     }
-     
-     &__img{
-      height: 40px;
-      width: 40px;
-      background-color: #ccc;
-      
-      border-radius: 50%;
-     }
+  &:nth-child(odd){
+   background-color: #45407B;
+  }
+  
+  &__img{
+   height: 40px;
+   width: 40px;
+   background-color: #ccc;
+   
+   border-radius: 8px;
+  }
 
-     &__name{
-      flex: 1;
-      margin-left: 11px;
-     }
+  &__name{
+   flex: 1;
+   margin-left: 11px;
+  }
 
-     &__points{
-      
-      position: relative;
-      padding-left: 20px;
+  &__points{
+   
+   position: relative;
+   padding-left: 20px;
 
-      &::before {
-          position: absolute;
-          content: '';
-          height: 20px;
-          width: 20px;
-          background-image: url('../assets/coin.svg');
-          background-size: cover;
-          left: -8px;
-          top: -2px;
-      }
-     }
+   &::before {
+       position: absolute;
+       content: '';
+       height: 20px;
+       width: 20px;
+       background-image: url('../assets/coin.svg');
+       background-size: cover;
+       left: -8px;
+       top: -2px;
+   }
+  }
 
-     &::before {
-      position: absolute;
-      counter-increment: section;
-      content:counter(section);
-      left: 20px;
-      
-    }
+  &::before {
+   position: absolute;
+   counter-increment: section;
+   content:counter(section);
+   left: 20px;
+   
  }
+}
+
 }
 
 .pick-opponent{
 overflow: hidden;
-height: calc(95vh - 85px);
-
 box-sizing: content-box;
   p{
       margin: 0 15px;
       
   }
-
-  padding: 80px 0px 0px 0px;
 
   .search-container {
       margin: 0 10px;
@@ -1180,21 +1152,6 @@ box-sizing: content-box;
 
 
 
-// play button container 
-
-.play-buttons-container{
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
-
-  .btn{
-    flex: 1;
-    margin: 5px;
-  }
-}
 
 // footer
 
@@ -1207,19 +1164,19 @@ box-sizing: content-box;
   justify-content: space-between;
   padding: 10px;
 
-  &::before{
-      content: '';
-      position: fixed;
-      width: 110vw;
-      background-image: url("../assets/footer-bg.svg");
-      background-repeat: no-repeat;
-      right: 0;
-      bottom: -30px;
+  // &::before{
+  //     content: '';
+  //     position: fixed;
+  //     width: 110vw;
+  //     background-image: url("../assets/footer-bg.svg");
+  //     background-repeat: no-repeat;
+  //     right: 0;
+  //     bottom: -30px;
       
-      z-index: 0;
-      height: 100px;
-      background-size: cover;
-  }
+  //     z-index: 0;
+  //     height: 100px;
+  //     background-size: cover;
+  // }
 
   .btn{
       
@@ -1292,4 +1249,83 @@ box-sizing: content-box;
 	bottom: 0;
 	margin: auto;
 	z-index: 9999;
+}
+
+
+.game-chest{
+  background-color: rgba(0, 0, 0, 0.74);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9;
+
+  .reward-bg{
+    background-image: url("../assets/stars.svg") !important;
+    background: #46417D;
+    
+  }
+
+  .chest-reward-container{
+    
+    height: 190px;
+    
+    
+    &::before{
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 13vh;
+      margin: auto;
+      height: 170px;
+      width: 140px;
+      background-image: url("../assets/chest.svg");
+      background-repeat: no-repeat;
+      text-align: center;
+      
+      
+    }
+
+  }
+
+  .chest-rewards{
+    display: flex;
+    justify-content: space-around;
+    max-width: 90%;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: center;
+    
+    
+  }
+
+  .chest-reward{
+   
+    flex: 1;
+    max-width: 90px;
+    height: 100px;
+    position: relative;
+    padding-top: 10px;
+    background-repeat: no-repeat;
+    
+    h1{
+      font-size: 22px;
+      margin: 8px 0;
+    }
+    span{
+      font-size: 10px;
+      width: 50px;
+      margin: auto;
+     
+      display: block;
+    }
+  }
+  .chest-reward.gems{
+    background-image: url('../assets/box-bg.svg');
+  }
+
+  .chest-reward.coins{
+    background-image: url('../assets/box-bg.svg');
+  }
 }

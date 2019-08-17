@@ -65,42 +65,37 @@ const PickOpponent = (props)=>{
     >
 
 
-            <div className={"main"}>
+            <div className={"modal"}>
+              <div className={"modal-header"}><h1>Available opponents</h1></div>
+              <div className={"modal-body"}>
         <div className={"pick-opponent"}>
-          <p>Find and invite friends from your facebook</p>
+          {/* <p>Find and invite friends from your facebook</p>
           <div className={"search-container"}>
             <input type="search" className={"input"} />
-          </div>
+          </div> */}
 
           
 
-<h3>Previous opponents</h3>
-          <div className={"rankings"}>
+
+          <div className={"rankings disabled"}>
               
+          <div className={"ranking-list"}>
+                  <div className={"ranking-list__img"}></div>
+                  <div className={"ranking-list__name"}>Billy Curtis</div>
+                  <button className={"ranking-list__choose"}>Choose</button>
+              </div>
+
               <div className={"ranking-list"}>
                   <div className={"ranking-list__img"}></div>
                   <div className={"ranking-list__name"}>Billy Curtis</div>
-                  <button className={"ranking-list__points"}>Choose</button>
+                  <button className={"ranking-list__choose"}>Choose</button>
               </div>
 
-               <div className={"ranking-list"}>
-                  <div className={"ranking-list__img"}></div>
-                  <div className={"ranking-list__name"}>Billy Curtis</div>
-                  <button className={"ranking-list__points"}>Choose</button>
-              </div>
-
-               <div className={"ranking-list"}>
-                  <div className={"ranking-list__img"}></div>
-                  <div className={"ranking-list__name"}>Billy Curtis</div>
-                  <button className={"ranking-list__points"}>Choose</button>
-              </div>
-    
-        
-           
             </div>
 
               <PlayButtons setFindPlayer={setFindPlayer} setSinglePlayer={setSinglePlayer}/>
 
+            </div>
             </div>
 
           

@@ -6,23 +6,23 @@
     text-align: center;
     display: block;
     letter-spacing: 0;
-    font-size: 2em;
+    font-size: 1.7em;
     width: 100%;
+    max-width: 190px;
     font-weight: 500;
     color: #777777;
-
+    border: 0;
     line-height: 1.6em;
     white-space: nowrap;
-    border: 1px transparent solid;
-    padding: 10px 20px 9px 20px;
+    
+    padding: 5px 10px 7px 10px;
     cursor: pointer;
     -webkit-transition: color .2s, background-color .2s, box-shadow .2s, border .2s;
     transition: color .2s, background-color .2s, box-shadow .2s, border .2s;
-    border-radius: 0.5em;
-    
+    border-radius: 5px;
     align-self: center;
     margin: 0 auto 10px auto;
-
+    
     &:disabled {
         opacity: 0.5;
         cursor: default!important;

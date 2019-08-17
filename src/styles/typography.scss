@@ -1,4 +1,4 @@
-@import url("https://use.typekit.net/kqm2yhf.css");
+@import url('https://fonts.googleapis.com/css?family=Ruda:400,700,900&display=swap');
 /**
  * Basic typography style for copy text
  */
@@ -8,11 +8,9 @@ body {
     font-size: 80%;
     //font-size: 0.8em;
     /* font: normal 125% / 1.4 $text-font-stack; */
-    font-family: azo-sans-uber, sans-serif;
+    font-family: 'Ruda', sans-serif;
+    font-weight: 900;
 
-    font-weight: 400;
-    
-    font-style: normal;
 }
 
 .h1 {
@@ -46,6 +44,10 @@ h5,
 h6,
 h6 {
     margin: 0 0 10px 0;
-    font-weight: 300 !important;
-    letter-spacing: 1px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.btn{
+    font-weight: 900;
 }

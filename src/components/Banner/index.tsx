@@ -11,7 +11,7 @@ type IBanner = {
 export default ({ title, description, bgImage }: IBanner) => {
   return (
     <div >
-      <div className={"category-header"}>
+      <div className={"modal-header"}>
         <h1>{title}</h1>
         
       </div>

@@ -54,19 +54,16 @@ const Login = ({}) => {
         variables={{ facebookToken: accessToken }}
       >
         {(login, { loading }) => {
-          if (loading) return "Loading...";
+          if (loading) return <Loader/>;
           return (
             <div>
-              <div className={"container"}>
-                <div className={"login-wrapper"}>
-                  <div className={"intro"}>Welcome to Vunzo</div>
+           
+                <div className={"modal"}>
+                  <div className={"modal-header"}>Welcome to Vunzo</div>
+                  <div className={"modal-body"}>
 
-                  <div className={"login-footer"}>
-                    <p>Signup to start playing quiz bee with friends</p>
+                  <p>Signup to start playing quiz bee with friends</p>
 
-                  
-
-                       <div className="login-footer">
                   <FacebookLogin
                     appId="337440783579454"
                     autoLoad={true}
@@ -74,11 +71,12 @@ const Login = ({}) => {
                     onClick={() => console.log("clicked")}
                     callback={res => fbLogin({ res, login })}
                   />
-                </div>
                   </div>
+                 
+
                 </div>
              
-              </div>
+              
             </div>
           );
         }}

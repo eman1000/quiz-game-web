@@ -376,18 +376,18 @@ const Test = (props: ITestProps) => {
             <button 
             
               onClick={() => cheat(user.id, 8, "gems")}
-              className={"btn darkbluegradient grenade"}
+              className={"btn grenade"}
             >
-              Grenade
-              <span>X8 Coins</span>
+              50/50
+              <span>8 </span>
             </button>
 
             <button
               onClick={() => cheat(user.id, 8, "coins")}
-              className={"btn orangegradient cheat"}
+              className={"btn cheat"}
             >
               Cheat
-              <span>X8 Coins</span>
+              <span>8 </span>
             </button>
           </div>
         </div>
