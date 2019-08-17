@@ -56,11 +56,15 @@ const Login = ({}) => {
         {(login, { loading }) => {
           if (loading) return <Loader/>;
           return (
-            <div>
+            <div className={"login-wrapper"}>
            
-                <div className={"modal"}>
-                  <div className={"modal-header"}>Welcome to Vunzo</div>
-                  <div className={"modal-body"}>
+              <div className={"logo"}>
+
+              </div>
+
+                <div className={"login"}>
+                  <div className={"login-header"}>Welcome to Quiz Night</div>
+                  <div className={"login-body"}>
 
                   <p>Signup to start playing quiz bee with friends</p>
 

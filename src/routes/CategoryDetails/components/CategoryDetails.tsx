@@ -66,11 +66,12 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
   return (
     <Page id="homepage"  className={"category-wrapper"} title="Affiliate App">
       
+      <div className={"modal-wrapper"}>
      <div className={"modal"}>
      
       <Query query={GET_CATEGORY} variables={{ id }}>
         {({ loading, error, data }) => {
-          if (loading) return <Loader></Loader>;
+          if (loading) return "Loading...";
           if (error) return `Error! ${error.message}`;
           const category = data.getCategory || {};
           return (
@@ -101,7 +102,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
         }}
       >
         {({ loading, error, data }) => {
-           if (loading) return <Loader></Loader>;
+           if (loading) return "Loading";
           if (error) return <ErrorHandler error={error} />;
 
           const ranking = data.getScores.edges || {};
@@ -144,6 +145,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
       </Query>
       </div>
     </div>
+        </div>
     </Page>
   );
 };

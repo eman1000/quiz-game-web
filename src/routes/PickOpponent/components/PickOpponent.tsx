@@ -2,7 +2,7 @@ import React, { Component, Fragment, useState } from "react";
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { withApollo, graphql } from 'react-apollo';
-
+import Loader from "../../../components/Loader";
 import Page from "../../../components/Page";
 
 //import { Category } from "typings";
@@ -51,7 +51,7 @@ const PickOpponent = (props)=>{
   const { data: {loading, error, getCategory }, match, user } = props;
   const { categoryId } = match.params || "";
   if (loading) {
-    return "Loading...";
+    return <Loader/>;
   }
   if (error) {
     return <p>{error.message}</p>;
@@ -64,7 +64,7 @@ const PickOpponent = (props)=>{
       title="Quiz App"
     >
 
-
+<div className={"modal-wrapper"}>
             <div className={"modal"}>
               <div className={"modal-header"}><h1>Available opponents</h1></div>
               <div className={"modal-body"}>
@@ -99,7 +99,7 @@ const PickOpponent = (props)=>{
             </div>
 
           
-
+          </div>
             </div>
 
       

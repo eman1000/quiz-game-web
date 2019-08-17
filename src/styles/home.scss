@@ -504,7 +504,7 @@ overflow: hidden;
   }
 
 }
-.category-wrapper{
+.modal-wrapper{
   position: absolute;
   background-color: rgba(0, 0, 0, 0.72);
   z-index: 999999;
@@ -1213,27 +1213,6 @@ box-sizing: content-box;
 }
 
 
-// LOGIN FOOTER
-
-.login-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    .intro{
-        font-size: 25px;
-        font-weight: bold;
-        text-align: center;
-        margin: 60px;
-        flex: 1;
-        
-    }
-
-    .login-footer{
-        margin-bottom: 60px;
-        text-align: center;
-    }
-}
 
 
 .loader{
@@ -1327,5 +1306,73 @@ box-sizing: content-box;
 
   .chest-reward.coins{
     background-image: url('../assets/box-bg.svg');
+  }
+}
+
+.login-wrapper{
+  text-align: center;
+}
+
+
+// LOGIN FOOTER
+
+
+
+.logo{
+  height: 120px;
+  width: 120px;
+  background-image: url("../assets/logo.svg");
+  background-repeat: no-repeat;
+  margin: 15vh auto;
+  
+}
+
+
+.kep-login-facebook.metro{
+	border-radius: 50px !important;
+    width: 80%;
+}
+
+
+  .profile-details{
+    padding: 1em;
+    background-color: #29284A;
+    margin-bottom: 1em;
+    margin: 1em;
+    border-radius: 8px;
+    display: flex;
+    .profile-img{
+      height: 50px;
+      width: 50px;
+      background-color: red;
+      border-radius: 4px;
+      margin-right: 1em;
+    }
+
+    .profile-details-name{
+      align-self: center;
+      line-height: 1em;
+    }
+}
+
+.profile-stats{
+  background-color: #000;
+  max-width: 250px;
+  align-self: flex-end;
+  border-radius: 8px;
+  margin-bottom: 2em;
+  margin-left: 2.5em;
+  
+  .profile-stat{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    font-weight: 700;
+    
+
+    &:nth-child(odd){
+      background-color: #29284A;
+     }
+     
   }
 }

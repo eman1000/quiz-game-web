@@ -6,7 +6,10 @@ const Loader = () =>{
 
   return (
     <div className="loader">
-      1232323
+      
+      <div className={"logo small"}/>
+      <div className={"loader"}></div>
+      
       {/* <LoaderComponent  active type="ball-clip-rotate" /> */}
     </div>
 
