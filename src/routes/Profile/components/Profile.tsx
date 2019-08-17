@@ -23,7 +23,27 @@ const HomePage: React.FunctionComponent<IFreeChestProps> = (props: IFreeChestPro
 
   return (
     <Page id="homepage" title="Affiliate App">
-      <h1>Profile</h1>
+      <div className="modal-wrapper">
+      <div className="modal">
+        <div className={"modal-header"}>
+          <h1>Profile</h1>
+        </div>
+        <div className={"modal-body"}>
+          <div className="profile-details">
+            <div className={"profile-img"}></div>
+            <div className={"profile-name"}>Kuda</div>
+          </div>
+
+        <div className={"profile-stats"}>
+          <div className={"profile-stat"}>
+          <div className={"profile-stat-label"}></div>
+          <div className={"profile-stat-item"}></div>
+          </div>
+        </div>
+
+        </div>
+        </div>
+      </div>
     </Page>
   );
 };

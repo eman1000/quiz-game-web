@@ -5,7 +5,7 @@ import FacebookLogin from "react-facebook-login";
 
 import Page from "../../../components/Page";
 import Loader from "../../../components/Loader";
-
+import "../../../styles/home.scss";
 import "./LoginStyles.scss";
 import { async } from "q";
 
