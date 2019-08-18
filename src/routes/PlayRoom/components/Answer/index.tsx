@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { ITest, IQuestion } from "../../../../typings";
 import "../../../../styles/home.scss";
-import { props } from "bluebird";
 
 export type IAnswer = {
   answer: any;

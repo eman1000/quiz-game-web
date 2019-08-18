@@ -138,6 +138,8 @@ const Test = (props: ITestProps) => {
   const { matchId, matchObj, user, opponent, client } = props;
   let [count, setCount] = useState<number>(0);
   const [testPosition, setTestPosition] = useState<number>(0);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
 
   const [showComplete, setShowComplete] = useState<boolean>(true);
@@ -262,7 +264,9 @@ const Test = (props: ITestProps) => {
       }
       return deduct;
     } catch (err) {
-      alert(err.message);
+      setIsError(true)
+      setErrMsg(err.graphQLErrors[0].message);
+      //alert(err.message);
       throw err;
     }
   };
@@ -392,6 +396,13 @@ const Test = (props: ITestProps) => {
           </div>
         </div>
       )}
+      {
+        isError &&
+        <div>
+          {errMsg}
+          <button className="btn" onClick={()=>setIsError(false)}>Close</button>
+        </div>
+      }
     </div>
   );
 };
