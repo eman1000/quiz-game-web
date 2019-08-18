@@ -38,7 +38,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => {
     return <p>{error.message}</p>
   }
 
-  const isAuthenticated = localStorage.getItem("jwtToken") ? true : false;
+  const isAuthenticated = (getMe && getMe.hasOwnProperty("id")) ? true : false;
 
   return(
     <Route

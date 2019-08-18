@@ -58,6 +58,8 @@ const schema = gql(`
         facebookId: String
         avatar: String
         lastSeen: Date
+        coins: Int
+        gems: Int
       ) : User
       deductReward(id: ID!, key:DeductKey!, amount:Int!) : User
     }

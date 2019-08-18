@@ -1,6 +1,7 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { withRouter, Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
+import moment from "moment";
 import "./Header.scss";
 import { IUser } from "../../typings";
 
@@ -18,7 +19,9 @@ type IHeaderProps = RouteComponentProps & {
 };
 
 const Header = (props: IHeaderProps) => {
-  const { avatar, coins, gems } = props.user;
+  const { avatar, coins, gems, firstName } = props.user;
+  const [numGamesPlayed, setNumGamesPlayes] = useState<number>(0);
+  const [isFreeChestActive, setIsFreeChestActive] = useState<boolean>(false);
 
   console.log("Current", props.current);
   const pages = {
@@ -60,7 +63,21 @@ const Header = (props: IHeaderProps) => {
     }
   };
   const path = props.current.split("/")[1];
-  console.log("context", path);
+  
+  React.useEffect(()=>{
+    if(typeof window != "undefined"){
+      const theNumGamesPlayed = window.localStorage.getItem("numGamesPlayed");
+      if(theNumGamesPlayed != null){
+        setNumGamesPlayes(parseInt(theNumGamesPlayed))
+      }
+      const freeChestCountDate = window.localStorage.getItem("freeChestCountDate");
+      if(freeChestCountDate != null){
+        //@ts-ignore
+        const isActive = moment(freeChestCountDate) < moment();
+        setIsFreeChestActive(isActive);
+      }
+    }
+  },[])
   return (
     <div className={"header"}>
       {((props.current === "/" || (pages[path] && !pages[path].hasBack)) && (
@@ -68,13 +85,26 @@ const Header = (props: IHeaderProps) => {
           <div className={"profile__top"}>
             <div className={"profile__user"}>
               <img src={avatar} className={"user__img"} />
-              <div className={"profile-name"}>kuda</div>
+              <div className={"profile-name"}>{firstName}</div>
             </div>
             <div className={"profile__coins"}>{coins}</div>
           </div>
           <div className={"profile__bottom"}>
-            <div className={"profile__game-chest"}>1/10</div>
-            <div className={"profile__free-chest"}>unlock</div>
+            <button
+              onClick={
+                ()=>props.history.push("/game-chest")
+              }
+              disabled={(numGamesPlayed < 10) ? true : false}
+              className={`profile__game-chest ${(numGamesPlayed < 10) ? "disabled" : "" }`}>{numGamesPlayed}/10</button>
+            <button
+              onClick={
+                ()=>props.history.push("/free-chest")
+              }
+              disabled={!isFreeChestActive ? true : false}
+              className={`profile__free-chest ${!isFreeChestActive ? "disabled" : "" }`}
+            >
+              unlock
+            </button>
             <div className={"profile__germs"}>{gems}</div>
           </div>
         </div>

@@ -29,13 +29,14 @@ const Answer = ({
   return (
     <Fragment>
       <button
-        className={
-          saveAnswerLoading
+        className={`
+          ${saveAnswerLoading
             ? "btn btn-outline option"
-            : "btn btn-outline option"
-        }
+            : "btn btn-outline option"}
+          ${(isCorrect !== undefined) ? (isCorrect ? "correct" : "wrong" ) : ""}
+          
+        `}
         onClick={() => handleSaveQuestion({ saveQuestionResult, testObj })}
-        style={{backgroundColor: (isCorrect !== undefined) ? (isCorrect ? "green" : "red" ) : ""}}
       >
         <div className={"fading-circle"}>
           <div className={"circle1 sk-circle"} />

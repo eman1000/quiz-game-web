@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
 import { graphql, withApollo, Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import moment from "moment";
 
 
 
@@ -92,6 +92,13 @@ export const App = (props)=>{
       //     }
       //   }
       // });
+      if(typeof window != "undefined"){
+        
+        const freeChestCountDate = window.localStorage.getItem("freeChestCountDate");
+        if(freeChestCountDate == null){
+          window.localStorage.setItem("freeChestCountDate", moment(Date.now()).add(24, 'hours').toString());
+        }
+      }
       return ()=>console.log("clear")
     },[])
 
@@ -109,6 +116,7 @@ export const App = (props)=>{
       // console.log("last")
       // console.log(count)
     }, 2000);
+
     return (
       <div>
         {
