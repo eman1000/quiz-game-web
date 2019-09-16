@@ -109,5 +109,8 @@
     "redux-logger": "^3.0.6",
     "ts-node": "^8.1.0"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "engines": {
+    "node": "8.10.0"
+  }
 }
