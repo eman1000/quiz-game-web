@@ -133,9 +133,6 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
                     );
                   })}
               </ol>
-              <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
-          Play Now
-        </Link>
             
               
             </div>
@@ -143,6 +140,10 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
           );
         }}
       </Query>
+
+        <Link className={"btn btngradient"} to={`/pick-opponent/${id}`}>
+          Play Now
+        </Link> 
       </div>
     </div>
         </div>
