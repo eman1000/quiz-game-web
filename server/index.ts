@@ -17,17 +17,17 @@ import loaders from './loaders';
 
 import "dotenv/config"
 
-const batchUsers = async (keys, models) => {
-  const users = await models.User.findAll({
-    where: {
-      id: {
-        $in: keys,
-      },
-    },
-  });
+// const batchUsers = async (keys, models) => {
+//   const users = await models.User.findAll({
+//     where: {
+//       id: {
+//         $in: keys,
+//       },
+//     },
+//   });
 
-  return keys.map(key => users.find(user => user.id === key));
-};
+//   return keys.map(key => users.find(user => user.id === key));
+// };
 
 const getMe = async req => {
   const token = req.headers['x-token'];
@@ -56,7 +56,7 @@ app.get('/', function(req, res) {
 });
 
 //cache and batching
-const userLoader = new DataLoader(keys => batchUsers(keys, db));
+//const userLoader = new DataLoader(keys => batchUsers(keys, db));
 
 const server = new ApolloServer({
   typeDefs: schema,
@@ -95,24 +95,24 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path: '/graphql' });
 
 const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+//server.installSubscriptionHandlers(httpServer);
 // app.use("/graphql", graphqlHTTP({
 //   schema:schema,
 //   rootValue:resolvers,
 //   graphiql: true
 // }))
 
-const eraseDatabaseOnSync = true;
+//const eraseDatabaseOnSync = true;
 
-sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
-  if (eraseDatabaseOnSync) {
-    //createUsersWithMessages(new Date());
-  }
+// sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
+//   if (eraseDatabaseOnSync) {
+//     //createUsersWithMessages(new Date());
+//   }
 
   httpServer.listen({ port }, () => {
     console.log('Apollo Server on http://localhost:5000/graphql');
   });
-});
+//});
 
 // const createUsersWithMessages = async date => {
 //   await db.User.create(
