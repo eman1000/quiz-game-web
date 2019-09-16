@@ -32,15 +32,14 @@ export const FACEBOOK_LOGIN = gql(`
 const Login = ({}) => {
   const [accessToken, setAccessToken] = useState(null);
   const fbLogin = async ({ res, login }) => {
-    console.log("res", res);
     if (res) {
       setAccessToken(res.accessToken);
       const tokenObj = await login();
       if (tokenObj) {
         const { token, user } = tokenObj.data.signInFacebook;
-        console.log("token", tokenObj);
         if (user) {
-          //localStorage.setItem("authUser", user);
+          localStorage.setItem("authUser", JSON.stringify(user));
+          window.location.href = "/";
         }
 
         return localStorage.setItem("jwtToken", token);
@@ -70,7 +69,7 @@ const Login = ({}) => {
 
                   <FacebookLogin
                     appId="337440783579454"
-                    autoLoad={true}
+                    autoLoad={false}
                     fields="name,email,picture"
                     onClick={() => console.log("clicked")}
                     callback={res => fbLogin({ res, login })}

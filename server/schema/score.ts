@@ -3,16 +3,16 @@ import { ApolloServer, gql } from 'apollo-server-express';
 const schema = gql(`
     type Score {
       id: ID
-      userId: ID !
-      categoryId: ID !
-      score: Int !
+      userId: ID 
+      categoryId: ID 
+      score: Int 
       user: User
       category: Category
     }
 
     extend type Query {
       getScore(id: ID): Score !
-      getUserScore(userId: ID!, categoryId: ID!): Score !
+      getUserScore(userId: ID!, categoryId: ID!): Score 
       getScores(cursor: String, limit: Int, categoryId: Int): ScoreConnection!
     }
 

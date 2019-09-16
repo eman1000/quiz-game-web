@@ -8,7 +8,7 @@ const schema = gql(`
       thumbnail: String !
       backgroundImageUrl: String
       catKey: String !
-      scores: [Score!]
+      scores: [Score]
     }
     extend type Query {
       getCategories(cursor: String, limit: Int): CategoryConnection!

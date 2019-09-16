@@ -8,7 +8,9 @@ import { async } from "q";
 import { number } from "prop-types";
 import Answer from "../Answer";
 import "../../../../styles/home.scss";
-
+const Entities = require('html-entities').AllHtmlEntities;
+ 
+const entities = new Entities();
 type ITestProps = {
   matchId: number;
   matchObj: {
@@ -177,7 +179,7 @@ const Test = (props: ITestProps) => {
     });
     setTimeout(() => {
       handleNext();
-    }, 2000);
+    }, 1000);
   };
   const markAsDone = async ({ matchId, status }) => {
     console.table([{ matchId, status }]);
@@ -325,7 +327,7 @@ const Test = (props: ITestProps) => {
               <div className={"question__counter"}>Question {testPosition + 1}/{testObj.testQuestions.length}</div>
 
               <div className={"question__title"}>
-                <h3>{test.question.description}</h3>
+                <h3>{entities.decode(test.question.description)}</h3>
               </div>
             </div>
 
