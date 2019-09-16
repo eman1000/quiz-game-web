@@ -17,6 +17,8 @@ import loaders from './loaders';
 
 import "dotenv/config"
 
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
 const batchUsers = async (keys, models) => {
   const users = await models.User.findAll({
     where: {
@@ -94,8 +96,7 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app, path: '/graphql' });
 
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+
 // app.use("/graphql", graphqlHTTP({
 //   schema:schema,
 //   rootValue:resolvers,
@@ -109,9 +110,29 @@ const eraseDatabaseOnSync = true;
 //     //createUsersWithMessages(new Date());
 //   }
 
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+} else {
+  // Workers can share any TCP connection
+  // In this case it is an HTTP server
+  const httpServer = http.createServer(app);
+  server.installSubscriptionHandlers(httpServer);
   httpServer.listen({ port }, () => {
     console.log('Apollo Server on http://localhost:5000/graphql');
   });
+
+  console.log(`Worker ${process.pid} started`);
+}
+  
 //});
 
 // const createUsersWithMessages = async date => {
