@@ -104,15 +104,15 @@ server.installSubscriptionHandlers(httpServer);
 
 const eraseDatabaseOnSync = true;
 
-sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
-  if (eraseDatabaseOnSync) {
-    //createUsersWithMessages(new Date());
-  }
+// sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
+//   if (eraseDatabaseOnSync) {
+//     //createUsersWithMessages(new Date());
+//   }
 
   httpServer.listen({ port }, () => {
     console.log('Apollo Server on http://localhost:5000/graphql');
   });
-});
+//});
 
 // const createUsersWithMessages = async date => {
 //   await db.User.create(
