@@ -110,7 +110,7 @@ sequelize.sync({ /** force: eraseDatabaseOnSync*/ }).then(async () => {
   }
 
   httpServer.listen({ port }, () => {
-    console.log('Apollo Server on http://localhost:5000/graphql');
+    console.log(`Apollo Server on http://localhost:${port}/graphql`);
   });
 });
 
