@@ -109,5 +109,6 @@
     "@types/redux-logger": "^3.0.7",
     "apollo": "^2.13.1",
     "chai": "^4.2.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
