@@ -16,7 +16,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { split } from "apollo-link";
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${location.host}/graphql`,
+  uri: `ws://${window.location.host}/graphql`,
   options: {
     reconnect: true,
     timeout:1000000,
