@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { ITest, IQuestion } from "../../../../typings";
 import "../../../../styles/home.scss";
-
+const Entities = require('html-entities').AllHtmlEntities;
+const entities = new Entities();
 export type IAnswer = {
   answer: any;
   isCorrect: boolean;
@@ -50,7 +51,7 @@ const Answer = ({
           <div className={"circle11 sk-circle"} />
           <div className={"circle12 sk-circle"} />
         </div>}
-        {answer.description}
+        {entities.decode(answer.description)}
       </button>
     </Fragment>
   );
