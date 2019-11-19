@@ -198,7 +198,7 @@
 
 .main{
     
-    height: 100vh;
+    // height: calc(100vh - 300px);
     
     display: flex;
     justify-content: space-between;
@@ -215,7 +215,7 @@
 
   // background-image: url("../assets/header-bg.svg");
   background-repeat: no-repeat;
-  position: fixed;
+  // position: fixed;
   width: 100%;
   height: 110px;
   box-sizing: content-box;
@@ -385,13 +385,17 @@ overflow: hidden;
 // GAME CATEGORIES
 
 .categories-container{
-  margin-top: 8em;
-  overflow-x: scroll;
+  // margin-top: 8em;
+  
   position: absolute;
   width: 100%;
-  max-height: 50vh;
-  bottom: 0;
   
+  bottom: -20px; 
+}
+
+.scroll{
+  overflow-x: scroll;
+  max-height: 45vh;
   
 }
 
@@ -401,13 +405,14 @@ overflow: hidden;
   background-image: url('../assets/header-bg.svg');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 40px;
+  height: 50px;
   line-height: 3em;
   text-align: center;
   display: block;
-  position: fixed;
-  bottom:50vh;
+  position: absolute;
+  top:0vh;
   width: 100%;
+  z-index: 9;
 
 }
 
@@ -505,12 +510,12 @@ overflow: hidden;
 
 }
 .modal-wrapper{
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.72);
   z-index: 999999;
-  position: absolute;
   width: 100%;
   height: 100vh;
+  top: 0
 }
 
 
@@ -720,7 +725,30 @@ overflow: hidden;
 
 // QUESTION 
 
+.questions{
+  position: absolute;
+  top: 0;
+  padding-top: 5vh;
+  background-color: rgba(0, 0, 0, 0.57);
+  width: 100%;
+  left: 0;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.question-wrapper{
+  max-width: 700px;
+  margin: auto;
+  color: #5a5ece;
+  margin: auto;
+  padding: 1em;
+}
+
 .question{
+  background-color: #fff;
+    border-radius: 10px;
+    padding: 1em 0 4.5em 0;
+    position: relative;
 
   .user{
       &__img{
@@ -731,8 +759,8 @@ overflow: hidden;
 }
 
   &__image{
-      margin-top:70px;
-      height: 130px;
+      // margin-top:70px;
+      max-height: 130px;
       width: 100%;
   }
 
@@ -768,9 +796,9 @@ overflow: hidden;
   &__options{
       display: flex;
       flex-wrap: wrap;
-      margin-top: 20px;
       padding: 0 5vw;
-
+      max-height: 50vh;
+    overflow: scroll;
 
       .option{
           
@@ -779,8 +807,11 @@ overflow: hidden;
           font-weight: bold;
           height: auto;
           white-space:normal;
-          border-radius: 90px;
+          border-radius: 7px;
           position: relative;
+          max-width: 500px;
+          padding: 10px;
+          text-align: left;
           
       }
 
@@ -936,38 +967,53 @@ margin-top: 30px;
 
   .btn{
       border-radius: 8px;
-      align-content: flex-start;
-      justify-content: flex-start;
-      max-width: 65px;
+     display: flex;
+     justify-content: space-between;
+      align-items: center;
       white-space: normal;
-      padding: 4px 10px;
-      margin-top: 4px;
+      margin: 0px;
       text-transform: uppercase;
       font-size: 14px;
       text-align: left;
       font-weight: bold;
-      background-color: #5A5ECE;
+      background-color: transparent;
       border: 0;
+      border-radius: 0;
+      border-right: 1px solid #fff;
       color: #fff;
+      padding: 0 14px;
+
+      &::before{
+            
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        
+        content: '';
+        left: 0px;
+        top: 0px;
+        background-size: contain;
+        background-repeat: no-repeat;
+  
+    }
+
+      &:last-child{
+        border-right: 0;
+      }
+
       span{
-          font-size: 14px;
-          position: relative;
-          padding-left: 30px;
-          display: block;
-          font-weight: normal;
-          &::before{
-            
-            position: absolute;
-            height: 25px;
-            width: 25px;
-            
-            content: '';
-            left: 0px;
-            top: 0px;
-            background-size: contain;
-            background-repeat: no-repeat;
-      
-        }
+        font-size: 14px;
+        position: relative;
+        
+        font-weight: bold;
+        color: #000;
+        background-color: #fff;
+        text-align: center;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        line-height: 2em;
+       
       }
   }
 }
@@ -978,17 +1024,17 @@ margin-top: 30px;
   
 }
 
-.grenade span{
-  &::before{
-      background-image: url('../assets/grenade-icon.svg');
-  }
-}
+// .grenade {
+//   &::before{
+//       background-image: url('../assets/grenade-icon.svg');
+//   }
+// }
 
-.cheat span{
-  &::before{
-      background-image: url('../assets/cheat-icon.svg');
-  }
-}
+// .cheat {
+//   &::before{
+//       background-image: url('../assets/cheat-icon.svg');
+//   }
+// }
 
 
 
@@ -1157,12 +1203,14 @@ box-sizing: content-box;
 
 .footer{
   width: 100%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  height: 60px;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 0;
+  background-color: #5A5ECE;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 
   // &::before{
   //     content: '';
@@ -1375,4 +1423,13 @@ box-sizing: content-box;
      }
      
   }
+}
+
+.banner{
+  height: 100px;
+  width: 95%;
+  background-color: #fff;
+  margin: auto;
+  
+  
 }
