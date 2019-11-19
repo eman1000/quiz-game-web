@@ -268,6 +268,9 @@ const Test = (props: ITestProps) => {
     } catch (err) {
       setIsError(true)
       setErrMsg(err.graphQLErrors[0].message);
+      setTimeout(() => {
+        setIsError(false)
+      }, 1000);
       //alert(err.message);
       throw err;
     }
@@ -341,7 +344,7 @@ const Test = (props: ITestProps) => {
           </div>
 
           <ul className={"question__options"}>
-            {filterdAnswers.map((answer, index) => {
+            {answers.map((answer, index) => {
               let isCorrect =
                 questionResult[`q${test.questionId}a${answer.id}`];
 
@@ -400,9 +403,9 @@ const Test = (props: ITestProps) => {
       )}
       {
         isError &&
-        <div>
+        <div className="err-modal">
           {errMsg}
-          <button className="btn" onClick={()=>setIsError(false)}>Close</button>
+          {/* <a className="btn" onClick={()=>setIsError(false)}>Close</a> */}
         </div>
       }
     </div>
