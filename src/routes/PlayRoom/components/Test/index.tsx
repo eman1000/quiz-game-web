@@ -179,7 +179,7 @@ const Test = (props: ITestProps) => {
     });
     setTimeout(() => {
       handleNext();
-    }, 1000);
+    }, 900000000);
   };
   const markAsDone = async ({ matchId, status }) => {
     console.table([{ matchId, status }]);
@@ -314,8 +314,9 @@ const Test = (props: ITestProps) => {
         />
       )}
       {matchObj.test && (
-        <div>
-          <div>
+        <div className={"questions"}>
+          <div className={"question-wrapper"}>
+            
             <div className={"question"}>
 
                   <div className={"question__image"}>
@@ -329,6 +330,26 @@ const Test = (props: ITestProps) => {
               <div className={"question__title"}>
                 <h3>{entities.decode(test.question.description)}</h3>
               </div>
+
+ <div className={"footer cheats"}>
+            <button 
+            
+              onClick={() => cheat(user.id, 8, "gems")}
+              className={"btn grenade"}
+            >
+              50/50
+              <span>8 </span>
+            </button>
+
+            <button
+              onClick={() => cheat(user.id, 8, "coins")}
+              className={"btn cheat"}
+            >
+              Cheat
+              <span>8 </span>
+            </button>
+          </div>
+
             </div>
 
             <div />
@@ -378,24 +399,7 @@ const Test = (props: ITestProps) => {
             })}
           </ul>
 
-          <div className={"footer cheats"}>
-            <button 
-            
-              onClick={() => cheat(user.id, 8, "gems")}
-              className={"btn grenade"}
-            >
-              50/50
-              <span>8 </span>
-            </button>
-
-            <button
-              onClick={() => cheat(user.id, 8, "coins")}
-              className={"btn cheat"}
-            >
-              Cheat
-              <span>8 </span>
-            </button>
-          </div>
+         
         </div>
       )}
       {

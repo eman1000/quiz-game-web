@@ -114,21 +114,26 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                           
                     </div> */}
 
+                    <div className="banner">
+                      122324
+                    </div>
+
                     <div className={"categories-container"}>
 
-                    
-
-                    <div className={"r"}>
-                      
                       <a href="category.html" className={"categoriies-header"}>
                         CATEGORIES
                       </a>
-                    </div>
+
+                    <div className={"scroll"}>
+                      
+                    
+                  
 
                     <HorizontalScroll
                       // title="uhyuhyhh"
                       data={getCategories.edges}
                     />
+                      </div>
 
                     </div>
 
