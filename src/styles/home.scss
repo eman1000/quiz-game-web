@@ -728,7 +728,7 @@ overflow: hidden;
 .questions{
   position: absolute;
   top: 0;
-  padding-top: 5vh;
+  padding-top: 15vh;
   background-color: rgba(0, 0, 0, 0.57);
   width: 100%;
   left: 0;
@@ -747,7 +747,7 @@ overflow: hidden;
 .question{
   background-color: #fff;
     border-radius: 10px;
-    padding: 1em 0 4.5em 0;
+    padding: 1em 0 5.5em 0;
     position: relative;
 
   .user{
@@ -888,12 +888,11 @@ padding: 4em 1.5em 0 1.5em;
   &--action{
 margin-top: 30px;
       .btn{
-         
+        padding: 10px 10px 10px 10px;
           margin: 15px auto;
-          font-size: 12px;
-          
-          
-      }
+          font-size: 16px;
+          max-width: 260px;
+        }
   }
 }
 
@@ -981,6 +980,7 @@ margin-top: 30px;
       border-radius: 0;
       border-right: 1px solid #fff;
       color: #fff;
+      
       padding: 0 14px;
 
       &::before{
