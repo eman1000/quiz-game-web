@@ -8,7 +8,6 @@ export type IAnswer = {
   saveQuestionResult: IAnswer;
   testObj: ITest;
   handleSaveQuestion: ({ saveQuestionResult: IAnswer, testObj: ITest }) => void;
-  isGemsCheat: boolean;
   saveAnswerLoading: boolean;
 };
 const Answer = ({
@@ -17,14 +16,13 @@ const Answer = ({
   saveQuestionResult,
   testObj,
   handleSaveQuestion,
-  isGemsCheat,
   saveAnswerLoading
 }: IAnswer) => {
-  useEffect(() => {
-    if (isGemsCheat) {
-      handleSaveQuestion({ saveQuestionResult, testObj });
-    }
-  });
+  // useEffect(() => {
+  //   if (isGemsCheat) {
+  //     handleSaveQuestion({ saveQuestionResult, testObj });
+  //   }
+  // });
   return (
     <Fragment>
       <button
@@ -37,6 +35,7 @@ const Answer = ({
         `}
         onClick={() => handleSaveQuestion({ saveQuestionResult, testObj })}
       >
+        {saveAnswerLoading &&
         <div className={"fading-circle"}>
           <div className={"circle1 sk-circle"} />
           <div className={"circle2 sk-circle"} />
@@ -50,7 +49,7 @@ const Answer = ({
           <div className={"circle10 sk-circle"} />
           <div className={"circle11 sk-circle"} />
           <div className={"circle12 sk-circle"} />
-        </div>
+        </div>}
         {answer.description}
       </button>
     </Fragment>

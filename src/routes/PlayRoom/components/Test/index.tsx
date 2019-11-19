@@ -9,7 +9,22 @@ import { number } from "prop-types";
 import Answer from "../Answer";
 import "../../../../styles/home.scss";
 const Entities = require('html-entities').AllHtmlEntities;
- 
+function shuffle(arra1) {
+  var ctr = arra1.length, temp, index;
+
+// While there are elements in the array
+  while (ctr > 0) {
+// Pick a random index
+      index = Math.floor(Math.random() * ctr);
+// Decrease ctr by 1
+      ctr--;
+// And swap the last element with it
+      temp = arra1[ctr];
+      arra1[ctr] = arra1[index];
+      arra1[index] = temp;
+  }
+  return arra1;
+} 
 const entities = new Entities();
 type ITestProps = {
   matchId: number;
@@ -138,18 +153,17 @@ function useInterval(callback, delay) {
 }
 const Test = (props: ITestProps) => {
   const { matchId, matchObj, user, opponent, client } = props;
-  let [count, setCount] = useState<number>(0);
+  let [count, setCount] = useState<number>(10);
   const [testPosition, setTestPosition] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
+  
 
   const [showComplete, setShowComplete] = useState<boolean>(true);
   const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(
     null
   );
-  const [isGemsCheat, setGemsCheat] = useState<boolean>(false);
-  const [isCoinsCheat, setCoinsCheat] = useState<boolean>(false);
 
   const testObj = matchObj.test || {};
   const test = testObj.testQuestions[testPosition];
@@ -168,9 +182,7 @@ const Test = (props: ITestProps) => {
     }
   };
   const handleSaveQuestion = async ({ saveQuestionResult, testObj }) => {
-    if (isGemsCheat) {
-      setGemsCheat(false);
-    }
+
     const result = await saveQuestionResult();
     const data = result.data.saveQuestionResult;
     setQuestionResult({
@@ -232,13 +244,9 @@ const Test = (props: ITestProps) => {
     console.log("WINNER", winner);
   };
   const handleNext = () => {
-    setCount(0);
-    if (isGemsCheat) {
-      setGemsCheat(false);
-    }
-    if (isCoinsCheat) {
-      setCoinsCheat(false);
-    }
+    setCount(10);
+    setFilterdAnswers(answers);
+
     //@ts-ignore
     if (testPosition + 1 < matchObj.test.testQuestions.length) {
       setTestPosition(testPosition + 1);
@@ -258,10 +266,21 @@ const Test = (props: ITestProps) => {
       });
       if (deduct) {
         if (key === "gems") {
-          setGemsCheat(true);
+          const newFiltered = answers.filter(
+            (ans, index) =>
+              ans.isCorrect === true
+          );
+          const incorrectAnswers = answers.filter((ans, index)=>ans.isCorrect !== true);
+          const randomFromAnswers = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
+
+
+          setFilterdAnswers(shuffle([...newFiltered, ...[randomFromAnswers]]));
         }
         if (key === "coins") {
-          setCoinsCheat(true);
+          setFilterdAnswers(answers.filter(
+            (ans, index) =>
+              ans.isCorrect === true
+          ));
         }
       }
       return deduct;
@@ -279,15 +298,15 @@ const Test = (props: ITestProps) => {
     if (matchObj.status === "complete") {
       clearInterval(timer);  
     }
-    if (count === 10) {
+    if (count === 0) {
       handleNext();
     } else {
-      setCount(count + 1);
+      setCount(count - 1);
     }
     //@ts-ignore
     if (
       testPosition + 1 == matchObj.test.testQuestions.length &&
-      count === 10
+      count === 0
     ) {
       clearInterval(timer);
     }
@@ -301,13 +320,16 @@ const Test = (props: ITestProps) => {
   }, []);
   const answers = test.question.answers;
   const correctAnswerIndex = answers.findIndex(ans => ans.isCorrect === true);
-  const filterdAnswers = !isCoinsCheat
-    ? answers
-    : answers.filter(
-        (ans, index) =>
-          ans.isCorrect === true ||
-          index === getRandomInt(answers.length, correctAnswerIndex)
-      );
+  // const filterdAnswers = !isCoinsCheat
+  //   ? answers
+  //   : answers.filter(
+  //       (ans, index) =>
+  //         ans.isCorrect === true
+  //     );
+  
+
+  const [filterdAnswers, setFilterdAnswers] = useState(answers);
+
   return (
     <div>
       {userScoreData && matchObj.status === "complete" && (
@@ -365,7 +387,7 @@ const Test = (props: ITestProps) => {
           </div>
 
           <ul className={"question__options"}>
-            {answers.map((answer, index) => {
+            {filterdAnswers.map((answer, index) => {
               let isCorrect =
                 questionResult[`q${test.questionId}a${answer.id}`];
 
@@ -392,7 +414,6 @@ const Test = (props: ITestProps) => {
                         isCorrect={isCorrect}
                         testObj={testObj}
                         answer={answer}
-                        isGemsCheat={isGemsCheat}
                         saveAnswerLoading={loading}
                       />
                     );
