@@ -6,6 +6,8 @@ import { IMatch, IUser, ITest } from "../../../../typings";
 import QuizComplete from "../QuizComplete";
 import { async } from "q";
 import { number } from "prop-types";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
 import Answer from "../Answer";
 import "../../../../styles/home.scss";
 const Entities = require('html-entities').AllHtmlEntities;
@@ -158,6 +160,7 @@ const Test = (props: ITestProps) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
+  const [answers, setAnswers] = useState();
   
 
   const [showComplete, setShowComplete] = useState<boolean>(true);
@@ -166,7 +169,8 @@ const Test = (props: ITestProps) => {
   );
 
   const testObj = matchObj.test || {};
-  const test = testObj.testQuestions[testPosition];
+  const [test, setTest] = useState(testObj.testQuestions[testPosition]);
+
 
   const handleGetScores = async () => {
     const getScores = await client.query({
@@ -250,6 +254,8 @@ const Test = (props: ITestProps) => {
     //@ts-ignore
     if (testPosition + 1 < matchObj.test.testQuestions.length) {
       setTestPosition(testPosition + 1);
+      setTest(testObj.testQuestions[testPosition + 1]);
+      setAnswers(shuffle(testObj.testQuestions[testPosition + 1].question.answers));
     } else {
       markAsDone({ matchId, status: "complete" });
     }
@@ -316,10 +322,11 @@ const Test = (props: ITestProps) => {
     if (matchObj.status === "complete") {
       handleGetScores();
     }
+    setAnswers(shuffle(test.question.answers));
     return () => console.log("clear");
   }, []);
-  const answers = test.question.answers;
-  const correctAnswerIndex = answers.findIndex(ans => ans.isCorrect === true);
+ // const answers = ;
+  //const correctAnswerIndex = answers.findIndex(ans => ans.isCorrect === true);
   // const filterdAnswers = !isCoinsCheat
   //   ? answers
   //   : answers.filter(
@@ -338,94 +345,102 @@ const Test = (props: ITestProps) => {
           isWinner={matchObj.winnerId == user.id ? true : false}
         />
       )}
-      {matchObj.test && (
-        <div className={"questions"}>
-          <div className={"question-wrapper"}>
-            
-            <div className={"question"}>
+      <TransitionGroup>
+        <CSSTransition
+          key={testPosition}
+          timeout={1000}
+          classNames="messageout"
+        >
+          {matchObj.test && (
+            <div className={"questions"}>
+              <div className={"question-wrapper"}>
+                
+                <div className={"question"}>
 
-                  <div className={"question__image"}>
+                      <div className={"question__image"}>
 
-</div>
+    </div>
 
-              <div className={"question__count-down"}>{count}</div>
+                  <div className={"question__count-down"}>{count}</div>
 
-              <div className={"question__counter"}>Question {testPosition + 1}/{testObj.testQuestions.length}</div>
+                  <div className={"question__counter"}>Question {testPosition + 1}/{testObj.testQuestions.length}</div>
 
-              <div className={"question__title"}>
-                <h3>{entities.decode(test.question.description)}</h3>
-              </div>
+                  <div className={"question__title"}>
+                    <h3>{entities.decode(test.question.description)}</h3>
+                  </div>
 
- <div className={"footer cheats"}>
-            <button 
-            
-              onClick={() => cheat(user.id, 8, "gems")}
-              className={"btn grenade"}
-            >
-              50/50
-              <span>8 </span>
-            </button>
-
-            <button
-              onClick={() => cheat(user.id, 8, "coins")}
-              className={"btn cheat"}
-            >
-              Cheat
-              <span>8 </span>
-            </button>
-          </div>
-
-            </div>
-
-            <div />
-            <div />
-            {opponent && (
-              <div>
-                <img style={{ width: "100px" }} src={opponent.avatar} />
-              </div>
-            )}
-          </div>
-
-          <ul className={"question__options"}>
-            {(filterdAnswers ? filterdAnswers : answers).map((answer, index) => {
-              let isCorrect =
-                questionResult[`q${test.questionId}a${answer.id}`];
-
-              return (
-                <Mutation
-                  key={index}
-                  mutation={SAVE_QUESTION_RESULT}
-                  variables={{
-                    matchId,
-                    userId: user.id,
-                    answerId: answer.id,
-                    questionId: test.question.id,
-                    categoryId: matchObj.test.categoryId,
-                    isCorrect:
-                      answer.isCorrect !== null ? answer.isCorrect : false
-                  }}
+    <div className={"footer cheats"}>
+                <button 
+                
+                  onClick={() => cheat(user.id, 8, "gems")}
+                  className={"btn grenade"}
                 >
-                  {(saveQuestionResult, { loading }) => {
-                    // if (loading) return "Loading...";
-                    return (
-                      <Answer
-                        handleSaveQuestion={handleSaveQuestion}
-                        saveQuestionResult={saveQuestionResult}
-                        isCorrect={isCorrect}
-                        testObj={testObj}
-                        answer={answer}
-                        saveAnswerLoading={loading}
-                      />
-                    );
-                  }}
-                </Mutation>
-              );
-            })}
-          </ul>
+                  50/50
+                  <span>8 </span>
+                </button>
 
-         
-        </div>
-      )}
+                <button
+                  onClick={() => cheat(user.id, 8, "coins")}
+                  className={"btn cheat"}
+                >
+                  Cheat
+                  <span>8 </span>
+                </button>
+              </div>
+
+                </div>
+
+                <div />
+                <div />
+                {opponent && (
+                  <div>
+                    <img style={{ width: "100px" }} src={opponent.avatar} />
+                  </div>
+                )}
+              </div>
+
+              <ul className={"question__options"}>
+                {answers && (filterdAnswers ? filterdAnswers : answers).map((answer, index) => {
+                  let isCorrect =
+                    questionResult[`q${test.questionId}a${answer.id}`];
+
+                  return (
+                    <Mutation
+                      key={index}
+                      mutation={SAVE_QUESTION_RESULT}
+                      variables={{
+                        matchId,
+                        userId: user.id,
+                        answerId: answer.id,
+                        questionId: test.question.id,
+                        categoryId: matchObj.test.categoryId,
+                        isCorrect:
+                          answer.isCorrect !== null ? answer.isCorrect : false
+                      }}
+                    >
+                      {(saveQuestionResult, { loading }) => {
+                        // if (loading) return "Loading...";
+                        return (
+                          <Answer
+                            handleSaveQuestion={handleSaveQuestion}
+                            saveQuestionResult={saveQuestionResult}
+                            isCorrect={isCorrect}
+                            testObj={testObj}
+                            answer={answer}
+                            saveAnswerLoading={loading}
+                          />
+                        );
+                      }}
+                    </Mutation>
+                  );
+                })}
+              </ul>
+
+            
+            </div>
+          )}
+        </CSSTransition>
+      </TransitionGroup>
       {
         isError &&
         <div className="err-modal">
