@@ -139,7 +139,7 @@
   
   .cars{
       &:before{
-          background-image: url('../assets/wheel-icon.svg');
+          // background-image: url('../assets/wheel-icon.svg');
           }
   }
   
@@ -174,13 +174,13 @@
         
          &:after{
              position: fixed;
-            
+            border: 10px solid red;
              
              left: 0;
             height: 100vh;
              width: 100vw;
              content: '';
-            opacity: 0.3;
+            opacity: 0.5;
              background-position: center;
              z-index: -1;
             
@@ -420,7 +420,7 @@ overflow: hidden;
   display: flex;
   // margin: 0 10px;
   // flex-wrap: wrap;
-
+  padding-top: 55px;
   align-self: flex-end;
   
   flex-direction: column;

@@ -182,16 +182,16 @@ const Test = (props: ITestProps) => {
     }
   };
   const handleSaveQuestion = async ({ saveQuestionResult, testObj }) => {
-
+    setTimeout(() => {
+      handleNext();
+    }, 1500);
     const result = await saveQuestionResult();
     const data = result.data.saveQuestionResult;
     setQuestionResult({
       ...questionResult,
       [`q${data.questionId}a${data.answerId}`]: data.isCorrect
     });
-    setTimeout(() => {
-      handleNext();
-    }, 900000000);
+
   };
   const markAsDone = async ({ matchId, status }) => {
     console.table([{ matchId, status }]);
@@ -245,7 +245,7 @@ const Test = (props: ITestProps) => {
   };
   const handleNext = () => {
     setCount(10);
-    setFilterdAnswers(answers);
+    setFilterdAnswers(null);
 
     //@ts-ignore
     if (testPosition + 1 < matchObj.test.testQuestions.length) {
@@ -328,7 +328,7 @@ const Test = (props: ITestProps) => {
   //     );
   
 
-  const [filterdAnswers, setFilterdAnswers] = useState(answers);
+  const [filterdAnswers, setFilterdAnswers] = useState();
 
   return (
     <div>
@@ -387,7 +387,9 @@ const Test = (props: ITestProps) => {
           </div>
 
           <ul className={"question__options"}>
-            {answers.map((answer, index) => {
+
+            {(filterdAnswers ? filterdAnswers : answers).map((answer, index) => {
+
               let isCorrect =
                 questionResult[`q${test.questionId}a${answer.id}`];
 
