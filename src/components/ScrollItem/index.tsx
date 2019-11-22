@@ -11,8 +11,9 @@ export default ({category}:IScrollProps)=>{
 
   console.log("category key", category.catKey)
   return(
-    <Link className="category" to={`/category-details/${category.id}`}>
-  
+    // <Link className="category" to={`/category-details/${category.id}`}>
+  <Link className="category" to={`/pick-opponent/${category.id}`}>
+
   <div className={`${category.catKey} category__icon `}></div>
 
       <div className={"category__name"}>{category.name}

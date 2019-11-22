@@ -184,6 +184,7 @@ const PlayRoom = (props: IPlayRoomProps)=>{
   if (error) {
     return <p>{error.message}</p>;
   }
+
   return (
     <Page
       id="homepage"

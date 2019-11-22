@@ -12,6 +12,9 @@ import { Transition } from 'react-transition-group';
 import "../../../styles/home.scss";
 import { ICategory, IUser } from "../../../typings";
 import { isAbsolute } from "path";
+import silverMedal from '../../../assets/silver.png';
+import goldMedal from '../../../assets/gold.png';
+import bronzMedal from '../../../assets/bronz.png';
 
 type IHomeProps = {
   user:IUser
@@ -24,6 +27,7 @@ type GetCategoriesQuery = {
 };
 
 const duration = 300;
+
 
 const defaultStyle = {
   transition: `opacity ${duration}ms ease-in-out`,
@@ -115,13 +119,36 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
                     </div> */}
 
                     <div className="banner">
-                      122324
+                      
+                      <div className="pedal">
+                        <div className="pedal__header ">
+                          <span className="medal silver">
+                          <img src={silverMedal}/>
+                          </span>
+                          <p>This could be you</p>
+                        </div>
+                      </div>
+                      <div className="pedal">
+                      <div className="pedal__header ">
+                      <span className="medal gold"> <img src={goldMedal}/></span>
+                      <p>This could be you</p>
+                      </div>
+                      </div>
+                      <div className="pedal">
+                      <div className="pedal__header ">
+                      <span className="medal  bronz"> <img src={bronzMedal}/></span>
+                      <p>This could be you</p>
+                      </div>
+                      </div>
+
                     </div>
 
                     <div className={"categories-container"}>
 
                       <a href="category.html" className={"categoriies-header"}>
                         CATEGORIES
+
+                        <i className="gift__title-svg"></i>
                       </a>
 
                     <div className={"scroll"}>

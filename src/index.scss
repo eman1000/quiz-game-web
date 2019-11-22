@@ -56,11 +56,11 @@ code {
   transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
 .correct{
-  background-color: #2ecc71 !important;
+  background-color: #77B93B !important;
   color: #fff !important;
 }
 .wrong{
-  background-color:#e74c3c !important;
+  background-color:#DF3142 !important;
   color: #fff !important;
 }
 .page h1 {
@@ -77,4 +77,34 @@ code {
   padding: 10px;
   text-align: center;
   font-size: 16px;
+}
+
+/* starting ENTER animation */
+.messageout-enter {
+  position: absolute;
+  top: 0;
+  left: calc(13% + 5px);
+  right: calc(13% + 5px);
+  opacity: 0.01;
+  transform: translateY(0%) scale(0.01);
+}
+
+/* ending ENTER animation */
+.messageout-enter-active {
+  opacity: 1;
+  transform: translateY(0%) scale(1);
+  transition: all 1000ms ease-in-out;
+}
+
+/* starting EXIT animation */
+.messageout-exit {
+  opacity: 1;
+  transform: scale(1.01);
+}
+
+/* ending EXIT animation */
+.messageout-exit-active {
+  opacity: 0;
+  // transform: scale(4);
+  transition: all 1000ms ease-in-out;
 }
