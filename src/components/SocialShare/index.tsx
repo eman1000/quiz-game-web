@@ -6,7 +6,8 @@ import {
   OKShareButton,
   RedditShareCount,
   TumblrShareCount,
-
+  WhatsappShareButton,
+  WhatsappIcon,
   FacebookIcon
 } from 'react-share';
 
@@ -20,6 +21,15 @@ const SocialShare = ()=>{
         size={32}
         round />
       </FacebookShareButton>
+
+      <WhatsappShareButton
+        url={"http://c1.ouisys.com/VUJXTQ"}
+      >
+      <WhatsappIcon
+        size={32}
+        round />
+      </WhatsappShareButton>
+      
     </div>
   )
 }
