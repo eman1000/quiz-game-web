@@ -163,7 +163,7 @@ const Test = (props: ITestProps) => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
   const [answers, setAnswers] = useState();
-
+  const [isDisabledOtherAnswers, setDisableOtherAnswers] = useState<boolean>(false);
   const [showComplete, setShowComplete] = useState<boolean>(true);
   const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(
     null
@@ -347,15 +347,7 @@ const Test = (props: ITestProps) => {
 
       {matchObj.test && (
         <div className={"questions"}>
-          <div className="response response--correct">
-            <div className="response__img"></div>
-            <div className="response__msg">Yes you got that right</div>
-          </div>
 
-          <div className="response response--wrong">
-            <div className="response__img"></div>
-            <div className="response__msg">Ooops not correct there</div>
-          </div>
 
           <TransitionGroup>
             <CSSTransition key={testPosition} timeout={800} classNames="fade">
@@ -426,7 +418,13 @@ const Test = (props: ITestProps) => {
                             }}
                           >
                             {(saveQuestionResult, { loading }) => {
-                              // if (loading) return "Loading...";
+                              if (loading){
+                                setDisableOtherAnswers(true);
+                              }else{
+                                setTimeout(() => {
+                                  setDisableOtherAnswers(false);
+                                }, 2500);
+                              }
                               return (
                                 <Answer
                                   handleSaveQuestion={handleSaveQuestion}
@@ -435,6 +433,7 @@ const Test = (props: ITestProps) => {
                                   testObj={testObj}
                                   answer={answer}
                                   saveAnswerLoading={loading}
+                                  isDisabledOtherAnswers={isDisabledOtherAnswers}
                                 />
                               );
                             }}

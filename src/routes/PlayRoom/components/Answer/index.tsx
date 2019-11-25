@@ -10,6 +10,7 @@ export type IAnswer = {
   testObj: ITest;
   handleSaveQuestion: ({ saveQuestionResult: IAnswer, testObj: ITest }) => void;
   saveAnswerLoading: boolean;
+  isDisabledOtherAnswers:boolean;
 };
 const Answer = ({
   answer,
@@ -17,16 +18,19 @@ const Answer = ({
   saveQuestionResult,
   testObj,
   handleSaveQuestion,
-  saveAnswerLoading
+  saveAnswerLoading,
+  isDisabledOtherAnswers
 }: IAnswer) => {
   // useEffect(() => {
   //   if (isGemsCheat) {
   //     handleSaveQuestion({ saveQuestionResult, testObj });
   //   }
   // });
+
   return (
     <Fragment>
       <button
+        disabled={isDisabledOtherAnswers}
         className={`
           ${saveAnswerLoading
             ? "btn btn-outline option"
@@ -36,7 +40,7 @@ const Answer = ({
         `}
         onClick={() => handleSaveQuestion({ saveQuestionResult, testObj })}
       >
-        {saveAnswerLoading &&
+        {isDisabledOtherAnswers && saveAnswerLoading &&
         <div className={"fading-circle"}>
           <div className={"circle1 sk-circle"} />
           <div className={"circle2 sk-circle"} />
@@ -52,7 +56,25 @@ const Answer = ({
           <div className={"circle12 sk-circle"} />
         </div>}
         {entities.decode(answer.description)}
+
+      
       </button>
+      {/* {
+           isDisabledOtherAnswers && isCorrect &&
+          <div style={{position:"absolute", zIndex:99999}} className="response response--correct">
+            <div className="response__img"></div>
+            <div className="response__msg">Yes you got that right</div>
+          </div>
+        }
+
+        {
+          !isCorrect &&
+        
+          <div style={{position:"absolute", zIndex:99999}} className="response response--wrong">
+            <div className="response__img"></div>
+            <div className="response__msg">Ooops not correct there</div>
+          </div>
+        }  */}
     </Fragment>
   );
 };
