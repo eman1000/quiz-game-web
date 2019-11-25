@@ -89,7 +89,6 @@ export default () => (
     >
     <Switch>
       <AuthenticatedRoute exact path="/" component={Homepage} />
-      
       <AuthenticatedRoute exact path="/category-details/:id" component={CategoryDetails} />
       <AuthenticatedRoute exact path="/categories" component={Categories} />
       <AuthenticatedRoute exact path="/game-chest" component={GameChest} />

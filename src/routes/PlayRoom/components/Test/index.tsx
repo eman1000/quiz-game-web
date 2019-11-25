@@ -10,23 +10,25 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import Answer from "../Answer";
 import "../../../../styles/home.scss";
-const Entities = require('html-entities').AllHtmlEntities;
+const Entities = require("html-entities").AllHtmlEntities;
 function shuffle(arra1) {
-  var ctr = arra1.length, temp, index;
+  var ctr = arra1.length,
+    temp,
+    index;
 
-// While there are elements in the array
+  // While there are elements in the array
   while (ctr > 0) {
-// Pick a random index
-      index = Math.floor(Math.random() * ctr);
-// Decrease ctr by 1
-      ctr--;
-// And swap the last element with it
-      temp = arra1[ctr];
-      arra1[ctr] = arra1[index];
-      arra1[index] = temp;
+    // Pick a random index
+    index = Math.floor(Math.random() * ctr);
+    // Decrease ctr by 1
+    ctr--;
+    // And swap the last element with it
+    temp = arra1[ctr];
+    arra1[ctr] = arra1[index];
+    arra1[index] = temp;
   }
   return arra1;
-} 
+}
 const entities = new Entities();
 type ITestProps = {
   matchId: number;
@@ -161,7 +163,6 @@ const Test = (props: ITestProps) => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
   const [answers, setAnswers] = useState();
-  
 
   const [showComplete, setShowComplete] = useState<boolean>(true);
   const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(
@@ -170,7 +171,6 @@ const Test = (props: ITestProps) => {
 
   const testObj = matchObj.test || {};
   const [test, setTest] = useState(testObj.testQuestions[testPosition]);
-
 
   const handleGetScores = async () => {
     const getScores = await client.query({
@@ -195,7 +195,6 @@ const Test = (props: ITestProps) => {
       ...questionResult,
       [`q${data.questionId}a${data.answerId}`]: data.isCorrect
     });
-
   };
   const markAsDone = async ({ matchId, status }) => {
     console.table([{ matchId, status }]);
@@ -236,12 +235,12 @@ const Test = (props: ITestProps) => {
     }
 
     //num games played
-    if(typeof window != "undefined"){
+    if (typeof window != "undefined") {
       const theNumGamesPlayed = window.localStorage.getItem("numGamesPlayed");
-      if(theNumGamesPlayed != null){
+      if (theNumGamesPlayed != null) {
         const newNum = parseInt(theNumGamesPlayed) + 1;
         window.localStorage.setItem("numGamesPlayed", newNum.toString());
-      }else{
+      } else {
         window.localStorage.setItem("numGamesPlayed", "1");
       }
     }
@@ -255,7 +254,9 @@ const Test = (props: ITestProps) => {
     if (testPosition + 1 < matchObj.test.testQuestions.length) {
       setTestPosition(testPosition + 1);
       setTest(testObj.testQuestions[testPosition + 1]);
-      setAnswers(shuffle(testObj.testQuestions[testPosition + 1].question.answers));
+      setAnswers(
+        shuffle(testObj.testQuestions[testPosition + 1].question.answers)
+      );
     } else {
       markAsDone({ matchId, status: "complete" });
     }
@@ -273,28 +274,30 @@ const Test = (props: ITestProps) => {
       if (deduct) {
         if (key === "gems") {
           const newFiltered = answers.filter(
-            (ans, index) =>
-              ans.isCorrect === true
+            (ans, index) => ans.isCorrect === true
           );
-          const incorrectAnswers = answers.filter((ans, index)=>ans.isCorrect !== true);
-          const randomFromAnswers = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
-
+          const incorrectAnswers = answers.filter(
+            (ans, index) => ans.isCorrect !== true
+          );
+          const randomFromAnswers =
+            incorrectAnswers[
+              Math.floor(Math.random() * incorrectAnswers.length)
+            ];
 
           setFilterdAnswers(shuffle([...newFiltered, ...[randomFromAnswers]]));
         }
         if (key === "coins") {
-          setFilterdAnswers(answers.filter(
-            (ans, index) =>
-              ans.isCorrect === true
-          ));
+          setFilterdAnswers(
+            answers.filter((ans, index) => ans.isCorrect === true)
+          );
         }
       }
       return deduct;
     } catch (err) {
-      setIsError(true)
+      setIsError(true);
       setErrMsg(err.graphQLErrors[0].message);
       setTimeout(() => {
-        setIsError(false)
+        setIsError(false);
       }, 1000);
       //alert(err.message);
       throw err;
@@ -302,7 +305,7 @@ const Test = (props: ITestProps) => {
   };
   useInterval(() => {
     if (matchObj.status === "complete") {
-      clearInterval(timer);  
+      clearInterval(timer);
     }
     if (count === 0) {
       handleNext();
@@ -310,10 +313,7 @@ const Test = (props: ITestProps) => {
       setCount(count - 1);
     }
     //@ts-ignore
-    if (
-      testPosition + 1 == matchObj.test.testQuestions.length &&
-      count === 0
-    ) {
+    if (testPosition + 1 == matchObj.test.testQuestions.length && count === 0) {
       clearInterval(timer);
     }
   }, 1000);
@@ -325,7 +325,7 @@ const Test = (props: ITestProps) => {
     setAnswers(shuffle(test.question.answers));
     return () => console.log("clear");
   }, []);
- // const answers = ;
+  // const answers = ;
   //const correctAnswerIndex = answers.findIndex(ans => ans.isCorrect === true);
   // const filterdAnswers = !isCoinsCheat
   //   ? answers
@@ -333,7 +333,6 @@ const Test = (props: ITestProps) => {
   //       (ans, index) =>
   //         ans.isCorrect === true
   //     );
-  
 
   const [filterdAnswers, setFilterdAnswers] = useState();
 
@@ -345,110 +344,117 @@ const Test = (props: ITestProps) => {
           isWinner={matchObj.winnerId == user.id ? true : false}
         />
       )}
-      <TransitionGroup>
-        <CSSTransition
-          key={testPosition}
-          timeout={1000}
-          classNames="messageout"
-        >
-          {matchObj.test && (
-            <div className={"questions"}>
-              <div className={"question-wrapper"}>
-                
-                <div className={"question"}>
 
-                      <div className={"question__image"}>
+      {matchObj.test && (
+        <div className={"questions"}>
+          <div className="response response--correct">
+            <div className="response__img"></div>
+            <div className="response__msg">Yes you got that right</div>
+          </div>
 
-    </div>
+          <div className="response response--wrong">
+            <div className="response__img"></div>
+            <div className="response__msg">Ooops not correct there</div>
+          </div>
 
-                  <div className={"question__count-down"}>{count}</div>
+          <TransitionGroup>
+            <CSSTransition key={testPosition} timeout={800} classNames="fade">
+              <div>
+                <div className={"question-wrapper"}>
+                  <div className={"question"}>
+                    <div className={"question__image"}></div>
 
-                  <div className={"question__counter"}>Question {testPosition + 1}/{testObj.testQuestions.length}</div>
+                    <div className={"question__count-down"}>{count}</div>
 
-                  <div className={"question__title"}>
-                    <h3>{entities.decode(test.question.description)}</h3>
+                    <div className={"question__counter"}>
+                      Question {testPosition + 1}/{testObj.testQuestions.length}
+                    </div>
+
+                    <div className={"question__title"}>
+                      <h3>{entities.decode(test.question.description)}</h3>
+                    </div>
+
+                    <div className={"footer cheats"}>
+                      <button
+                        onClick={() => cheat(user.id, 8, "gems")}
+                        className={"btn grenade"}
+                      >
+                        50/50
+                        <span>8 </span>
+                      </button>
+
+                      <button
+                        onClick={() => cheat(user.id, 8, "coins")}
+                        className={"btn cheat"}
+                      >
+                        Cheat
+                        <span>8 </span>
+                      </button>
+                    </div>
                   </div>
 
-    <div className={"footer cheats"}>
-                <button 
-                
-                  onClick={() => cheat(user.id, 8, "gems")}
-                  className={"btn grenade"}
-                >
-                  50/50
-                  <span>8 </span>
-                </button>
-
-                <button
-                  onClick={() => cheat(user.id, 8, "coins")}
-                  className={"btn cheat"}
-                >
-                  Cheat
-                  <span>8 </span>
-                </button>
-              </div>
-
+                  <div />
+                  <div />
+                  {opponent && (
+                    <div>
+                      <img style={{ width: "100px" }} src={opponent.avatar} />
+                    </div>
+                  )}
                 </div>
 
-                <div />
-                <div />
-                {opponent && (
-                  <div>
-                    <img style={{ width: "100px" }} src={opponent.avatar} />
-                  </div>
-                )}
-              </div>
+                <ul className={"question__options"}>
+                  {answers &&
+                    (filterdAnswers ? filterdAnswers : answers).map(
+                      (answer, index) => {
+                        let isCorrect =
+                          questionResult[`q${test.questionId}a${answer.id}`];
 
-              <ul className={"question__options"}>
-                {answers && (filterdAnswers ? filterdAnswers : answers).map((answer, index) => {
-                  let isCorrect =
-                    questionResult[`q${test.questionId}a${answer.id}`];
-
-                  return (
-                    <Mutation
-                      key={index}
-                      mutation={SAVE_QUESTION_RESULT}
-                      variables={{
-                        matchId,
-                        userId: user.id,
-                        answerId: answer.id,
-                        questionId: test.question.id,
-                        categoryId: matchObj.test.categoryId,
-                        isCorrect:
-                          answer.isCorrect !== null ? answer.isCorrect : false
-                      }}
-                    >
-                      {(saveQuestionResult, { loading }) => {
-                        // if (loading) return "Loading...";
                         return (
-                          <Answer
-                            handleSaveQuestion={handleSaveQuestion}
-                            saveQuestionResult={saveQuestionResult}
-                            isCorrect={isCorrect}
-                            testObj={testObj}
-                            answer={answer}
-                            saveAnswerLoading={loading}
-                          />
+                          <Mutation
+                            key={index}
+                            mutation={SAVE_QUESTION_RESULT}
+                            variables={{
+                              matchId,
+                              userId: user.id,
+                              answerId: answer.id,
+                              questionId: test.question.id,
+                              categoryId: matchObj.test.categoryId,
+                              isCorrect:
+                                answer.isCorrect !== null
+                                  ? answer.isCorrect
+                                  : false
+                            }}
+                          >
+                            {(saveQuestionResult, { loading }) => {
+                              // if (loading) return "Loading...";
+                              return (
+                                <Answer
+                                  handleSaveQuestion={handleSaveQuestion}
+                                  saveQuestionResult={saveQuestionResult}
+                                  isCorrect={isCorrect}
+                                  testObj={testObj}
+                                  answer={answer}
+                                  saveAnswerLoading={loading}
+                                />
+                              );
+                            }}
+                          </Mutation>
                         );
-                      }}
-                    </Mutation>
-                  );
-                })}
-              </ul>
+                      }
+                    )}
+                </ul>
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+        </div>
+      )}
 
-            
-            </div>
-          )}
-        </CSSTransition>
-      </TransitionGroup>
-
-      {
-        isError &&
+      {isError && (
         <div className="err-modal">
           {errMsg}
           {/* <a className="btn" onClick={()=>setIsError(false)}>Close</a> */}
         </div>
-      }
+      )}
     </div>
   );
 };

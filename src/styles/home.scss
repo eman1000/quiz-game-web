@@ -175,6 +175,24 @@
         color: #ffb124;
         height: 100vh;
         width: 100vw;
+
+      
+        &::before{
+          content: '';
+          position: absolute;
+          top: 0;
+          opacity: 0.3;
+          left: 0;
+          height: 100vh;
+          width: 100vw;
+          z-index: 999;
+          z-index: -1;
+          background-image: url('../assets/stars.svg');
+          background-repeat: repeat;
+          background-position: top left;
+          background-size: conver;
+        }
+        
         
          &:after{
              position: fixed;
@@ -184,7 +202,7 @@
              content: '';
             
              background-position: center;
-             z-index: -1;
+             z-index: -2;
             
             top: 0vh;
             // background-image: url("../assets/main3.png");
@@ -192,7 +210,7 @@
             // background-image: -webkit-linear-gradient(top,#7c1c7e,#130b17);
             // background-image: -o-linear-gradient(top,#7c1c7e 0,#130b17 100%);
             // background-image: linear-gradient(180deg,#7c1c7e,#130b17);
-
+          
 
             background-image: -webkit-gradient(linear,left top,left bottom,from(#1c2f4d),to(#0c1019));
             background-image: -webkit-linear-gradient(top,#1c2f4d,#0c1019);
@@ -200,6 +218,7 @@
             background-image: linear-gradient(180deg,#1c2f4d,#0c1019);
             background-size: cover;
             background-repeat: no-repeat;
+            
             
                
          }
@@ -491,6 +510,7 @@ overflow: hidden;
       margin: 2px 8px;
       display: flex;
       background-color: #192236; 
+      // background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       border-radius: 8px;
       
 
@@ -597,8 +617,11 @@ overflow: hidden;
 
 
 .modal{
-  background-color: #253047;
-  border: 3px solid rgba(120, 143, 155, 0.23);
+  // background-color: #14192d;
+  background-color: #4E89FE;
+  background-image: linear-gradient(180deg, #1c283f, #14192d);
+  border-top: 2px solid #5a6882;
+  
   // border: 4px solid #9605c3;
   // background: -moz-linear-gradient(top,  #2E305C 0%, #46417D 100%); /* FF3.6-15 */
   // background: -webkit-linear-gradient(top,  #2E305C 0%,#46417D 100%); /* Chrome10-25,Safari5.1-6 */
@@ -606,17 +629,19 @@ overflow: hidden;
   left: 0;
   right: 0;
   width: 100%;
-  top: 15vh;
+  bottom: 0;
   max-height: 80vh;
-  max-width: 90%;
+  max-width: 100%;
   margin: auto;
-  position: relative;
+  position: absolute;
   overflow-y: scroll;
-  border-radius: 8px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
   animation-duration: 0.75s;
     animation-name: bounceIn;
-    
-  
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  animation: example 200ms linear;
 
   // &::after{
   //   content: '';
@@ -895,6 +920,8 @@ overflow: hidden;
           text-align: left;
           border: 0;
           padding-left: 48px;
+          background-color: #14192d;
+          color: #fff;
 
           &:after{
             content: '1';
@@ -1599,3 +1626,39 @@ img{
 .silver, .bronz{
   top: -47px;
 }
+
+
+.response{
+  text-align: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: none;
+  top: 0;
+  &--correct{
+    display: block;
+    z-index: 999;
+  }
+
+  &::after{
+    content: "";
+    position: absolute;
+    background: #000;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: -999;
+  
+  }
+
+}
+
+
+
+
+@keyframes example {
+  from {bottom: -200px}
+  to {bottom: 0}
+}
+

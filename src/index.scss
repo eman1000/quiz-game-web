@@ -108,3 +108,45 @@ code {
   // transform: scale(4);
   transition: all 1000ms ease-in-out;
 }
+
+.fade-appear{
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-appear.fade-appear-active{
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+.fade-enter{
+  position: absolute;
+  
+  left: 0;
+  right: 0;
+  margin: auto;
+  opacity: 0;
+  z-index: 1;
+  transform: scale(0.50) translateY(5px);
+}
+
+.fade-enter.fade-enter-active{
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 300ms linear 300ms, transform 300ms ease-in-out 300ms;
+}
+
+.fade-exit{
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.fade-exit.fade-exit-active{
+  opacity: 0;
+  transform: scale(0.50) translateY(5px);
+  transition: opacity 300ms linear, transform 300ms ease-out;
+}
+
+.fade-exit-done{
+  opacity: 0;
+}
