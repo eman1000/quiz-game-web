@@ -1,16 +1,23 @@
-@import url('https://fonts.googleapis.com/css?family=Ruda:400,700,900&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Ruda:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Wendy+One&display=swap');
 /**
  * Basic typography style for copy text
  */
 
 body {
-    
+
     font-size: 80%;
     //font-size: 0.8em;
     /* font: normal 125% / 1.4 $text-font-stack; */
-    font-family: 'Ruda', sans-serif;
+
     font-weight: 900;
 
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Wendy One', sans-serif;
+    letter-spacing: 0.7px;
 }
 
 .h1 {
@@ -44,10 +51,106 @@ h5,
 h6,
 h6 {
     margin: 0 0 10px 0;
-    font-weight: 900;
-    text-transform: uppercase;
+
 }
 
-.btn{
+.btn {
     font-weight: 900;
+}
+
+
+.header-bg {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100px;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+
+
+.leaf-left {
+
+    display: inline-block;
+    animation: loadin 0.3s ease-in;
+    position: absolute;
+
+    left: 0;
+
+    svg {
+        width: 206px;
+        height: 188px
+    }
+}
+
+.leaf-right {
+
+    display: inline-block;
+    animation: loadin 0.3s ease-in;
+    position: absolute;
+    right: -50px;
+    top: -60px;
+
+    svg {
+        width: 206px;
+        height: 188px
+    }
+}
+
+@keyframes loadin {
+    from {
+        margin-left: -200px;
+    }
+
+    to {
+        margin-left: 0;
+    }
+}
+
+
+.footer-bottom {
+    height: 200px;
+
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    opacity: 0.8;
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        background-image: url('../assets/ground.svg');
+        background-size: contain;
+        background-position: bottom;
+        width: 100%;
+        height: 250px;
+        background-repeat: no-repeat;
+
+    }
+
+    &__right {
+        svg {
+            width: 139px;
+            height: 132px;
+            position: absolute;
+            left: -25px;
+            bottom: -17px;
+        }
+    }
+
+    &__left {
+        position: absolute;
+        right: -10px;
+        bottom: -17px;
+
+        svg {
+            width: 139px;
+            height: 132px;
+            right: -25px;
+            bottom: -17px;
+            ;
+        }
+    }
 }

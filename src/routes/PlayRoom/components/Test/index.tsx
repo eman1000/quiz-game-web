@@ -157,13 +157,15 @@ function useInterval(callback, delay) {
 }
 const Test = (props: ITestProps) => {
   const { matchId, matchObj, user, opponent, client } = props;
-  let [count, setCount] = useState<number>(10);
+  let [count, setCount] = useState<number>(2000);
   const [testPosition, setTestPosition] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [questionResult, setQuestionResult] = useState({});
   const [answers, setAnswers] = useState();
-  const [isDisabledOtherAnswers, setDisableOtherAnswers] = useState<boolean>(false);
+  const [isDisabledOtherAnswers, setDisableOtherAnswers] = useState<boolean>(
+    false
+  );
   const [showComplete, setShowComplete] = useState<boolean>(true);
   const [userScoreData, setUserScoreData] = useState<IUserScoreData | null>(
     null
@@ -247,7 +249,7 @@ const Test = (props: ITestProps) => {
     console.log("WINNER", winner);
   };
   const handleNext = () => {
-    setCount(10);
+    setCount(2000);
     setFilterdAnswers(null);
 
     //@ts-ignore
@@ -347,8 +349,6 @@ const Test = (props: ITestProps) => {
 
       {matchObj.test && (
         <div className={"questions"}>
-
-
           <TransitionGroup>
             <CSSTransition key={testPosition} timeout={800} classNames="fade">
               <div>
@@ -365,8 +365,10 @@ const Test = (props: ITestProps) => {
                     <div className={"question__title"}>
                       <h3>{entities.decode(test.question.description)}</h3>
                     </div>
+                  </div>
 
-                    <div className={"footer cheats"}>
+                  <div className={"footer cheats"}>
+                    <div className="footer-cheat">
                       <button
                         onClick={() => cheat(user.id, 8, "gems")}
                         className={"btn grenade"}
@@ -374,7 +376,9 @@ const Test = (props: ITestProps) => {
                         50/50
                         <span>8 </span>
                       </button>
+                    </div>
 
+                    <div className="footer-cheat">
                       <button
                         onClick={() => cheat(user.id, 8, "coins")}
                         className={"btn cheat"}
@@ -418,9 +422,9 @@ const Test = (props: ITestProps) => {
                             }}
                           >
                             {(saveQuestionResult, { loading }) => {
-                              if (loading){
+                              if (loading) {
                                 setDisableOtherAnswers(true);
-                              }else{
+                              } else {
                                 setTimeout(() => {
                                   setDisableOtherAnswers(false);
                                 }, 2500);
@@ -433,7 +437,9 @@ const Test = (props: ITestProps) => {
                                   testObj={testObj}
                                   answer={answer}
                                   saveAnswerLoading={loading}
-                                  isDisabledOtherAnswers={isDisabledOtherAnswers}
+                                  isDisabledOtherAnswers={
+                                    isDisabledOtherAnswers
+                                  }
                                 />
                               );
                             }}

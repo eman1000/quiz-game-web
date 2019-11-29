@@ -1,20 +1,16 @@
-
-
- 
- 
- .btn {
+.btn {
     text-align: center;
     display: block;
     letter-spacing: 0;
     font-size: 1.7em;
     width: 100%;
-    max-width: 260px;
+    max-width: 95%;
     font-weight: 500;
     color: #777777;
     border: 0;
     line-height: 1.6em;
     white-space: nowrap;
-    font-family: 'Ruda', sans-serif;
+    font-family: 'Wendy One', sans-serif;
     padding: 5px 10px 7px 10px;
     cursor: pointer;
     -webkit-transition: color .2s, background-color .2s, box-shadow .2s, border .2s;
@@ -22,14 +18,16 @@
     border-radius: 5px;
     align-self: center;
     margin: 0 auto 10px auto;
-    
+
+
     &:disabled {
         opacity: 0.5;
-        cursor: default!important;
+        cursor: default !important;
         text-shadow: none;
         -webkit-transition: none;
         transition: none;
     }
+
     i {
         vertical-align: middle;
         margin-top: -0.12em;
@@ -37,11 +35,11 @@
     }
 
     &:hover {
-       opacity: 0.9;
-   }
+        opacity: 0.9;
+    }
 }
 
-.kep-login-facebook{
+.kep-login-facebook {
     background-color: #3B5999;
     color: #fff;
     margin: auto;
@@ -49,9 +47,15 @@
     border-radius: 90px;
 }
 
-.btn-outline{
-   border: 1px solid #ccc;
-   background-color: #fff;
+.btn-outline {
+    border: 1px solid #ccc;
+    background: rgb(255, 255, 255);
+    /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 62%, rgba(239, 239, 239, 1) 83%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 62%, rgba(239, 239, 239, 1) 83%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 62%, rgba(239, 239, 239, 1) 83%);
 }
 
 .btn-sm {
@@ -68,16 +72,15 @@
 }
 
 .primary {
-    background: /*linear-gradient(-45deg, #ec1943, #f0486a);*/
-    $primary;
+    background: $primary;
     color: #fff !important;
     border: 1px solid $primary;
-    
+
 }
 
-.secondary{
-   background: linear-gradient(to bottom, #fff, #f9fafb);
-   border: 1px solid $border-color;
+.secondary {
+    background: linear-gradient(to bottom, #fff, #f9fafb);
+    border: 1px solid $border-color;
 }
 
 .danger {
@@ -92,6 +95,7 @@
 .success {
     background-color: $success;
     color: #fff;
+
     i {
         color: #fff;
     }
@@ -135,11 +139,14 @@
     -o-transition: background-color .40s ease-in-out;
     transition: background-color .40s ease-in-out;
     cursor: pointer;
+
     &.inactive {
         background: no-repeat 40px center $danger;
+
         .round-btn {
             left: 5px;
         }
+
         &::after {
             position: absolute;
             right: -65px;
@@ -147,6 +154,7 @@
             top: 0px;
         }
     }
+
     &.inactive.level {
         &::after {
             content: 'True';
@@ -154,11 +162,14 @@
             top: 3px;
         }
     }
+
     &.active {
         background: $success;
+
         .round-btn {
             left: 20px;
         }
+
         &::after {
             position: absolute;
             content: 'Active';
@@ -166,6 +177,7 @@
             top: 0px;
         }
     }
+
     &.active.level {
         &::after {
             position: absolute;
@@ -174,6 +186,7 @@
             top: 3px;
         }
     }
+
     .round-btn {
         width: 15px;
         height: 15px;
@@ -188,6 +201,7 @@
         -o-transition: all .30s ease-in-out;
         transition: all .30s ease-in-out;
     }
+
     .cb-value {
         position: absolute;
         left: 0;
@@ -199,6 +213,7 @@
         cursor: pointer;
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     }
+
     .cb-text {
         position: absolute;
         font-size: 1em;

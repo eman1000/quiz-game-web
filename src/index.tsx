@@ -10,6 +10,7 @@ import {client} from "./store/reducers"
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import "./styles/home.scss"
 import "./index.scss"
 
 // Create a store and get back itself and its history object

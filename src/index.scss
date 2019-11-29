@@ -12,6 +12,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 /* Page */
 
 .page {
@@ -55,21 +56,63 @@ code {
   transform: scale(0.9);
   transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
-.correct{
-  background-color: #77B93B !important;
-  color: #fff !important;
+
+.option.correct {
+
+  background: rgb(255, 255, 255);
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #BEFFE2 62%, #96f1c9 83%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #BEFFE2 62%, #96f1c9 83%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #BEFFE2 62%, #96f1c9 83%);
+  color: #fff;
+
+  &::before {
+    content: 'Ohh yeh!';
+    position: fixed;
+    top: 120px;
+    padding: 16px 1em;
+    width: 200px;
+    background-color: rgba(40, 171, 113, 0.78);
+    text-align: center;
+    font-size: 22px;
+    border-radius: 22px;
+  }
+
 }
-.wrong{
-  background-color:#DF3142 !important;
+
+.option.wrong {
+  background: rgb(255, 255, 255);
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #FFB1B1 62%, #E37979 83%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #FFB1B1 62%, #E37979 83%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #FFB1B1 62%, #E37979 83%);
+  color: #fff;
   color: #fff !important;
+
+  &::before {
+    content: 'Ohh no!';
+    position: fixed;
+    top: 120px;
+    padding: 16px 1em;
+    width: 200px;
+    background-color: rgba(181, 9, 59, 0.83);
+    text-align: center;
+    font-size: 22px;
+    border-radius: 22px;
+  }
 }
+
 .page h1 {
   margin-top: 0;
 }
 
-.err-modal{
+.err-modal {
   position: absolute;
-  top:0;
+  top: 0;
   width: 100%;
   background-color: #e74c3c;
   color: #fff;
@@ -109,19 +152,19 @@ code {
   transition: all 1000ms ease-in-out;
 }
 
-.fade-appear{
+.fade-appear {
   opacity: 0;
   z-index: 1;
 }
 
-.fade-appear.fade-appear-active{
+.fade-appear.fade-appear-active {
   opacity: 1;
   transition: opacity 300ms linear;
 }
 
-.fade-enter{
+.fade-enter {
   position: absolute;
-  
+
   left: 0;
   right: 0;
   margin: auto;
@@ -130,23 +173,23 @@ code {
   transform: scale(0.50) translateY(5px);
 }
 
-.fade-enter.fade-enter-active{
+.fade-enter.fade-enter-active {
   opacity: 1;
   transform: scale(1) translateY(0);
   transition: opacity 300ms linear 300ms, transform 300ms ease-in-out 300ms;
 }
 
-.fade-exit{
+.fade-exit {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-.fade-exit.fade-exit-active{
+.fade-exit.fade-exit-active {
   opacity: 0;
   transform: scale(0.50) translateY(5px);
   transition: opacity 300ms linear, transform 300ms ease-out;
 }
 
-.fade-exit-done{
+.fade-exit-done {
   opacity: 0;
 }
