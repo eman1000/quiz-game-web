@@ -77,7 +77,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon --watch 'server/**/*.ts' --exec 'ts-node' --project ./server/tsconfig.json server/index.ts",
-    "sev": "'ts-node' --project ./server/tsconfig.json server/index.ts",
+    "sev": "pm2 start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn start\"",
     "serve": "NODE_ENV=production npm run build && NODE_ENV=production npm run sev"
   },
