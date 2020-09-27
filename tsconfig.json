@@ -31,7 +31,5 @@
   ],
   "types":[
     "facebook-js-sdk"
-  ],
-
-  "extends": "./server/tsconfig.json",
+  ]
 }
