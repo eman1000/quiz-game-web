@@ -49,7 +49,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => {
             isAuthenticated && 
             <Component {...props} user={getMe}  />
           ||
-          <Redirect to={`/login`} />
+          <Redirect to={`/login?redirect=${window.location.pathname}`} />
           }
         </div>
       )}
