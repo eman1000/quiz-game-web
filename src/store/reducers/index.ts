@@ -20,7 +20,7 @@ const arr = href.split("/");
 const url = arr[0] + "//" + arr[2]
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${url}/graphql`,
+  uri: `wss://${window.location.protocol}//${window.location.host}/graphql`,
   options: {
     reconnect: true,
     timeout:1000000,
