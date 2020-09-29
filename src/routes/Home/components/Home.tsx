@@ -79,7 +79,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props: IHomeProps) => {
   console.log(props);
   return (
     <div>
-      <Page id="homepage" title="Affiliate App">
+      <Page id="homepage" title="Quiz App">
         <Query<GetCategoriesQuery, {}> query={GET_CATEGORIES}>
           {({ loading, data, error }) => {
             if (loading) return <Loader />;
