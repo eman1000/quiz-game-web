@@ -118,7 +118,7 @@ export const App = (props)=>{
     }, 2000);
 
     return (
-      <div>
+      <div className="app-wrapper">
         {
           user &&
           //@ts-ignore
@@ -136,11 +136,12 @@ export const App = (props)=>{
           }
           
           <Routes />
-          {/* {
-            user &&
-            <Footer current={window.location.pathname}/>
-          } */}
+       
         </div>
+{
+user &&
+<Footer current={window.location.pathname}/>
+}
       </div>
     );
   }

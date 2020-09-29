@@ -5,7 +5,15 @@ import { connect } from "react-redux";
 
 class Logout extends Component<any>{
 
+  componentDidMount(){
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("jwtToken");
+    window.location.href = "/";
+
+  }
+
   render() {
+    
     return null;
   }
 }

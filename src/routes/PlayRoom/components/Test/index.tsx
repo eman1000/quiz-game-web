@@ -249,8 +249,8 @@ const Test = (props: ITestProps) => {
     console.log("WINNER", winner);
   };
   const handleNext = () => {
-    setCount(2000);
-    setFilterdAnswers(null);
+    setCount(30);
+    setFilterdAnswers(undefined);
 
     //@ts-ignore
     if (testPosition + 1 < matchObj.test.testQuestions.length) {

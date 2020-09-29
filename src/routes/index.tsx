@@ -77,6 +77,13 @@ const Logout = Loadable({
   modules: ["logout"]
 });
 
+const Privacy = Loadable({
+  loader: () => import(/* webpackChunkName: "logout" */ "./Privacy"),
+  loading: () => null,
+  modules: ["privacy"]
+});
+
+
 
 export default () => (
   <TransitionGroup>
@@ -103,9 +110,14 @@ export default () => (
       <AuthenticatedRoute exact path="/pick-opponent/:categoryId" component={PickOpponent} />
 
       <UnauthenticatedRoute exact path="/login" component={Login} />
+
+      
       <AuthenticatedRoute exact path="/logout" component={Logout} />
 
+      <Route exact path="/privacy-policy" component={Privacy} />
+
       <Route component={NotFound} />
+
     </Switch>
     </CSSTransition>
   </TransitionGroup>

@@ -426,11 +426,22 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin: auto;
-  bottom: 2vh;
+  bottom: 5vh;
   padding-top: 82px;
 
 }
 
+.privacy{
+  padding: 15px;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 800px;
+  margin-bottom: 50px;
+  padding-bottom: 100px;
+  position: absolute;
+  top: 100px;
+}
 .scroll {
   overflow-x: scroll;
   max-height: 40vh;
@@ -1510,7 +1521,7 @@ body {
   margin-bottom: 2em;
   padding-top: 50px;
   position: absolute;
-  bottom: 40vh;
+  bottom: 43vh;
   left: 0;
   right: 0;
 
