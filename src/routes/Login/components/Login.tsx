@@ -30,7 +30,7 @@ export const FACEBOOK_LOGIN = gql(`
   }
 `);
 
-const Login = ({history}) => {
+const Login = ({}) => {
   const [accessToken, setAccessToken] = useState(null);
   const fbLogin = async ({ res, login }) => {
     if (res) {
@@ -40,8 +40,8 @@ const Login = ({history}) => {
         const { token, user } = tokenObj.data.signInFacebook;
         if (user) {
           localStorage.setItem("authUser", JSON.stringify(user));
-          history.replace("/");
         }
+        window.location.href = "/";
 
         return localStorage.setItem("jwtToken", token);
       }
