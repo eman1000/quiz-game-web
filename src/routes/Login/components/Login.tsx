@@ -40,8 +40,8 @@ const Login = ({}) => {
         const { token, user } = tokenObj.data.signInFacebook;
         if (user) {
           localStorage.setItem("authUser", JSON.stringify(user));
+          window.location.href = "/";
         }
-        window.location.href = "/";
 
         return localStorage.setItem("jwtToken", token);
       }
