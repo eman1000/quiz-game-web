@@ -8,6 +8,7 @@ import Loader from "../../../components/Loader";
 import "../../../styles/home.scss";
 import "./LoginStyles.scss";
 import { async } from "q";
+import { withRouter } from "react-router-dom";
 
 export const FACEBOOK_LOGIN = gql(`
   mutation signInFacebook($facebookToken: String!){
@@ -29,7 +30,7 @@ export const FACEBOOK_LOGIN = gql(`
   }
 `);
 
-const Login = ({}) => {
+const Login = ({history}) => {
   const [accessToken, setAccessToken] = useState(null);
   const fbLogin = async ({ res, login }) => {
     if (res) {
@@ -39,7 +40,7 @@ const Login = ({}) => {
         const { token, user } = tokenObj.data.signInFacebook;
         if (user) {
           localStorage.setItem("authUser", JSON.stringify(user));
-          window.location.href = "/";
+          history.replace("/");
         }
 
         return localStorage.setItem("jwtToken", token);
@@ -88,4 +89,4 @@ const Login = ({}) => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
