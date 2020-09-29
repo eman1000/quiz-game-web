@@ -15,8 +15,12 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from "apollo-utilities";
 import { split } from "apollo-link";
 
+const href = window.location.href;
+const arr = href.split("/");
+const url = arr[0] + "//" + arr[2]
+
 const wsLink = new WebSocketLink({
-  uri: `ws://${window.location.protocol}//${window.location.host}/graphql`,
+  uri: `ws://${url}/graphql`,
   options: {
     reconnect: true,
     timeout:1000000,
