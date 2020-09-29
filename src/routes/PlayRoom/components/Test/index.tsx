@@ -157,7 +157,7 @@ function useInterval(callback, delay) {
 }
 const Test = (props: ITestProps) => {
   const { matchId, matchObj, user, opponent, client } = props;
-  let [count, setCount] = useState<number>(2000);
+  let [count, setCount] = useState<number>(30);
   const [testPosition, setTestPosition] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
