@@ -69,6 +69,7 @@ const Login = ({}) => {
                   <p>Signup to start playing quiz bee with friends</p>
 
                   <FacebookLogin
+                    disableMobileRedirect
                     appId="337440783579454"
                     autoLoad={false}
                     fields="name,email,picture"
