@@ -22,7 +22,7 @@ type IChallengesProps = {
 const Challenges: React.FunctionComponent<IChallengesProps> = (props: IChallengesProps) => {
 
   return (
-    <Page id="homepage" title="Affiliate App">
+    <Page id="homepage" title="Challenges App">
       <h1>Challenges</h1>
     </Page>
   );

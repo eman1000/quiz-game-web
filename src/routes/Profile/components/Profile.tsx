@@ -19,7 +19,7 @@ const HomePage: React.FunctionComponent<IFreeChestProps> = (
   props: IFreeChestProps
 ) => {
   return (
-    <Page id="homepage" title="Affiliate App">
+    <Page id="homepage" title="Profile App">
       <div className="modal-wrapper">
         <div className="modal">
           <div className={"modal-header"}>

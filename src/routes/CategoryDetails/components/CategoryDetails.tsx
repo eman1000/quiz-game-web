@@ -64,7 +64,7 @@ const CategoryDetails: React.ComponentType<ICategoryDetails> = props => {
   const { id } = props.match.params || "";
 
   return (
-    <Page id="homepage"  className={"category-wrapper"} title="Affiliate App">
+    <Page id="homepage"  className={"category-wrapper"} title="Category Details App">
       
       <div className={"modal-wrapper"}>
      <div className={"modal"}>

@@ -48,7 +48,7 @@ const Login = ({}) => {
     }
   };
   return (
-    <Page id="homepage" title="Affiliate App">
+    <Page id="homepage" title="Login">
       <Mutation
         mutation={FACEBOOK_LOGIN}
         variables={{ facebookToken: accessToken }}

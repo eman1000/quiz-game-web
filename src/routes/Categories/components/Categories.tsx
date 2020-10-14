@@ -79,7 +79,7 @@ const Categories: React.FunctionComponent<ICategoriesProps> = (props: ICategorie
 
 
   return (
-    <Page id="homepage" title="Affiliate App">
+    <Page id="homepage" title="Categories">
       <Query<GetCategoriesQuery, {}> query={GET_CATEGORIES}>
         {({ loading, data, error }) => {
           if (loading) return <div>Loading</div>;
