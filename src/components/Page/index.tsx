@@ -9,11 +9,11 @@ const SITE_URL =
 
 const FACEBOOK_APP_ID = "XXXXXXXXX";
 
-const defaultTitle = "Sam Media";
+const defaultTitle = "Funnight";
 const defaultDescription =
-  "Sam Media";
+  "Funnight";
 const defaultImage = `${SITE_URL}${""}`;
-const defaultTwitter = "@sam-media";
+const defaultTwitter = "@funnightquiz";
 const defaultSep = " | ";
 
 const Page = (props)=> {
