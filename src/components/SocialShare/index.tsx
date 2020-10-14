@@ -15,7 +15,7 @@ const SocialShare = ()=>{
   return(
     <div>
       <FacebookShareButton
-        url={"http://c1.ouisys.com/VUJXTQ"}
+        url={""}
       >
       <FacebookIcon
         size={32}
@@ -23,7 +23,7 @@ const SocialShare = ()=>{
       </FacebookShareButton>
 
       <WhatsappShareButton
-        url={"http://c1.ouisys.com/VUJXTQ"}
+        url={""}
       >
       <WhatsappIcon
         size={32}
