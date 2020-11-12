@@ -9,6 +9,7 @@ import "../../../styles/home.scss";
 import "./LoginStyles.scss";
 import { async } from "q";
 import { withRouter } from "react-router-dom";
+import MainMenu from "../../MainMenu";
 
 export const FACEBOOK_LOGIN = gql(`
   mutation signInFacebook($facebookToken: String!){
@@ -32,6 +33,7 @@ export const FACEBOOK_LOGIN = gql(`
 
 const Login = ({}) => {
   const [accessToken, setAccessToken] = useState(null);
+  const [isShowMenu, setIsShowMenu] = useState(true);
   const fbLogin = async ({ res, login }) => {
     if (res) {
       setAccessToken(res.accessToken);
@@ -70,7 +72,7 @@ const Login = ({}) => {
 
                   <FacebookLogin
                     disableMobileRedirect
-                    appId="337440783579454"
+                    appId="2765919050355010"
                     autoLoad={false}
                     fields="name,email,picture"
                     onClick={() => console.log("clicked")}
@@ -86,6 +88,10 @@ const Login = ({}) => {
           );
         }}
       </Mutation>
+      {
+        isShowMenu &&
+        <MainMenu closeMenu={()=>setIsShowMenu(false)}/>
+      }
     </Page>
   );
 };

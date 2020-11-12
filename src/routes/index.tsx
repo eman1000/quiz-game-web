@@ -84,6 +84,24 @@ const Privacy = Loadable({
 });
 
 
+const Video = Loadable({
+  loader: () => import(/* webpackChunkName: "logout" */ "./Videos"),
+  loading: () => null,
+  modules: ["video"]
+});
+
+
+const Games = Loadable({
+  loader: () => import(/* webpackChunkName: "logout" */ "./Games"),
+  loading: () => null,
+  modules: ["games"]
+});
+
+const PlayGame = Loadable({
+  loader: () => import(/* webpackChunkName: "logout" */ "./PlayGame"),
+  loading: () => null,
+  modules: ["playgame"]
+});
 
 export default () => (
   <TransitionGroup>
@@ -116,6 +134,12 @@ export default () => (
 
       <Route exact path="/privacy-policy" component={Privacy} />
 
+      <Route exact path="/videos" component={Video} />
+
+      <Route exact path="/games" component={Games} />
+      <Route exact path="/play-game/:gamename" component={PlayGame} />
+
+      
       <Route component={NotFound} />
 
     </Switch>
