@@ -72,7 +72,7 @@ const Login = ({}) => {
 
                   <FacebookLogin
                     disableMobileRedirect
-                    appId="2765919050355010"
+                    appId="337440783579454"
                     autoLoad={false}
                     fields="name,email,picture"
                     onClick={() => console.log("clicked")}
