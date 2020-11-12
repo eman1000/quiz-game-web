@@ -7,6 +7,8 @@ import logoImg from "../../assets/logo.svg";
 import i2048Img from "../../assets/games/2048.jpg"
 import HexGL from "../../assets/games/HexGL.jpg"
 import Chess from "../../assets/games/chess.png"
+import astrayImg from "../../assets/games/astray.jpg"
+
 
 
 import MainMenu from "../MainMenu";
@@ -26,7 +28,12 @@ const Games = ({}) => {
     title:"Chess",
     image:Chess,
     indentifer:"chess"
+  },{
+    title:"Astray Maze game",
+    image:astrayImg,
+    indentifer:"astray"
   }]
+
   return (
     <Page id="games" title="Games">
       <PlayHeader/>
