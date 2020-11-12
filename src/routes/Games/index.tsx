@@ -8,6 +8,9 @@ import i2048Img from "../../assets/games/2048.jpg"
 import HexGL from "../../assets/games/HexGL.jpg"
 import Chess from "../../assets/games/chess.png"
 import astrayImg from "../../assets/games/astray.jpg"
+import i3dCarRacer from "../../assets/games/3dracer.jpg"
+import duckhuntImg from "../../assets/games/duckhunt.jpg"
+
 
 
 
@@ -32,7 +35,16 @@ const Games = ({}) => {
     title:"Astray Maze game",
     image:astrayImg,
     indentifer:"astray"
+  },{
+    title:"3D Car Racer game",
+    image:i3dCarRacer,
+    indentifer:"3dracer"
+  },{
+    title:"Duck Hunt",
+    image:duckhuntImg,
+    indentifer:"duckhunt"
   }]
+
 
   return (
     <Page id="games" title="Games">
