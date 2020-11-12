@@ -52,6 +52,7 @@ const Games = ({}) => {
       <div className="ncontent">
         
         <h1>Games</h1>
+        <p>(NOTE * Optimised for desktop)</p>
 
         <div className="nlist">
           {
