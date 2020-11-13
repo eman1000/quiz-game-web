@@ -4,6 +4,10 @@
   h1{
     text-align: center;
   }
+  p{
+    color: #fff;
+    text-align: center;
+  }
 
   .nlist{
     display: flex;
@@ -11,6 +15,9 @@
     @media(max-width: 767px){
       flex-wrap: nowrap;
       flex-direction: column;
+    }
+    p{
+      color: #000;
     }
     
   }
