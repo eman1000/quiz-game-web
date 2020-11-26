@@ -17,7 +17,21 @@ export type IVideos = {
 const Games = ({}) => {
 
   const [filteredVideos, setFilterdVideos] = useState<Array<IVideos> | undefined>();
-  const videos:Array<IVideos> = [{
+  const videos:Array<IVideos> = 
+  
+    [{
+    title:"Girls pose for holiday snap, but can you see why it's gone viral?",
+    id:"OhuJplxjqOc",
+    category:"weird"
+  },{
+    title:"Women React to Being Called Beautiful ",
+    id:"etAUOxS_178",
+    category:"info"
+  },{
+    title:"Top 10 Most Beautiful Girls In The World (2020)",
+    id:"b1AN6bsjo-E",
+    category:"info"
+  },{
     title:"Cute and Funny Cat Videos to Keep You Smiling! 🐱",
     id:"tpiyEe_CqB4",
     category:"funny"
