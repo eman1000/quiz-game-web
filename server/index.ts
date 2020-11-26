@@ -9,7 +9,6 @@ import * as DataLoader from 'dataloader';
 import * as fs from 'fs';
 
 import * as jwt from 'jsonwebtoken';
-import * as ReactDOMServer from 'react-dom/server';
 
 import { ApolloServer, IResolvers } from 'apollo-server-express';
 import schema from "./schema";
@@ -55,21 +54,8 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 
 app.get('*', function(req, res) {
-  //res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 
-  const myApp = ReactDOMServer.renderToString(React.createElement(App));
-
-  const indexFile = path.resolve('./build/index.html');
-  fs.readFile(indexFile, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Something went wrong:', err);
-      return res.status(500).send('Oops, better luck next time!');
-    }
-
-    return res.send(
-      data.replace('<div id="root"></div>', `<div id="root">${myApp}</div>`)
-    );
-  });
 });
 
 //cache and batching
